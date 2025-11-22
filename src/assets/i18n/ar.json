@@ -1,0 +1,157 @@
+{
+  "app": {
+    "title": "تسجيل العميل",
+    "welcome": "مرحباً"
+  },
+  "auth": {
+    "login": "تسجيل الدخول",
+    "logout": "تسجيل الخروج",
+    "idNumber": "رقم الهوية",
+    "mobile": "رقم الجوال",
+    "otp": "رمز التحقق",
+    "verifyOtp": "تحقق من الرمز",
+    "sendOtp": "إرسال الرمز",
+    "enterOtp": "أدخل رمز التحقق المرسل إلى جوالك"
+  },
+  "kyc": {
+    "title": "تسجيل بيانات العميل",
+    "progress": "التقدم",
+    "currentStep": "الخطوة الحالية",
+    "completed": "مكتمل",
+    "common": {
+      "select": "اختر..."
+    },
+    "buttons": {
+      "save": "حفظ",
+      "saveAndContinue": "حفظ ومتابعة",
+      "saving": "جاري الحفظ...",
+      "next": "التالي",
+      "back": "رجوع",
+      "previous": "السابق",
+      "submit": "إرسال"
+    },
+    "messages": {
+      "saveSuccess": "تم الحفظ بنجاح!",
+      "saveFailed": "فشل الحفظ"
+    },
+    "validation": {
+      "required": "هذا الحقل مطلوب",
+      "phoneInvalid": "رقم الهاتف غير صحيح",
+      "ibanInvalid": "صيغة الآيبان غير صحيحة"
+    },
+    "personalInfo": {
+      "title": "المعلومات الشخصية",
+      "subtitle": "يرجى تقديم بياناتك الشخصية"
+    },
+    "addressInfo": {
+      "title": "معلومات العنوان",
+      "subtitle": "يرجى تقديم تفاصيل عنوانك",
+      "country": "الدولة",
+      "city": "المدينة",
+      "district": "الحي",
+      "street": "الشارع",
+      "buildingNumber": "رقم المبنى"
+    },
+    "contactInfo": {
+      "title": "معلومات الاتصال",
+      "subtitle": "يرجى تقديم تفاصيل الاتصال",
+      "countryCode": "رمز الدولة",
+      "primaryContact": "جهة الاتصال الأساسية",
+      "altMobile": "جوال بديل"
+    },
+    "employmentInfo": {
+      "title": "معلومات التوظيف",
+      "subtitle": "يرجى تقديم تفاصيل التوظيف",
+      "employmentType": "نوع التوظيف",
+      "employed": "موظف",
+      "selfEmployed": "عمل حر",
+      "unemployed": "عاطل عن العمل",
+      "retired": "متقاعد",
+      "student": "طالب",
+      "employerName": "اسم جهة العمل",
+      "jobTitle": "المسمى الوظيفي",
+      "occupation": "المهنة",
+      "employmentYears": "سنوات العمل",
+      "monthlyIncome": "الدخل الشهري"
+    },
+    "generalInfo": {
+      "title": "معلومات عامة",
+      "subtitle": "يرجى تقديم ملفك الاستثماري",
+      "investmentExperience": "الخبرة الاستثمارية",
+      "investmentKnowledge": "المعرفة الاستثمارية",
+      "riskTolerance": "تحمل المخاطر",
+      "none": "لا يوجد",
+      "beginner": "مبتدئ",
+      "intermediate": "متوسط",
+      "advanced": "متقدم",
+      "expert": "خبير",
+      "basic": "أساسي",
+      "good": "جيد",
+      "excellent": "ممتاز",
+      "low": "منخفض",
+      "medium": "متوسط",
+      "high": "عالي"
+    },
+    "fatcaInfo": {
+      "title": "معلومات FATCA",
+      "subtitle": "يرجى تقديم تفاصيل FATCA",
+      "usCitizen": "هل أنت مواطن أمريكي؟",
+      "usTaxResident": "هل أنت مقيم ضريبي أمريكي؟",
+      "tin": "الرقم الضريبي"
+    },
+    "bankInfo": {
+      "title": "المعلومات البنكية",
+      "subtitle": "يرجى تقديم تفاصيل حسابك البنكي",
+      "bankName": "اسم البنك",
+      "iban": "رقم الآيبان",
+      "accountHolderName": "اسم صاحب الحساب"
+    }
+  },
+  "steps": {
+    "personalInfo": "المعلومات الشخصية",
+    "addressInfo": "معلومات العنوان",
+    "contactInfo": "معلومات الاتصال",
+    "employmentInfo": "معلومات التوظيف",
+    "generalInfo": "معلومات عامة",
+    "fatcaInfo": "معلومات FATCA",
+    "bankInfo": "المعلومات البنكية"
+  },
+  "fields": {
+    "title": "اللقب",
+    "firstName": "الاسم الأول",
+    "secondName": "الاسم الثاني",
+    "lastName": "اسم العائلة",
+    "familyName": "اسم العائلة",
+    "country": "الدولة",
+    "city": "المدينة",
+    "district": "الحي",
+    "street": "الشارع",
+    "buildingNumber": "رقم المبنى",
+    "primaryContact": "جهة الاتصال الأساسية",
+    "altMobile": "جوال بديل",
+    "countryCode": "رمز الدولة",
+    "employmentType": "نوع التوظيف",
+    "employerName": "اسم جهة العمل",
+    "jobTitle": "المسمى الوظيفي",
+    "monthlyIncome": "الدخل الشهري",
+    "investmentExperience": "الخبرة الاستثمارية",
+    "investmentKnowledge": "المعرفة الاستثمارية",
+    "riskTolerance": "تحمل المخاطر",
+    "usCitizen": "مواطن أمريكي",
+    "usTaxResident": "مقيم ضريبي أمريكي",
+    "tin": "الرقم الضريبي",
+    "bankName": "اسم البنك",
+    "iban": "رقم الآيبان",
+    "accountHolderName": "اسم صاحب الحساب"
+  },
+  "theme": {
+    "light": "الوضع الفاتح",
+    "dark": "الوضع الداكن",
+    "toggle": "تبديل المظهر"
+  },
+  "language": {
+    "english": "الإنجليزية",
+    "arabic": "العربية",
+    "toggle": "تبديل اللغة"
+  }
+}

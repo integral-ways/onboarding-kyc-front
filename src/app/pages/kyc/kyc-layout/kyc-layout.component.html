@@ -1,0 +1,133 @@
+<div class="kyc-layout">
+  <!-- Modern Header -->
+  <header class="modern-header">
+    <div class="container-fluid">
+      <div class="header-content">
+        <!-- Brand Section -->
+        <div class="brand-section">
+          <div class="brand-logo">
+            <div class="logo-icon">
+              <i class="bi bi-shield-check"></i>
+            </div>
+            <div class="brand-text">
+              <h1 class="brand-title">{{ 'kyc.title' | translate }}</h1>
+              <p class="brand-subtitle">Secure Digital Onboarding</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Actions Section -->
+        <div class="header-actions">
+          <!-- Language Toggle -->
+          <button class="action-btn language-btn" (click)="toggleLanguage()" [attr.aria-label]="'Toggle Language'">
+            <i class="bi bi-translate"></i>
+            <span class="btn-text">{{ currentLang === 'en' ? 'العربية' : 'English' }}</span>
+          </button>
+          
+          <!-- Theme Toggle -->
+          <button class="action-btn theme-btn" (click)="toggleTheme()" [attr.aria-label]="'Toggle Theme'">
+            <i [class]="currentTheme === 'light' ? 'bi bi-moon-fill' : 'bi bi-sun-fill'"></i>
+            <span class="btn-text">{{ currentTheme === 'light' ? 'Dark' : 'Light' }}</span>
+          </button>
+          
+          <!-- Logout -->
+          <button class="action-btn logout-btn" (click)="logout()" [attr.aria-label]="'Logout'">
+            <i class="bi bi-box-arrow-right"></i>
+            <span class="btn-text">{{ 'auth.logout' | translate }}</span>
+          </button>
+        </div>
+
+        <!-- Mobile Menu Toggle -->
+        <button class="mobile-menu-toggle" (click)="toggleMobileMenu()" [attr.aria-label]="'Toggle Menu'">
+          <i class="bi" [class.bi-list]="!mobileMenuOpen" [class.bi-x]="mobileMenuOpen"></i>
+        </button>
+      </div>
+
+      <!-- Mobile Menu -->
+      <div class="mobile-menu" [class.open]="mobileMenuOpen">
+        <button class="mobile-action-btn" (click)="toggleLanguage(); closeMobileMenu()">
+          <i class="bi bi-translate"></i>
+          <span>{{ currentLang === 'en' ? 'العربية' : 'English' }}</span>
+        </button>
+        
+        <button class="mobile-action-btn" (click)="toggleTheme(); closeMobileMenu()">
+          <i [class]="currentTheme === 'light' ? 'bi bi-moon-fill' : 'bi bi-sun-fill'"></i>
+          <span>{{ currentTheme === 'light' ? 'Dark Mode' : 'Light Mode' }}</span>
+        </button>
+        
+        <button class="mobile-action-btn logout" (click)="logout(); closeMobileMenu()">
+          <i class="bi bi-box-arrow-right"></i>
+          <span>{{ 'auth.logout' | translate }}</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Progress Section with Configurable Stepper -->
+  <div class="progress-section" *ngIf="progress" [class.vertical-layout]="stepperOrientation === 'vertical'">
+    <div class="container">
+      <div class="progress-header">
+        <div class="progress-info">
+          <span class="progress-text">{{ 'kyc.progress' | translate }}: {{ completedSteps }}/{{ totalSteps }}</span>
+          <span class="progress-percentage">{{ ((completedSteps / totalSteps) * 100) | number:'1.0-0' }}%</span>
+        </div>
+        
+        <!-- Orientation Toggle -->
+        <button class="orientation-toggle" (click)="toggleStepperOrientation()" [attr.aria-label]="'Toggle Stepper Orientation'">
+          <i [class]="stepperOrientation === 'horizontal' ? 'bi bi-layout-sidebar' : 'bi bi-layout-three-columns'"></i>
+        </button>
+      </div>
+      
+      <!-- Stepper Container -->
+      <div class="stepper-container" [class.horizontal]="stepperOrientation === 'horizontal'" [class.vertical]="stepperOrientation === 'vertical'">
+        <div class="stepper-track"></div>
+        
+        <div class="step-item" 
+             *ngFor="let step of steps; let i = index"
+             [class.completed]="step.completed"
+             [class.active]="isActiveStep(step)"
+             (click)="navigateToStep(step.key)"
+             [title]="('steps.' + step.key | translate)">
+          
+          <div class="step-circle">
+            <i *ngIf="step.completed" class="bi bi-check-lg"></i>
+            <span *ngIf="!step.completed">{{ step.stepNumber }}</span>
+          </div>
+          
+          <div class="step-content">
+            <div class="step-label">{{ 'steps.' + step.key | translate }}</div>
+          </div>
+          
+          <div class="step-connector" *ngIf="i < steps.length - 1"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content" [class.with-vertical-stepper]="stepperOrientation === 'vertical'">
+    <div class="container py-3">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+
+  <!-- Compact Footer -->
+  <footer class="compact-footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="copyright">
+          <i class="bi bi-c-circle"></i>
+          <span>{{ currentYear }} {{ 'kyc.title' | translate }}. All rights reserved.</span>
+        </div>
+        
+        <div class="footer-links">
+          <a href="#" class="footer-link">Privacy</a>
+          <span class="separator">•</span>
+          <a href="#" class="footer-link">Terms</a>
+          <span class="separator">•</span>
+          <a href="#" class="footer-link">Support</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>

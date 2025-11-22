@@ -1,0 +1,111 @@
+<div class="step-container fade-in">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card-modern p-4">
+        <!-- Header -->
+        <div class="d-flex align-items-center mb-4">
+          <div class="step-number">1</div>
+          <div class="ms-3">
+            <h3 class="mb-1">{{ 'steps.personalInfo' | translate }}</h3>
+            <p class="text-secondary mb-0">Please provide your personal information</p>
+          </div>
+        </div>
+
+        <!-- Success Alert -->
+        <div *ngIf="success" class="alert alert-success">
+          <i class="bi bi-check-circle-fill me-2"></i>
+          Saved successfully! Moving to next step...
+        </div>
+
+        <!-- Error Alert -->
+        <div *ngIf="error" class="alert alert-danger">
+          <i class="bi bi-exclamation-triangle-fill me-2"></i>
+          {{ error }}
+        </div>
+
+        <!-- Form -->
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <div class="row g-3">
+            <!-- Title -->
+            <div class="col-md-4">
+              <label class="form-label-modern">{{ 'fields.title' | translate }}</label>
+              <select class="form-control form-control-modern" formControlName="title">
+                <option value="">Select...</option>
+                <option value="Mr">Mr</option>
+                <option value="Mrs">Mrs</option>
+                <option value="Ms">Ms</option>
+                <option value="Dr">Dr</option>
+              </select>
+            </div>
+
+            <!-- First Name -->
+            <div class="col-md-8">
+              <label class="form-label-modern">{{ 'fields.firstName' | translate }} *</label>
+              <input type="text" class="form-control form-control-modern" formControlName="firstName" />
+            </div>
+
+            <!-- Second Name -->
+            <div class="col-md-6">
+              <label class="form-label-modern">{{ 'fields.secondName' | translate }}</label>
+              <input type="text" class="form-control form-control-modern" formControlName="secondName" />
+            </div>
+
+            <!-- Last Name -->
+            <div class="col-md-6">
+              <label class="form-label-modern">{{ 'fields.lastName' | translate }} *</label>
+              <input type="text" class="form-control form-control-modern" formControlName="lastName" />
+            </div>
+
+            <!-- Family Name -->
+            <div class="col-md-6">
+              <label class="form-label-modern">{{ 'fields.familyName' | translate }} *</label>
+              <input type="text" class="form-control form-control-modern" formControlName="familyName" />
+            </div>
+
+            <!-- Number of Dependents -->
+            <div class="col-md-6">
+              <label class="form-label-modern">Number of Dependents</label>
+              <input type="number" class="form-control form-control-modern" formControlName="numOfDependents" min="0" />
+            </div>
+
+            <!-- Net Worth -->
+            <div class="col-md-6">
+              <label class="form-label-modern">Net Worth</label>
+              <input type="number" class="form-control form-control-modern" formControlName="netWorth" />
+            </div>
+
+            <!-- Net Growth -->
+            <div class="col-md-6">
+              <label class="form-label-modern">Net Growth</label>
+              <input type="number" class="form-control form-control-modern" formControlName="netGrowth" />
+            </div>
+
+            <!-- Income Source -->
+            <div class="col-12">
+              <label class="form-label-modern">Income Source</label>
+              <input type="text" class="form-control form-control-modern" formControlName="incomeSource" />
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div class="d-flex justify-content-between mt-4">
+            <button type="button" class="btn btn-outline-secondary" (click)="goBack()">
+              <i class="bi bi-arrow-left me-2"></i>
+              {{ 'kyc.previous' | translate }}
+            </button>
+            <button type="submit" class="btn btn-primary-modern" [disabled]="form.invalid || loading">
+              <span *ngIf="!loading">
+                {{ 'kyc.save' | translate }}
+                <i class="bi bi-arrow-right ms-2"></i>
+              </span>
+              <span *ngIf="loading">
+                <span class="spinner-border spinner-border-sm me-2"></span>
+                Saving...
+              </span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,81 @@
+<div class="step-container fade-in">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card-modern p-4">
+        <!-- Header -->
+        <div class="d-flex align-items-center mb-4">
+          <div class="step-number">2</div>
+          <div class="ms-3">
+            <h3 class="mb-1">{{ 'kyc.addressInfo.title' | translate }}</h3>
+            <p class="text-secondary mb-0">{{ 'kyc.addressInfo.subtitle' | translate }}</p>
+          </div>
+        </div>
+
+        <!-- Success Alert -->
+        <div *ngIf="success" class="alert alert-success">
+          <i class="bi bi-check-circle-fill me-2"></i>
+          {{ 'kyc.messages.saveSuccess' | translate }}
+        </div>
+
+        <!-- Error Alert -->
+        <div *ngIf="error" class="alert alert-danger">
+          <i class="bi bi-exclamation-triangle-fill me-2"></i>
+          {{ error }}
+        </div>
+
+        <!-- Form -->
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <div class="row g-3">
+            <!-- Country -->
+            <div class="col-md-6">
+              <label class="form-label-modern">{{ 'kyc.addressInfo.country' | translate }} *</label>
+              <input type="text" class="form-control form-control-modern" formControlName="country" />
+            </div>
+
+            <!-- City -->
+            <div class="col-md-6">
+              <label class="form-label-modern">{{ 'kyc.addressInfo.city' | translate }} *</label>
+              <input type="text" class="form-control form-control-modern" formControlName="city" />
+            </div>
+
+            <!-- District -->
+            <div class="col-md-6">
+              <label class="form-label-modern">{{ 'kyc.addressInfo.district' | translate }} *</label>
+              <input type="text" class="form-control form-control-modern" formControlName="district" />
+            </div>
+
+            <!-- Building Number -->
+            <div class="col-md-6">
+              <label class="form-label-modern">{{ 'kyc.addressInfo.buildingNumber' | translate }} *</label>
+              <input type="text" class="form-control form-control-modern" formControlName="buildingNumber" />
+            </div>
+
+            <!-- Street -->
+            <div class="col-12">
+              <label class="form-label-modern">{{ 'kyc.addressInfo.street' | translate }} *</label>
+              <input type="text" class="form-control form-control-modern" formControlName="street" />
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div class="d-flex justify-content-between mt-4">
+            <button type="button" class="btn btn-outline-secondary" (click)="goBack()">
+              <i class="bi bi-arrow-left me-2"></i>
+              {{ 'kyc.buttons.back' | translate }}
+            </button>
+            <button type="submit" class="btn btn-primary-modern" [disabled]="form.invalid || loading">
+              <span *ngIf="!loading">
+                {{ 'kyc.buttons.saveAndContinue' | translate }}
+                <i class="bi bi-arrow-right ms-2"></i>
+              </span>
+              <span *ngIf="loading">
+                <span class="spinner-border spinner-border-sm me-2"></span>
+                {{ 'kyc.buttons.saving' | translate }}
+              </span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

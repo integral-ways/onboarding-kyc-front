@@ -1,0 +1,77 @@
+<div class="step-container fade-in">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card-modern p-4">
+        <!-- Header -->
+        <div class="d-flex align-items-center mb-4">
+          <div class="step-number">6</div>
+          <div class="ms-3">
+            <h3 class="mb-1">{{ 'kyc.fatcaInfo.title' | translate }}</h3>
+            <p class="text-secondary mb-0">{{ 'kyc.fatcaInfo.subtitle' | translate }}</p>
+          </div>
+        </div>
+
+        <!-- Success Alert -->
+        <div *ngIf="success" class="alert alert-success">
+          <i class="bi bi-check-circle-fill me-2"></i>
+          {{ 'kyc.messages.saveSuccess' | translate }}
+        </div>
+
+        <!-- Error Alert -->
+        <div *ngIf="error" class="alert alert-danger">
+          <i class="bi bi-exclamation-triangle-fill me-2"></i>
+          {{ error }}
+        </div>
+
+        <!-- Form -->
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <div class="row g-3">
+            <!-- US Citizen Checkbox -->
+            <div class="col-12">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="usCitizen" formControlName="usCitizen">
+                <label class="form-check-label" for="usCitizen">
+                  {{ 'kyc.fatcaInfo.usCitizen' | translate }}
+                </label>
+              </div>
+            </div>
+
+            <!-- US Tax Resident Checkbox -->
+            <div class="col-12">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="usTaxResident" formControlName="usTaxResident">
+                <label class="form-check-label" for="usTaxResident">
+                  {{ 'kyc.fatcaInfo.usTaxResident' | translate }}
+                </label>
+              </div>
+            </div>
+
+            <!-- TIN (conditional) -->
+            <div class="col-12" *ngIf="form.get('usCitizen')?.value || form.get('usTaxResident')?.value">
+              <label class="form-label-modern">{{ 'kyc.fatcaInfo.tin' | translate }}</label>
+              <input type="text" class="form-control form-control-modern" formControlName="tin" placeholder="Tax Identification Number" />
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div class="d-flex justify-content-between mt-4">
+            <button type="button" class="btn btn-outline-secondary" (click)="goBack()">
+              <i class="bi bi-arrow-left me-2"></i>
+              {{ 'kyc.buttons.back' | translate }}
+            </button>
+            <button type="submit" class="btn btn-primary-modern" [disabled]="form.invalid || loading">
+              <span *ngIf="!loading">
+                {{ 'kyc.buttons.saveAndContinue' | translate }}
+                <i class="bi bi-arrow-right ms-2"></i>
+              </span>
+              <span *ngIf="loading">
+                <span class="spinner-border spinner-border-sm me-2"></span>
+                {{ 'kyc.buttons.saving' | translate }}
+              </span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

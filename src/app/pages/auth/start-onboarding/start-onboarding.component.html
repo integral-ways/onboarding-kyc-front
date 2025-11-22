@@ -1,0 +1,195 @@
+<div class="modern-auth-container">
+  <!-- Background Elements -->
+  <div class="auth-background">
+    <div class="gradient-orb orb-1"></div>
+    <div class="gradient-orb orb-2"></div>
+    <div class="gradient-orb orb-3"></div>
+  </div>
+
+  <div class="auth-content">
+    <div class="container">
+      <div class="row min-vh-100 align-items-center justify-content-center">
+        <!-- Left Side - Branding (Hidden on mobile) -->
+        <div class="col-lg-6 d-none d-lg-block">
+          <div class="branding-section fade-in">
+            <div class="brand-logo-large">
+              <div class="logo-circle">
+                <i class="bi bi-person-plus"></i>
+              </div>
+            </div>
+            <h1 class="brand-title">Start Your Journey</h1>
+            <p class="brand-description">Begin your secure digital onboarding process</p>
+            
+            <div class="features-list">
+              <div class="feature-item">
+                <i class="bi bi-check-circle-fill"></i>
+                <span>Quick Registration Process</span>
+              </div>
+              <div class="feature-item">
+                <i class="bi bi-check-circle-fill"></i>
+                <span>Secure OTP Verification</span>
+              </div>
+              <div class="feature-item">
+                <i class="bi bi-check-circle-fill"></i>
+                <span>Complete KYC in Minutes</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Side - Start Form -->
+        <div class="col-lg-6 col-md-8 col-sm-10">
+          <div class="login-card fade-in-up">
+            <!-- Mobile Logo -->
+            <div class="mobile-logo d-lg-none">
+              <div class="logo-circle-small">
+                <i class="bi bi-person-plus"></i>
+              </div>
+            </div>
+
+            <!-- Card Header -->
+            <div class="card-header-custom">
+              <h2 class="login-title">{{ otpSent ? 'Verify OTP' : 'Start Onboarding' }}</h2>
+              <p class="login-subtitle">{{ otpSent ? 'Enter the OTP sent to your mobile' : 'Enter your details to begin KYC registration' }}</p>
+            </div>
+
+            <!-- Error Alert -->
+            <div *ngIf="error" class="alert alert-danger alert-modern">
+              <i class="bi bi-exclamation-triangle-fill"></i>
+              <span>{{ error }}</span>
+            </div>
+
+            <!-- Step 1: Start Form -->
+            <form [formGroup]="startForm" (ngSubmit)="onSubmitStart()" class="login-form" *ngIf="!otpSent">
+              <!-- ID Number -->
+              <div class="form-group-modern">
+                <label class="form-label-custom">
+                  <i class="bi bi-card-text"></i>
+                  {{ 'auth.idNumber' | translate }}
+                </label>
+                <div class="input-wrapper">
+                  <input
+                    type="text"
+                    class="form-control-custom"
+                    formControlName="idNumber"
+                    placeholder="1234567890"
+                    maxlength="10"
+                    [class.error]="startForm.get('idNumber')?.invalid && startForm.get('idNumber')?.touched"
+                  />
+                  <i class="input-icon bi bi-card-text"></i>
+                </div>
+                <div class="error-message" *ngIf="startForm.get('idNumber')?.invalid && startForm.get('idNumber')?.touched">
+                  <i class="bi bi-exclamation-circle"></i>
+                  Please enter a valid 10-digit ID number
+                </div>
+              </div>
+
+              <!-- Mobile Number -->
+              <div class="form-group-modern">
+                <label class="form-label-custom">
+                  <i class="bi bi-phone"></i>
+                  {{ 'auth.mobile' | translate }}
+                </label>
+                <div class="input-wrapper">
+                  <input
+                    type="tel"
+                    class="form-control-custom"
+                    formControlName="mobile"
+                    placeholder="05xxxxxxxx"
+                    maxlength="10"
+                    [class.error]="startForm.get('mobile')?.invalid && startForm.get('mobile')?.touched"
+                  />
+                  <i class="input-icon bi bi-phone-fill"></i>
+                </div>
+                <div class="error-message" *ngIf="startForm.get('mobile')?.invalid && startForm.get('mobile')?.touched">
+                  <i class="bi bi-exclamation-circle"></i>
+                  Please enter a valid 10-digit mobile number
+                </div>
+              </div>
+
+              <!-- Submit Button -->
+              <button
+                type="submit"
+                class="btn-submit-modern"
+                [disabled]="startForm.invalid || loading"
+                [class.loading]="loading"
+              >
+                <span class="btn-content" *ngIf="!loading">
+                  <i class="bi bi-send"></i>
+                  <span>{{ 'auth.sendOtp' | translate }}</span>
+                </span>
+                <span class="btn-content" *ngIf="loading">
+                  <span class="spinner"></span>
+                  <span>Sending...</span>
+                </span>
+              </button>
+            </form>
+
+            <!-- Step 2: OTP Form -->
+            <form [formGroup]="otpForm" (ngSubmit)="onSubmitOtp()" class="login-form" *ngIf="otpSent">
+              <!-- Success Info -->
+              <div class="alert alert-success alert-modern">
+                <i class="bi bi-check-circle-fill"></i>
+                <span>OTP sent to {{ mobile }}</span>
+              </div>
+
+              <!-- OTP Input -->
+              <div class="form-group-modern">
+                <label class="form-label-custom">
+                  <i class="bi bi-shield-lock"></i>
+                  {{ 'auth.otp' | translate }}
+                </label>
+                <div class="input-wrapper">
+                  <input
+                    type="text"
+                    class="form-control-custom otp-input"
+                    formControlName="otp"
+                    placeholder="• • • •"
+                    maxlength="4"
+                    [class.error]="otpForm.get('otp')?.invalid && otpForm.get('otp')?.touched"
+                  />
+                  <i class="input-icon bi bi-shield-lock-fill"></i>
+                </div>
+                <div class="error-message" *ngIf="otpForm.get('otp')?.invalid && otpForm.get('otp')?.touched">
+                  <i class="bi bi-exclamation-circle"></i>
+                  Please enter a valid 4-digit OTP
+                </div>
+              </div>
+
+              <!-- Submit Button -->
+              <button
+                type="submit"
+                class="btn-submit-modern"
+                [disabled]="otpForm.invalid || loading"
+                [class.loading]="loading"
+              >
+                <span class="btn-content" *ngIf="!loading">
+                  <i class="bi bi-box-arrow-in-right"></i>
+                  <span>{{ 'auth.verifyOtp' | translate }}</span>
+                </span>
+                <span class="btn-content" *ngIf="loading">
+                  <span class="spinner"></span>
+                  <span>Verifying...</span>
+                </span>
+              </button>
+
+              <!-- Back Button -->
+              <button type="button" class="btn-back-modern" (click)="goBack()">
+                <i class="bi bi-arrow-left"></i>
+                <span>Change Mobile Number</span>
+              </button>
+            </form>
+
+            <!-- Footer -->
+            <div class="card-footer-custom">
+              <p>
+                <i class="bi bi-shield-check"></i>
+                Your data is protected with bank-grade encryption
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,120 @@
+{
+  "app": {
+    "title": "KYC Onboarding",
+    "welcome": "Welcome"
+  },
+  "auth": {
+    "login": "Login",
+    "logout": "Logout",
+    "idNumber": "ID Number",
+    "mobile": "Mobile Number",
+    "otp": "OTP Code",
+    "verifyOtp": "Verify OTP",
+    "sendOtp": "Send OTP",
+    "enterOtp": "Enter the OTP sent to your mobile"
+  },
+  "kyc": {
+    "title": "KYC Registration",
+    "progress": "Progress",
+    "currentStep": "Current Step",
+    "completed": "Completed",
+    "common": {
+      "select": "Select..."
+    },
+    "buttons": {
+      "save": "Save",
+      "saveAndContinue": "Save & Continue",
+      "saving": "Saving...",
+      "next": "Next",
+      "back": "Back",
+      "previous": "Previous",
+      "submit": "Submit"
+    },
+    "messages": {
+      "saveSuccess": "Saved successfully!",
+      "saveFailed": "Failed to save"
+    },
+    "validation": {
+      "required": "This field is required",
+      "phoneInvalid": "Invalid phone number",
+      "ibanInvalid": "Invalid IBAN format"
+    },
+    "personalInfo": {
+      "title": "Personal Information",
+      "subtitle": "Please provide your personal details"
+    },
+    "addressInfo": {
+      "title": "Address Information",
+      "subtitle": "Please provide your address details",
+      "country": "Country",
+      "city": "City",
+      "district": "District",
+      "street": "Street",
+      "buildingNumber": "Building Number"
+    },
+    "contactInfo": {
+      "title": "Contact Information",
+      "subtitle": "Please provide your contact details",
+      "countryCode": "Country Code",
+      "primaryContact": "Primary Contact",
+      "altMobile": "Alternative Mobile"
+    },
+    "employmentInfo": {
+      "title": "Employment Information",
+      "subtitle": "Please provide your employment details",
+      "employmentType": "Employment Type",
+      "employed": "Employed",
+      "selfEmployed": "Self Employed",
+      "unemployed": "Unemployed",
+      "retired": "Retired",
+      "student": "Student",
+      "employerName": "Employer Name",
+      "jobTitle": "Job Title",
+      "occupation": "Occupation",
+      "employmentYears": "Years of Employment",
+      "monthlyIncome": "Monthly Income"
+    },
+    "generalInfo": {
+      "title": "General Information",
+      "subtitle": "Please provide your investment profile",
+      "investmentExperience": "Investment Experience",
+      "investmentKnowledge": "Investment Knowledge",
+      "riskTolerance": "Risk Tolerance",
+      "none": "None",
+      "beginner": "Beginner",
+      "intermediate": "Intermediate",
+      "advanced": "Advanced",
+      "expert": "Expert",
+      "basic": "Basic",
+      "good": "Good",
+      "excellent": "Excellent",
+      "low": "Low",
+      "medium": "Medium",
+      "high": "High"
+    },
+    "fatcaInfo": {
+      "title": "FATCA Information",
+      "subtitle": "Please provide your FATCA details",
+      "usCitizen": "Are you a US Citizen?",
+      "usTaxResident": "Are you a US Tax Resident?",
+      "tin": "Tax Identification Number (TIN)"
+    },
+    "bankInfo": {
+      "title": "Bank Information",
+      "subtitle": "Please provide your bank account details",
+      "bankName": "Bank Name",
+      "iban": "IBAN",
+      "accountHolderName": "Account Holder Name"
+    }
+  },
+  "theme": {
+    "light": "Light Mode",
+    "dark": "Dark Mode",
+    "toggle": "Toggle Theme"
+  },
+  "language": {
+    "english": "English",
+    "arabic": "Arabic",
+    "toggle": "Toggle Language"
+  }
+}

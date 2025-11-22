@@ -1,0 +1,94 @@
+<div class="step-container fade-in">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card-modern p-4">
+        <!-- Header -->
+        <div class="d-flex align-items-center mb-4">
+          <div class="step-number">4</div>
+          <div class="ms-3">
+            <h3 class="mb-1">{{ 'kyc.employmentInfo.title' | translate }}</h3>
+            <p class="text-secondary mb-0">{{ 'kyc.employmentInfo.subtitle' | translate }}</p>
+          </div>
+        </div>
+
+        <!-- Success Alert -->
+        <div *ngIf="success" class="alert alert-success">
+          <i class="bi bi-check-circle-fill me-2"></i>
+          {{ 'kyc.messages.saveSuccess' | translate }}
+        </div>
+
+        <!-- Error Alert -->
+        <div *ngIf="error" class="alert alert-danger">
+          <i class="bi bi-exclamation-triangle-fill me-2"></i>
+          {{ error }}
+        </div>
+
+        <!-- Form -->
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <div class="row g-3">
+            <!-- Employment Type -->
+            <div class="col-md-6">
+              <label class="form-label-modern">{{ 'kyc.employmentInfo.employmentType' | translate }} *</label>
+              <select class="form-control form-control-modern" formControlName="employmentType">
+                <option value="">{{ 'kyc.common.select' | translate }}</option>
+                <option value="EMPLOYED">{{ 'kyc.employmentInfo.employed' | translate }}</option>
+                <option value="SELF_EMPLOYED">{{ 'kyc.employmentInfo.selfEmployed' | translate }}</option>
+                <option value="UNEMPLOYED">{{ 'kyc.employmentInfo.unemployed' | translate }}</option>
+                <option value="RETIRED">{{ 'kyc.employmentInfo.retired' | translate }}</option>
+                <option value="STUDENT">{{ 'kyc.employmentInfo.student' | translate }}</option>
+              </select>
+            </div>
+
+            <!-- Employer Name -->
+            <div class="col-md-6">
+              <label class="form-label-modern">{{ 'kyc.employmentInfo.employerName' | translate }} *</label>
+              <input type="text" class="form-control form-control-modern" formControlName="employerName" />
+            </div>
+
+            <!-- Job Title -->
+            <div class="col-md-6">
+              <label class="form-label-modern">{{ 'kyc.employmentInfo.jobTitle' | translate }} *</label>
+              <input type="text" class="form-control form-control-modern" formControlName="jobTitle" />
+            </div>
+
+            <!-- Occupation -->
+            <div class="col-md-6">
+              <label class="form-label-modern">{{ 'kyc.employmentInfo.occupation' | translate }} *</label>
+              <input type="text" class="form-control form-control-modern" formControlName="occupation" />
+            </div>
+
+            <!-- Employment Years -->
+            <div class="col-md-6">
+              <label class="form-label-modern">{{ 'kyc.employmentInfo.employmentYears' | translate }} *</label>
+              <input type="number" class="form-control form-control-modern" formControlName="employmentYears" min="0" />
+            </div>
+
+            <!-- Monthly Income -->
+            <div class="col-md-6">
+              <label class="form-label-modern">{{ 'kyc.employmentInfo.monthlyIncome' | translate }} *</label>
+              <input type="number" class="form-control form-control-modern" formControlName="monthlyIncome" min="0" />
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div class="d-flex justify-content-between mt-4">
+            <button type="button" class="btn btn-outline-secondary" (click)="goBack()">
+              <i class="bi bi-arrow-left me-2"></i>
+              {{ 'kyc.buttons.back' | translate }}
+            </button>
+            <button type="submit" class="btn btn-primary-modern" [disabled]="form.invalid || loading">
+              <span *ngIf="!loading">
+                {{ 'kyc.buttons.saveAndContinue' | translate }}
+                <i class="bi bi-arrow-right ms-2"></i>
+              </span>
+              <span *ngIf="loading">
+                <span class="spinner-border spinner-border-sm me-2"></span>
+                {{ 'kyc.buttons.saving' | translate }}
+              </span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
