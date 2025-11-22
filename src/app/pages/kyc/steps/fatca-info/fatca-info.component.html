@@ -1,6 +1,6 @@
 <div class="step-container fade-in">
   <div class="row justify-content-center">
-    <div class="col-lg-8">
+    <div class="col-lg-10">
       <div class="card-modern p-4">
         <!-- Header -->
         <div class="d-flex align-items-center mb-4">
@@ -12,72 +12,298 @@
         </div>
 
         <!-- Success Alert -->
-        <div *ngIf="success" class="alert alert-success">
+        <div *ngIf="success" class="alert alert-success alert-dismissible fade show">
           <i class="bi bi-check-circle-fill me-2"></i>
           {{ 'kyc.messages.saveSuccess' | translate }}
+          <button type="button" class="btn-close" (click)="success = false"></button>
         </div>
 
         <!-- Error Alert -->
-        <div *ngIf="error" class="alert alert-danger">
+        <div *ngIf="error" class="alert alert-danger alert-dismissible fade show">
           <i class="bi bi-exclamation-triangle-fill me-2"></i>
           {{ error }}
+          <button type="button" class="btn-close" (click)="error = null"></button>
         </div>
 
         <!-- Info Box -->
         <div class="info-box">
           <i class="bi bi-shield-check"></i>
-          <p>FATCA (Foreign Account Tax Compliance Act) requires us to collect information about your US tax status.</p>
+          <p>{{ 'kyc.fatcaInfo.infoText' | translate }}</p>
         </div>
 
         <!-- Form -->
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
-          <!-- Tax Status Section -->
+          
+          <!-- US Status Section -->
           <div class="section-title">
             <i class="bi bi-flag-usa"></i>
-            <span>US Tax Status</span>
+            <span>{{ 'kyc.fatcaInfo.usStatus' | translate }}</span>
           </div>
 
-          <div class="row g-3">
-            <!-- US Citizen Checkbox -->
+          <div class="row g-3 mb-4">
+            <!-- US Citizenship -->
             <div class="col-12">
-              <div class="form-check">
+              <div class="form-check-modern">
                 <input class="form-check-input" type="checkbox" id="usCitizen" formControlName="usCitizen">
                 <label class="form-check-label" for="usCitizen">
                   <i class="bi bi-passport me-2"></i>
                   {{ 'kyc.fatcaInfo.usCitizen' | translate }}
                 </label>
               </div>
+              
+              <!-- US Birth Place (conditional - appears right under US Citizen) -->
+              <div *ngIf="showUsBirthPlace" class="conditional-card mt-3">
+                <div class="conditional-card-header">
+                  <i class="bi bi-geo-alt-fill me-2"></i>
+                  <span>US Birth Information</span>
+                </div>
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <label class="form-label-modern">
+                      <i class="bi bi-geo-alt"></i>
+                      {{ 'kyc.fatcaInfo.usBirthCity' | translate }}
+                    </label>
+                    <input 
+                      type="text" 
+                      class="form-control form-control-modern" 
+                      formControlName="usBirthCity" 
+                      [placeholder]="'kyc.fatcaInfo.usBirthCityPlaceholder' | translate"
+                    />
+                  </div>
+
+                  <div class="col-md-6">
+                    <label class="form-label-modern">
+                      <i class="bi bi-map"></i>
+                      {{ 'kyc.fatcaInfo.usBirthState' | translate }}
+                    </label>
+                    <input 
+                      type="text" 
+                      class="form-control form-control-modern" 
+                      formControlName="usBirthState" 
+                      [placeholder]="'kyc.fatcaInfo.usBirthStatePlaceholder' | translate"
+                    />
+                  </div>
+                </div>
+              </div>
+              
+              <!-- US TIN for Citizen (conditional) -->
+              <div *ngIf="form.get('usCitizen')?.value" class="conditional-card mt-3">
+                <div class="conditional-card-header">
+                  <i class="bi bi-card-heading me-2"></i>
+                  <span>US Tax Identification</span>
+                </div>
+                <div class="row g-3">
+                  <div class="col-md-8">
+                    <label class="form-label-modern">
+                      <i class="bi bi-card-heading"></i>
+                      {{ 'kyc.fatcaInfo.usTin' | translate }}
+                      <span class="required" *ngIf="!form.get('noUsTin')?.value">*</span>
+                    </label>
+                    <input 
+                      type="text" 
+                      class="form-control form-control-modern" 
+                      formControlName="usTin" 
+                      [placeholder]="'kyc.fatcaInfo.usTinPlaceholder' | translate"
+                      [disabled]="form.get('noUsTin')?.value"
+                    />
+                  </div>
+
+                  <div class="col-md-4 d-flex align-items-end">
+                    <div class="form-check-modern w-100">
+                      <input class="form-check-input" type="checkbox" id="noUsTinCitizen" formControlName="noUsTin">
+                      <label class="form-check-label" for="noUsTinCitizen">
+                        {{ 'kyc.fatcaInfo.noUsTin' | translate }}
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
 
-            <!-- US Tax Resident Checkbox -->
+            <!-- US Green Card -->
             <div class="col-12">
-              <div class="form-check">
+              <div class="form-check-modern">
+                <input class="form-check-input" type="checkbox" id="usGreenCard" formControlName="usGreenCard">
+                <label class="form-check-label" for="usGreenCard">
+                  <i class="bi bi-credit-card me-2"></i>
+                  {{ 'kyc.fatcaInfo.usGreenCard' | translate }}
+                </label>
+              </div>
+              
+              <!-- US TIN for Green Card Holder (conditional - only if citizen is not checked) -->
+              <div *ngIf="form.get('usGreenCard')?.value && !form.get('usCitizen')?.value" class="conditional-card mt-3">
+                <div class="conditional-card-header">
+                  <i class="bi bi-card-heading me-2"></i>
+                  <span>US Tax Identification</span>
+                </div>
+                <div class="row g-3">
+                  <div class="col-md-8">
+                    <label class="form-label-modern">
+                      <i class="bi bi-card-heading"></i>
+                      {{ 'kyc.fatcaInfo.usTin' | translate }}
+                      <span class="required" *ngIf="!form.get('noUsTin')?.value">*</span>
+                    </label>
+                    <input 
+                      type="text" 
+                      class="form-control form-control-modern" 
+                      formControlName="usTin" 
+                      [placeholder]="'kyc.fatcaInfo.usTinPlaceholder' | translate"
+                      [disabled]="form.get('noUsTin')?.value"
+                    />
+                  </div>
+
+                  <div class="col-md-4 d-flex align-items-end">
+                    <div class="form-check-modern w-100">
+                      <input class="form-check-input" type="checkbox" id="noUsTin" formControlName="noUsTin">
+                      <label class="form-check-label" for="noUsTin">
+                        {{ 'kyc.fatcaInfo.noUsTin' | translate }}
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- US Tax Resident -->
+            <div class="col-12">
+              <div class="form-check-modern">
                 <input class="form-check-input" type="checkbox" id="usTaxResident" formControlName="usTaxResident">
                 <label class="form-check-label" for="usTaxResident">
                   <i class="bi bi-house-check me-2"></i>
                   {{ 'kyc.fatcaInfo.usTaxResident' | translate }}
                 </label>
               </div>
+              
+              <!-- US TIN for Tax Resident (conditional - only if citizen and green card are not checked) -->
+              <div *ngIf="form.get('usTaxResident')?.value && !form.get('usCitizen')?.value && !form.get('usGreenCard')?.value" class="conditional-card mt-3">
+                <div class="conditional-card-header">
+                  <i class="bi bi-card-heading me-2"></i>
+                  <span>US Tax Identification</span>
+                </div>
+                <div class="row g-3">
+                  <div class="col-md-8">
+                    <label class="form-label-modern">
+                      <i class="bi bi-card-heading"></i>
+                      {{ 'kyc.fatcaInfo.usTin' | translate }}
+                      <span class="required" *ngIf="!form.get('noUsTin')?.value">*</span>
+                    </label>
+                    <input 
+                      type="text" 
+                      class="form-control form-control-modern" 
+                      formControlName="usTin" 
+                      [placeholder]="'kyc.fatcaInfo.usTinPlaceholder' | translate"
+                      [disabled]="form.get('noUsTin')?.value"
+                    />
+                  </div>
+
+                  <div class="col-md-4 d-flex align-items-end">
+                    <div class="form-check-modern w-100">
+                      <input class="form-check-input" type="checkbox" id="noUsTin2" formControlName="noUsTin">
+                      <label class="form-check-label" for="noUsTin2">
+                        {{ 'kyc.fatcaInfo.noUsTin' | translate }}
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tax Residency Section (conditional on US Tax Resident) -->
+          <ng-container *ngIf="form.get('usTaxResident')?.value">
+            <div class="section-title">
+              <i class="bi bi-globe"></i>
+              <span>{{ 'kyc.fatcaInfo.taxResidency' | translate }}</span>
             </div>
 
-            <!-- TIN (conditional) -->
-            <div class="col-12" *ngIf="form.get('usCitizen')?.value || form.get('usTaxResident')?.value">
-              <hr class="section-divider" />
-              <label class="form-label-modern">
-                <i class="bi bi-card-heading"></i>
-                {{ 'kyc.fatcaInfo.tin' | translate }}
-                <span class="required">*</span>
-              </label>
-              <input 
-                type="text" 
-                class="form-control form-control-modern" 
-                formControlName="tin" 
-                placeholder="Enter Tax Identification Number"
-              />
-              <small class="text-muted d-block mt-2">
+            <div class="mb-4">
+              <p class="text-muted small mb-3">
                 <i class="bi bi-info-circle me-1"></i>
-                Please provide your US Tax Identification Number (TIN)
-              </small>
+                Please add all countries where you are considered a tax resident and provide the corresponding Tax Identification Numbers.
+              </p>
+              
+              <div *ngFor="let residency of taxResidencies; let i = index" class="row g-3 mb-3 tax-residency-row">
+                <div class="col-md-5">
+                  <label class="form-label-modern">
+                    <i class="bi bi-flag"></i>
+                    {{ 'kyc.fatcaInfo.country' | translate }}
+                    <span class="required">*</span>
+                  </label>
+                  <input 
+                    type="text" 
+                    class="form-control form-control-modern" 
+                    [(ngModel)]="residency.country"
+                    [ngModelOptions]="{standalone: true}"
+                    (ngModelChange)="updateTaxResidencyForm()"
+                    [placeholder]="'kyc.fatcaInfo.countryPlaceholder' | translate"
+                  />
+                </div>
+
+                <div class="col-md-5">
+                  <label class="form-label-modern">
+                    <i class="bi bi-card-text"></i>
+                    {{ 'kyc.fatcaInfo.taxTin' | translate }}
+                    <span class="required">*</span>
+                  </label>
+                  <input 
+                    type="text" 
+                    class="form-control form-control-modern" 
+                    [(ngModel)]="residency.tin"
+                    [ngModelOptions]="{standalone: true}"
+                    (ngModelChange)="updateTaxResidencyForm()"
+                    [placeholder]="'kyc.fatcaInfo.taxTinPlaceholder' | translate"
+                  />
+                </div>
+
+                <div class="col-md-2 d-flex align-items-end">
+                  <button type="button" class="btn btn-outline-danger w-100" (click)="removeTaxResidency(i)">
+                    <i class="bi bi-trash"></i>
+                  </button>
+                </div>
+              </div>
+
+              <button type="button" class="btn btn-outline-primary" (click)="addTaxResidency()">
+                <i class="bi bi-plus-circle me-2"></i>
+                {{ 'kyc.fatcaInfo.addTaxResidency' | translate }}
+              </button>
+            </div>
+          </ng-container>
+
+          <!-- Certification Section -->
+          <div class="section-title">
+            <i class="bi bi-check-circle"></i>
+            <span>{{ 'kyc.fatcaInfo.certification' | translate }}</span>
+          </div>
+
+          <div class="certification-box">
+            <div class="form-check-modern mb-3">
+              <input 
+                class="form-check-input" 
+                type="checkbox" 
+                id="certifyInformationCorrect" 
+                formControlName="certifyInformationCorrect"
+              />
+              <label class="form-check-label" for="certifyInformationCorrect">
+                <strong>{{ 'kyc.fatcaInfo.certifyCorrect' | translate }}</strong>
+                <p class="text-muted small mb-0 mt-1">
+                  {{ 'kyc.fatcaInfo.certifyCorrectText' | translate }}
+                </p>
+              </label>
+            </div>
+
+            <div class="form-check-modern">
+              <input 
+                class="form-check-input" 
+                type="checkbox" 
+                id="agreeToNotifyChanges" 
+                formControlName="agreeToNotifyChanges"
+              />
+              <label class="form-check-label" for="agreeToNotifyChanges">
+                <strong>{{ 'kyc.fatcaInfo.agreeNotify' | translate }}</strong>
+                <p class="text-muted small mb-0 mt-1">
+                  {{ 'kyc.fatcaInfo.agreeNotifyText' | translate }}
+                </p>
+              </label>
             </div>
           </div>
 
