@@ -1,6 +1,6 @@
 <div class="step-container fade-in">
   <div class="row justify-content-center">
-    <div class="col-lg-8">
+    <div class="col-lg-10">
       <div class="card-modern p-4">
         <!-- Header -->
         <div class="d-flex align-items-center mb-4">
@@ -13,52 +13,60 @@
 
         <!-- Success Alert -->
         <div *ngIf="success" class="alert alert-success">
-          <i class="bi bi-check-circle-fill me-2"></i>
+          <i class="bi bi-check-circle-fill"></i>
           {{ 'kyc.messages.saveSuccess' | translate }}
         </div>
 
         <!-- Error Alert -->
         <div *ngIf="error" class="alert alert-danger">
-          <i class="bi bi-exclamation-triangle-fill me-2"></i>
+          <i class="bi bi-exclamation-triangle-fill"></i>
           {{ error }}
         </div>
 
         <!-- Form -->
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
           <div class="row g-3">
-            <!-- Bank Name -->
-            <div class="col-12">
-              <label class="form-label-modern">{{ 'kyc.bankInfo.bankName' | translate }} *</label>
-              <input type="text" class="form-control form-control-modern" formControlName="bankName" />
+            <!-- Row 1: Bank Name, Account Holder Name -->
+            <div class="col-md-6">
+              <label class="form-label-modern">
+                <i class="bi bi-building"></i>
+                Bank Name <span class="required">*</span>
+              </label>
+              <input type="text" class="form-control form-control-modern" formControlName="bankName" placeholder="Bank name" />
             </div>
 
-            <!-- IBAN -->
-            <div class="col-12">
-              <label class="form-label-modern">{{ 'kyc.bankInfo.iban' | translate }} *</label>
-              <input type="text" class="form-control form-control-modern" formControlName="iban" placeholder="SA0000000000000000000000" />
+            <div class="col-md-6">
+              <label class="form-label-modern">
+                <i class="bi bi-person-circle"></i>
+                Account Holder <span class="required">*</span>
+              </label>
+              <input type="text" class="form-control form-control-modern" formControlName="accountHolderName" placeholder="Account holder name" />
             </div>
 
-            <!-- Account Holder Name -->
+            <!-- Row 2: IBAN -->
             <div class="col-12">
-              <label class="form-label-modern">{{ 'kyc.bankInfo.accountHolderName' | translate }} *</label>
-              <input type="text" class="form-control form-control-modern" formControlName="accountHolderName" />
+              <label class="form-label-modern">
+                <i class="bi bi-credit-card-2-front"></i>
+                IBAN <span class="required">*</span>
+              </label>
+              <input type="text" class="form-control form-control-modern" formControlName="iban" placeholder="SA0000000000000000000000" style="font-family: monospace; letter-spacing: 1px;" />
             </div>
           </div>
 
           <!-- Actions -->
-          <div class="d-flex justify-content-between mt-4">
-            <button type="button" class="btn btn-outline-secondary" (click)="goBack()">
-              <i class="bi bi-arrow-left me-2"></i>
-              {{ 'kyc.buttons.back' | translate }}
+          <div class="kyc-actions">
+            <button type="button" class="btn-previous-modern" (click)="goBack()">
+              <i class="bi bi-arrow-left"></i>
+              <span>{{ 'kyc.buttons.back' | translate }}</span>
             </button>
-            <button type="submit" class="btn btn-primary-modern" [disabled]="form.invalid || loading">
-              <span *ngIf="!loading">
-                {{ 'kyc.buttons.saveAndContinue' | translate }}
-                <i class="bi bi-arrow-right ms-2"></i>
+            <button type="submit" class="btn-save-modern" [disabled]="form.invalid || loading">
+              <span class="btn-content" *ngIf="!loading">
+                <span>{{ 'kyc.buttons.saveAndContinue' | translate }}</span>
+                <i class="bi bi-arrow-right"></i>
               </span>
-              <span *ngIf="loading">
-                <span class="spinner-border spinner-border-sm me-2"></span>
-                {{ 'kyc.buttons.saving' | translate }}
+              <span class="btn-content" *ngIf="loading">
+                <span class="spinner"></span>
+                <span>{{ 'kyc.buttons.saving' | translate }}</span>
               </span>
             </button>
           </div>

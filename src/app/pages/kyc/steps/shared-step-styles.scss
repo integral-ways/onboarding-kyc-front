@@ -1,0 +1,416 @@
+/* Shared KYC Step Styles - Modern Enhanced Design */
+
+/* Step Container */
+.step-container {
+  animation: fadeIn 0.6s ease-out;
+  padding: 1rem 0;
+}
+
+/* Modern Card */
+.card-modern {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(102, 126, 234, 0.1);
+  transition: all 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  }
+}
+
+/* Step Header */
+.step-number {
+  width: 60px;
+  height: 60px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.75rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+/* Enhanced Form Labels */
+.form-label-modern {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  i {
+    color: #667eea;
+    font-size: 1rem;
+  }
+
+  .required {
+    color: #ef4444;
+    margin-left: 0.25rem;
+  }
+}
+
+/* Enhanced Form Controls */
+.form-control-modern {
+  padding: 0.875rem 1rem;
+  font-size: 0.95rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  background: #f8fafc;
+  color: #1e293b;
+
+  &:focus {
+    outline: none;
+    border-color: #667eea;
+    background: white;
+    box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+  }
+
+  &:disabled {
+    background: #f1f5f9;
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
+  &::placeholder {
+    color: #94a3b8;
+  }
+}
+
+select.form-control-modern {
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23667eea' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  padding-right: 2.5rem;
+}
+
+/* Form Groups with Icons */
+.form-group-icon {
+  position: relative;
+
+  .input-icon {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94a3b8;
+    font-size: 1.125rem;
+    pointer-events: none;
+    transition: color 0.3s ease;
+  }
+
+  .form-control-modern:focus ~ .input-icon {
+    color: #667eea;
+  }
+
+  .form-control-modern {
+    padding-right: 3rem;
+  }
+}
+
+/* Section Divider */
+.section-divider {
+  margin: 2rem 0;
+  border: none;
+  height: 1px;
+  background: linear-gradient(to right, transparent, #e2e8f0, transparent);
+}
+
+.section-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+
+  i {
+    color: #667eea;
+    font-size: 1.25rem;
+  }
+}
+
+/* Enhanced Alerts */
+.alert {
+  border-radius: 12px;
+  border: none;
+  padding: 1rem 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+
+  i {
+    font-size: 1.25rem;
+  }
+}
+
+.alert-success {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(5, 150, 105, 0.05) 100%);
+  color: #059669;
+  border-left: 4px solid #10b981;
+
+  i {
+    color: #10b981;
+  }
+}
+
+.alert-danger {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(220, 38, 38, 0.05) 100%);
+  color: #dc2626;
+  border-left: 4px solid #ef4444;
+
+  i {
+    color: #ef4444;
+  }
+}
+
+/* Enhanced Save Button */
+.btn-save-modern {
+  padding: 0.875rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+
+  &:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  .btn-content {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+
+    i {
+      font-size: 1.25rem;
+    }
+  }
+
+  .spinner {
+    width: 18px;
+    height: 18px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+}
+
+/* Enhanced Previous Button */
+.btn-previous-modern {
+  padding: 0.875rem 1.75rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #64748b;
+  background: white;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+
+  i {
+    font-size: 1.125rem;
+    transition: transform 0.3s ease;
+  }
+
+  &:hover {
+    background: #f8fafc;
+    border-color: #cbd5e1;
+    color: #475569;
+
+    i {
+      transform: translateX(-4px);
+    }
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+/* Button Container */
+.kyc-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e2e8f0;
+  gap: 1rem;
+
+  &.justify-end {
+    justify-content: flex-end;
+  }
+}
+
+/* Custom Checkbox/Radio */
+.form-check {
+  padding: 1rem;
+  background: #f8fafc;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  margin-bottom: 0.75rem;
+
+  &:hover {
+    background: white;
+    border-color: #cbd5e1;
+  }
+}
+
+.form-check-input {
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 2px solid #cbd5e1;
+  cursor: pointer;
+  margin-top: 0;
+
+  &:checked {
+    background-color: #667eea;
+    border-color: #667eea;
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+  }
+}
+
+.form-check-label {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #334155;
+  cursor: pointer;
+  margin-left: 0.5rem;
+}
+
+/* Info Box */
+.info-box {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+  border: 1px solid rgba(102, 126, 234, 0.2);
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: start;
+  gap: 0.75rem;
+
+  i {
+    color: #667eea;
+    font-size: 1.25rem;
+    margin-top: 0.125rem;
+  }
+
+  p {
+    margin: 0;
+    font-size: 0.875rem;
+    color: #475569;
+    line-height: 1.6;
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* RTL Support */
+[dir="rtl"] {
+  .btn-save-modern,
+  .btn-previous-modern {
+    .btn-content {
+      flex-direction: row-reverse;
+    }
+  }
+
+  .btn-previous-modern:hover i {
+    transform: translateX(4px);
+  }
+
+  .form-group-icon {
+    .input-icon {
+      right: auto;
+      left: 1rem;
+    }
+
+    .form-control-modern {
+      padding-right: 1rem;
+      padding-left: 3rem;
+    }
+  }
+
+  select.form-control-modern {
+    background-position: left 1rem center;
+    padding-left: 2.5rem;
+    padding-right: 1rem;
+  }
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+  .kyc-actions {
+    flex-direction: column-reverse;
+    gap: 0.75rem;
+
+    .btn-save-modern,
+    .btn-previous-modern {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  .step-number {
+    width: 50px;
+    height: 50px;
+    font-size: 1.5rem;
+  }
+
+  .card-modern {
+    border-radius: 16px;
+  }
+}

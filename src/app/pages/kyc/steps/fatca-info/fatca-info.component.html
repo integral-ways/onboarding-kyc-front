@@ -23,14 +23,27 @@
           {{ error }}
         </div>
 
+        <!-- Info Box -->
+        <div class="info-box">
+          <i class="bi bi-shield-check"></i>
+          <p>FATCA (Foreign Account Tax Compliance Act) requires us to collect information about your US tax status.</p>
+        </div>
+
         <!-- Form -->
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <!-- Tax Status Section -->
+          <div class="section-title">
+            <i class="bi bi-flag-usa"></i>
+            <span>US Tax Status</span>
+          </div>
+
           <div class="row g-3">
             <!-- US Citizen Checkbox -->
             <div class="col-12">
               <div class="form-check">
                 <input class="form-check-input" type="checkbox" id="usCitizen" formControlName="usCitizen">
                 <label class="form-check-label" for="usCitizen">
+                  <i class="bi bi-passport me-2"></i>
                   {{ 'kyc.fatcaInfo.usCitizen' | translate }}
                 </label>
               </div>
@@ -41,6 +54,7 @@
               <div class="form-check">
                 <input class="form-check-input" type="checkbox" id="usTaxResident" formControlName="usTaxResident">
                 <label class="form-check-label" for="usTaxResident">
+                  <i class="bi bi-house-check me-2"></i>
                   {{ 'kyc.fatcaInfo.usTaxResident' | translate }}
                 </label>
               </div>
@@ -48,25 +62,39 @@
 
             <!-- TIN (conditional) -->
             <div class="col-12" *ngIf="form.get('usCitizen')?.value || form.get('usTaxResident')?.value">
-              <label class="form-label-modern">{{ 'kyc.fatcaInfo.tin' | translate }}</label>
-              <input type="text" class="form-control form-control-modern" formControlName="tin" placeholder="Tax Identification Number" />
+              <hr class="section-divider" />
+              <label class="form-label-modern">
+                <i class="bi bi-card-heading"></i>
+                {{ 'kyc.fatcaInfo.tin' | translate }}
+                <span class="required">*</span>
+              </label>
+              <input 
+                type="text" 
+                class="form-control form-control-modern" 
+                formControlName="tin" 
+                placeholder="Enter Tax Identification Number"
+              />
+              <small class="text-muted d-block mt-2">
+                <i class="bi bi-info-circle me-1"></i>
+                Please provide your US Tax Identification Number (TIN)
+              </small>
             </div>
           </div>
 
           <!-- Actions -->
-          <div class="d-flex justify-content-between mt-4">
-            <button type="button" class="btn btn-outline-secondary" (click)="goBack()">
-              <i class="bi bi-arrow-left me-2"></i>
-              {{ 'kyc.buttons.back' | translate }}
+          <div class="kyc-actions">
+            <button type="button" class="btn-previous-modern" (click)="goBack()">
+              <i class="bi bi-arrow-left"></i>
+              <span>{{ 'kyc.buttons.back' | translate }}</span>
             </button>
-            <button type="submit" class="btn btn-primary-modern" [disabled]="form.invalid || loading">
-              <span *ngIf="!loading">
-                {{ 'kyc.buttons.saveAndContinue' | translate }}
-                <i class="bi bi-arrow-right ms-2"></i>
+            <button type="submit" class="btn-save-modern" [disabled]="form.invalid || loading">
+              <span class="btn-content" *ngIf="!loading">
+                <span>{{ 'kyc.buttons.saveAndContinue' | translate }}</span>
+                <i class="bi bi-arrow-right"></i>
               </span>
-              <span *ngIf="loading">
-                <span class="spinner-border spinner-border-sm me-2"></span>
-                {{ 'kyc.buttons.saving' | translate }}
+              <span class="btn-content" *ngIf="loading">
+                <span class="spinner"></span>
+                <span>{{ 'kyc.buttons.saving' | translate }}</span>
               </span>
             </button>
           </div>

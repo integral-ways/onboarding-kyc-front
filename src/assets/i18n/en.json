@@ -11,15 +11,30 @@
     "otp": "OTP Code",
     "verifyOtp": "Verify OTP",
     "sendOtp": "Send OTP",
-    "enterOtp": "Enter the OTP sent to your mobile"
+    "enterOtp": "Enter the OTP sent to your mobile",
+    "welcomeBack": "Welcome Back",
+    "loginSubtitle": "Login to continue your KYC process",
+    "verifyOtpTitle": "Verify OTP",
+    "verifyOtpSubtitle": "Enter the OTP sent to your mobile",
+    "otpSentTo": "OTP sent to",
+    "changeMobile": "Change Mobile Number",
+    "sendingOtp": "Sending OTP...",
+    "verifying": "Verifying...",
+    "dataProtected": "Your data is protected with bank-grade encryption",
+    "quickProcess": "Quick Registration Process",
+    "secureOtp": "Secure OTP Verification",
+    "completeKyc": "Complete KYC in Minutes"
   },
   "kyc": {
     "title": "KYC Registration",
     "progress": "Progress",
     "currentStep": "Current Step",
     "completed": "Completed",
+    "save": "Save & Continue",
+    "previous": "Previous",
     "common": {
-      "select": "Select..."
+      "select": "Select...",
+      "required": "*"
     },
     "buttons": {
       "save": "Save",
@@ -32,16 +47,20 @@
     },
     "messages": {
       "saveSuccess": "Saved successfully!",
-      "saveFailed": "Failed to save"
+      "saveFailed": "Failed to save",
+      "movingToNext": "Moving to next step..."
     },
     "validation": {
       "required": "This field is required",
       "phoneInvalid": "Invalid phone number",
-      "ibanInvalid": "Invalid IBAN format"
+      "ibanInvalid": "Invalid IBAN format",
+      "idInvalid": "Please enter a valid 10-digit ID number",
+      "mobileInvalid": "Please enter a valid 10-digit mobile number",
+      "otpInvalid": "Please enter a valid 4-digit OTP"
     },
     "personalInfo": {
       "title": "Personal Information",
-      "subtitle": "Please provide your personal details"
+      "subtitle": "Please provide your personal information"
     },
     "addressInfo": {
       "title": "Address Information",
@@ -50,14 +69,16 @@
       "city": "City",
       "district": "District",
       "street": "Street",
-      "buildingNumber": "Building Number"
+      "buildingNumber": "Building Number",
+      "infoText": "Please provide your current residential address details. All fields marked with * are required."
     },
     "contactInfo": {
       "title": "Contact Information",
       "subtitle": "Please provide your contact details",
       "countryCode": "Country Code",
       "primaryContact": "Primary Contact",
-      "altMobile": "Alternative Mobile"
+      "altMobile": "Alternative Mobile",
+      "infoText": "Provide your contact information. We'll use this to reach you regarding your application."
     },
     "employmentInfo": {
       "title": "Employment Information",
@@ -72,7 +93,8 @@
       "jobTitle": "Job Title",
       "occupation": "Occupation",
       "employmentYears": "Years of Employment",
-      "monthlyIncome": "Monthly Income"
+      "monthlyIncome": "Monthly Income",
+      "infoText": "Tell us about your current employment status and work experience."
     },
     "generalInfo": {
       "title": "General Information",
@@ -90,22 +112,100 @@
       "excellent": "Excellent",
       "low": "Low",
       "medium": "Medium",
-      "high": "High"
+      "high": "High",
+      "infoText": "Help us understand your investment profile to provide better recommendations and services.",
+      "conservative": "Conservative",
+      "balanced": "Balanced",
+      "aggressive": "Aggressive"
     },
     "fatcaInfo": {
       "title": "FATCA Information",
       "subtitle": "Please provide your FATCA details",
       "usCitizen": "Are you a US Citizen?",
       "usTaxResident": "Are you a US Tax Resident?",
-      "tin": "Tax Identification Number (TIN)"
+      "tin": "Tax Identification Number (TIN)",
+      "infoText": "FATCA (Foreign Account Tax Compliance Act) requires us to collect information about your US tax status.",
+      "tinRequired": "Please provide your US Tax Identification Number (TIN)"
     },
     "bankInfo": {
       "title": "Bank Information",
       "subtitle": "Please provide your bank account details",
       "bankName": "Bank Name",
       "iban": "IBAN",
-      "accountHolderName": "Account Holder Name"
+      "accountHolderName": "Account Holder Name",
+      "infoText": "Provide your bank account details for transactions and withdrawals. Ensure all information is accurate.",
+      "ibanHelp": "International Bank Account Number (IBAN)",
+      "accountHolderHelp": "Name must match your bank account records"
     }
+  },
+  "steps": {
+    "personalInfo": "Personal Information",
+    "addressInfo": "Address Information",
+    "contactInfo": "Contact Information",
+    "employmentInfo": "Employment Information",
+    "generalInfo": "General Information",
+    "fatcaInfo": "FATCA Information",
+    "bankInfo": "Bank Information"
+  },
+  "fields": {
+    "title": "Title",
+    "firstName": "First Name",
+    "secondName": "Second Name",
+    "lastName": "Last Name",
+    "familyName": "Family Name",
+    "dependents": "Dependents",
+    "netWorth": "Net Worth",
+    "netGrowth": "Net Growth",
+    "incomeSource": "Income Source",
+    "country": "Country",
+    "city": "City",
+    "district": "District",
+    "street": "Street",
+    "buildingNumber": "Building Number",
+    "primaryContact": "Primary Contact",
+    "altMobile": "Alternative Mobile",
+    "countryCode": "Country Code",
+    "employmentType": "Employment Type",
+    "employerName": "Employer Name",
+    "jobTitle": "Job Title",
+    "occupation": "Occupation",
+    "employmentYears": "Years of Employment",
+    "monthlyIncome": "Monthly Income",
+    "investmentExperience": "Investment Experience",
+    "investmentKnowledge": "Investment Knowledge",
+    "riskTolerance": "Risk Tolerance",
+    "usCitizen": "US Citizen",
+    "usTaxResident": "US Tax Resident",
+    "tin": "Tax Identification Number",
+    "bankName": "Bank Name",
+    "iban": "IBAN",
+    "accountHolderName": "Account Holder Name"
+  },
+  "placeholders": {
+    "firstName": "First name",
+    "secondName": "Second name",
+    "lastName": "Last name",
+    "familyName": "Family name",
+    "dependents": "0",
+    "netWorth": "Net worth",
+    "netGrowth": "Net growth",
+    "incomeSource": "e.g., Salary, Business, Investments",
+    "country": "Country",
+    "city": "City",
+    "district": "District",
+    "street": "Street name",
+    "buildingNumber": "Building #",
+    "primaryContact": "5XXXXXXXX",
+    "altMobile": "5XXXXXXXX (Optional)",
+    "employerName": "Employer name",
+    "jobTitle": "Job title",
+    "occupation": "Occupation",
+    "employmentYears": "Years",
+    "monthlyIncome": "Monthly income",
+    "bankName": "Bank name",
+    "iban": "SA0000000000000000000000",
+    "accountHolderName": "Account holder name",
+    "tin": "Enter Tax Identification Number"
   },
   "theme": {
     "light": "Light Mode",
@@ -114,7 +214,8 @@
   },
   "language": {
     "english": "English",
-    "arabic": "Arabic",
-    "toggle": "Toggle Language"
+    "arabic": "العربية",
+    "toggle": "Toggle Language",
+    "switchTo": "Switch to"
   }
 }

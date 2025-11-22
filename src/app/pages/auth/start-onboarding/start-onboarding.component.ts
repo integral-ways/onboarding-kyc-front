@@ -1,16 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { TranslateService } from '@ngx-translate/core';
+import { Subject, takeUntil } from 'rxjs';
 import { AuthService } from '../../../services/auth.service';
 import * as AuthActions from '../../../store/auth/auth.actions';
+import { selectAuthError, selectAuthLoading } from '../../../store/auth/auth.selectors';
 
 @Component({
   selector: 'app-start-onboarding',
   templateUrl: './start-onboarding.component.html',
   styleUrls: ['./start-onboarding.component.scss']
 })
-export class StartOnboardingComponent implements OnInit {
+export class StartOnboardingComponent implements OnInit, OnDestroy {
   startForm!: FormGroup;
   otpForm!: FormGroup;
   loading = false;
@@ -18,13 +21,19 @@ export class StartOnboardingComponent implements OnInit {
   otpSent = false;
   mobile = '';
   trxRef = '';
+  currentLang = 'en';
+  private destroy$ = new Subject<void>();
+  private errorTimeout: any;
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
-    private store: Store
-  ) {}
+    private store: Store,
+    private translate: TranslateService
+  ) {
+    this.currentLang = this.translate.currentLang || this.translate.defaultLang;
+  }
 
   ngOnInit() {
     this.startForm = this.fb.group({
@@ -35,6 +44,43 @@ export class StartOnboardingComponent implements OnInit {
     this.otpForm = this.fb.group({
       otp: ['', [Validators.required, Validators.pattern(/^[0-9]{4}$/)]]
     });
+
+    // Subscribe to auth state for OTP verification
+    this.store.select(selectAuthLoading)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(loading => {
+        this.loading = loading;
+      });
+
+    this.store.select(selectAuthError)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(error => {
+        if (error) {
+          this.error = error;
+          this.loading = false;
+          this.autoHideError();
+        }
+      });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+    if (this.errorTimeout) {
+      clearTimeout(this.errorTimeout);
+    }
+  }
+
+  private autoHideError() {
+    // Clear any existing timeout
+    if (this.errorTimeout) {
+      clearTimeout(this.errorTimeout);
+    }
+    
+    // Set new timeout to hide error after 5 seconds
+    this.errorTimeout = setTimeout(() => {
+      this.error = null;
+    }, 5000);
   }
 
   onSubmitStart() {
@@ -52,6 +98,7 @@ export class StartOnboardingComponent implements OnInit {
         error: (err) => {
           this.error = err.error?.message || 'Failed to start onboarding';
           this.loading = false;
+          this.autoHideError();
         }
       });
     }
@@ -71,5 +118,15 @@ export class StartOnboardingComponent implements OnInit {
     this.otpSent = false;
     this.otpForm.reset();
     this.error = null;
+  }
+
+  toggleLanguage() {
+    const newLang = this.currentLang === 'en' ? 'ar' : 'en';
+    this.translate.use(newLang);
+    this.currentLang = newLang;
+    
+    // Update document direction for RTL
+    document.documentElement.dir = newLang === 'ar' ? 'rtl' : 'ltr';
+    document.documentElement.lang = newLang;
   }
 }

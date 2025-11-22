@@ -1,6 +1,6 @@
 {
   "app": {
-    "title": "تسجيل العميل",
+    "title": "تسجيل بيانات العميل",
     "welcome": "مرحباً"
   },
   "auth": {
@@ -11,15 +11,30 @@
     "otp": "رمز التحقق",
     "verifyOtp": "تحقق من الرمز",
     "sendOtp": "إرسال الرمز",
-    "enterOtp": "أدخل رمز التحقق المرسل إلى جوالك"
+    "enterOtp": "أدخل رمز التحقق المرسل إلى جوالك",
+    "welcomeBack": "مرحباً بعودتك",
+    "loginSubtitle": "سجل الدخول لمتابعة عملية التسجيل",
+    "verifyOtpTitle": "تحقق من الرمز",
+    "verifyOtpSubtitle": "أدخل رمز التحقق المرسل إلى جوالك",
+    "otpSentTo": "تم إرسال الرمز إلى",
+    "changeMobile": "تغيير رقم الجوال",
+    "sendingOtp": "جاري إرسال الرمز...",
+    "verifying": "جاري التحقق...",
+    "dataProtected": "بياناتك محمية بتشفير على مستوى البنوك",
+    "quickProcess": "عملية تسجيل سريعة",
+    "secureOtp": "تحقق آمن برمز OTP",
+    "completeKyc": "أكمل التسجيل في دقائق"
   },
   "kyc": {
     "title": "تسجيل بيانات العميل",
     "progress": "التقدم",
     "currentStep": "الخطوة الحالية",
     "completed": "مكتمل",
+    "save": "حفظ ومتابعة",
+    "previous": "السابق",
     "common": {
-      "select": "اختر..."
+      "select": "اختر...",
+      "required": "*"
     },
     "buttons": {
       "save": "حفظ",
@@ -32,16 +47,20 @@
     },
     "messages": {
       "saveSuccess": "تم الحفظ بنجاح!",
-      "saveFailed": "فشل الحفظ"
+      "saveFailed": "فشل الحفظ",
+      "movingToNext": "الانتقال إلى الخطوة التالية..."
     },
     "validation": {
       "required": "هذا الحقل مطلوب",
       "phoneInvalid": "رقم الهاتف غير صحيح",
-      "ibanInvalid": "صيغة الآيبان غير صحيحة"
+      "ibanInvalid": "صيغة الآيبان غير صحيحة",
+      "idInvalid": "يرجى إدخال رقم هوية صحيح مكون من 10 أرقام",
+      "mobileInvalid": "يرجى إدخال رقم جوال صحيح مكون من 10 أرقام",
+      "otpInvalid": "يرجى إدخال رمز تحقق صحيح مكون من 4 أرقام"
     },
     "personalInfo": {
       "title": "المعلومات الشخصية",
-      "subtitle": "يرجى تقديم بياناتك الشخصية"
+      "subtitle": "يرجى تقديم معلوماتك الشخصية"
     },
     "addressInfo": {
       "title": "معلومات العنوان",
@@ -50,18 +69,20 @@
       "city": "المدينة",
       "district": "الحي",
       "street": "الشارع",
-      "buildingNumber": "رقم المبنى"
+      "buildingNumber": "رقم المبنى",
+      "infoText": "يرجى تقديم تفاصيل عنوان إقامتك الحالي. جميع الحقول المميزة بـ * مطلوبة."
     },
     "contactInfo": {
       "title": "معلومات الاتصال",
-      "subtitle": "يرجى تقديم تفاصيل الاتصال",
+      "subtitle": "يرجى تقديم تفاصيل الاتصال الخاصة بك",
       "countryCode": "رمز الدولة",
       "primaryContact": "جهة الاتصال الأساسية",
-      "altMobile": "جوال بديل"
+      "altMobile": "جوال بديل",
+      "infoText": "قدم معلومات الاتصال الخاصة بك. سنستخدمها للتواصل معك بخصوص طلبك."
     },
     "employmentInfo": {
       "title": "معلومات التوظيف",
-      "subtitle": "يرجى تقديم تفاصيل التوظيف",
+      "subtitle": "يرجى تقديم تفاصيل التوظيف الخاصة بك",
       "employmentType": "نوع التوظيف",
       "employed": "موظف",
       "selfEmployed": "عمل حر",
@@ -72,7 +93,8 @@
       "jobTitle": "المسمى الوظيفي",
       "occupation": "المهنة",
       "employmentYears": "سنوات العمل",
-      "monthlyIncome": "الدخل الشهري"
+      "monthlyIncome": "الدخل الشهري",
+      "infoText": "أخبرنا عن حالة التوظيف الحالية وخبرتك العملية."
     },
     "generalInfo": {
       "title": "معلومات عامة",
@@ -90,21 +112,30 @@
       "excellent": "ممتاز",
       "low": "منخفض",
       "medium": "متوسط",
-      "high": "عالي"
+      "high": "عالي",
+      "infoText": "ساعدنا في فهم ملفك الاستثماري لتقديم توصيات وخدمات أفضل.",
+      "conservative": "محافظ",
+      "balanced": "متوازن",
+      "aggressive": "جريء"
     },
     "fatcaInfo": {
       "title": "معلومات FATCA",
-      "subtitle": "يرجى تقديم تفاصيل FATCA",
+      "subtitle": "يرجى تقديم تفاصيل FATCA الخاصة بك",
       "usCitizen": "هل أنت مواطن أمريكي؟",
       "usTaxResident": "هل أنت مقيم ضريبي أمريكي؟",
-      "tin": "الرقم الضريبي"
+      "tin": "الرقم الضريبي (TIN)",
+      "infoText": "يتطلب قانون FATCA (قانون الامتثال الضريبي للحسابات الأجنبية) منا جمع معلومات حول وضعك الضريبي الأمريكي.",
+      "tinRequired": "يرجى تقديم رقم التعريف الضريبي الأمريكي (TIN)"
     },
     "bankInfo": {
       "title": "المعلومات البنكية",
       "subtitle": "يرجى تقديم تفاصيل حسابك البنكي",
       "bankName": "اسم البنك",
       "iban": "رقم الآيبان",
-      "accountHolderName": "اسم صاحب الحساب"
+      "accountHolderName": "اسم صاحب الحساب",
+      "infoText": "قدم تفاصيل حسابك البنكي للمعاملات والسحوبات. تأكد من دقة جميع المعلومات.",
+      "ibanHelp": "رقم الحساب المصرفي الدولي (IBAN)",
+      "accountHolderHelp": "يجب أن يتطابق الاسم مع سجلات حسابك البنكي"
     }
   },
   "steps": {
@@ -122,6 +153,10 @@
     "secondName": "الاسم الثاني",
     "lastName": "اسم العائلة",
     "familyName": "اسم العائلة",
+    "dependents": "المعالون",
+    "netWorth": "صافي الثروة",
+    "netGrowth": "النمو الصافي",
+    "incomeSource": "مصدر الدخل",
     "country": "الدولة",
     "city": "المدينة",
     "district": "الحي",
@@ -133,6 +168,8 @@
     "employmentType": "نوع التوظيف",
     "employerName": "اسم جهة العمل",
     "jobTitle": "المسمى الوظيفي",
+    "occupation": "المهنة",
+    "employmentYears": "سنوات العمل",
     "monthlyIncome": "الدخل الشهري",
     "investmentExperience": "الخبرة الاستثمارية",
     "investmentKnowledge": "المعرفة الاستثمارية",
@@ -144,14 +181,41 @@
     "iban": "رقم الآيبان",
     "accountHolderName": "اسم صاحب الحساب"
   },
+  "placeholders": {
+    "firstName": "الاسم الأول",
+    "secondName": "الاسم الثاني",
+    "lastName": "اسم العائلة",
+    "familyName": "اسم العائلة",
+    "dependents": "0",
+    "netWorth": "صافي الثروة",
+    "netGrowth": "النمو الصافي",
+    "incomeSource": "مثال: راتب، عمل تجاري، استثمارات",
+    "country": "الدولة",
+    "city": "المدينة",
+    "district": "الحي",
+    "street": "اسم الشارع",
+    "buildingNumber": "رقم المبنى",
+    "primaryContact": "5XXXXXXXX",
+    "altMobile": "5XXXXXXXX (اختياري)",
+    "employerName": "اسم جهة العمل",
+    "jobTitle": "المسمى الوظيفي",
+    "occupation": "المهنة",
+    "employmentYears": "السنوات",
+    "monthlyIncome": "الدخل الشهري",
+    "bankName": "اسم البنك",
+    "iban": "SA0000000000000000000000",
+    "accountHolderName": "اسم صاحب الحساب",
+    "tin": "أدخل الرقم الضريبي"
+  },
   "theme": {
     "light": "الوضع الفاتح",
     "dark": "الوضع الداكن",
     "toggle": "تبديل المظهر"
   },
   "language": {
-    "english": "الإنجليزية",
+    "english": "English",
     "arabic": "العربية",
-    "toggle": "تبديل اللغة"
+    "toggle": "تبديل اللغة",
+    "switchTo": "التبديل إلى"
   }
 }

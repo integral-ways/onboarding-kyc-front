@@ -1,4 +1,10 @@
 <div class="modern-auth-container">
+  <!-- Language Switcher -->
+  <button class="language-switcher" (click)="toggleLanguage()">
+    <i class="bi bi-translate"></i>
+    <span>{{ currentLang === 'en' ? 'العربية' : 'English' }}</span>
+  </button>
+
   <!-- Background Elements -->
   <div class="auth-background">
     <div class="gradient-orb orb-1"></div>
@@ -17,21 +23,21 @@
                 <i class="bi bi-person-plus"></i>
               </div>
             </div>
-            <h1 class="brand-title">Start Your Journey</h1>
-            <p class="brand-description">Begin your secure digital onboarding process</p>
+            <h1 class="brand-title">{{ 'auth.welcomeBack' | translate }}</h1>
+            <p class="brand-description">{{ 'auth.loginSubtitle' | translate }}</p>
             
             <div class="features-list">
               <div class="feature-item">
                 <i class="bi bi-check-circle-fill"></i>
-                <span>Quick Registration Process</span>
+                <span>{{ 'auth.quickProcess' | translate }}</span>
               </div>
               <div class="feature-item">
                 <i class="bi bi-check-circle-fill"></i>
-                <span>Secure OTP Verification</span>
+                <span>{{ 'auth.secureOtp' | translate }}</span>
               </div>
               <div class="feature-item">
                 <i class="bi bi-check-circle-fill"></i>
-                <span>Complete KYC in Minutes</span>
+                <span>{{ 'auth.completeKyc' | translate }}</span>
               </div>
             </div>
           </div>
@@ -49,14 +55,20 @@
 
             <!-- Card Header -->
             <div class="card-header-custom">
-              <h2 class="login-title">{{ otpSent ? 'Verify OTP' : 'Start Onboarding' }}</h2>
-              <p class="login-subtitle">{{ otpSent ? 'Enter the OTP sent to your mobile' : 'Enter your details to begin KYC registration' }}</p>
+              <h2 class="login-title">{{ otpSent ? ('auth.verifyOtpTitle' | translate) : ('auth.welcomeBack' | translate) }}</h2>
+              <p class="login-subtitle">{{ otpSent ? ('auth.verifyOtpSubtitle' | translate) : ('auth.loginSubtitle' | translate) }}</p>
             </div>
 
             <!-- Error Alert -->
-            <div *ngIf="error" class="alert alert-danger alert-modern">
-              <i class="bi bi-exclamation-triangle-fill"></i>
-              <span>{{ error }}</span>
+            <div *ngIf="error" class="alert alert-danger alert-modern alert-dismissible">
+              <div class="alert-content">
+                <i class="bi bi-exclamation-triangle-fill"></i>
+                <span>{{ error }}</span>
+              </div>
+              <button type="button" class="alert-close" (click)="error = null">
+                <i class="bi bi-x-lg"></i>
+              </button>
+              <div class="alert-progress"></div>
             </div>
 
             <!-- Step 1: Start Form -->
@@ -80,7 +92,7 @@
                 </div>
                 <div class="error-message" *ngIf="startForm.get('idNumber')?.invalid && startForm.get('idNumber')?.touched">
                   <i class="bi bi-exclamation-circle"></i>
-                  Please enter a valid 10-digit ID number
+                  {{ 'kyc.validation.idInvalid' | translate }}
                 </div>
               </div>
 
@@ -103,7 +115,7 @@
                 </div>
                 <div class="error-message" *ngIf="startForm.get('mobile')?.invalid && startForm.get('mobile')?.touched">
                   <i class="bi bi-exclamation-circle"></i>
-                  Please enter a valid 10-digit mobile number
+                  {{ 'kyc.validation.mobileInvalid' | translate }}
                 </div>
               </div>
 
@@ -115,12 +127,12 @@
                 [class.loading]="loading"
               >
                 <span class="btn-content" *ngIf="!loading">
-                  <i class="bi bi-send"></i>
-                  <span>{{ 'auth.sendOtp' | translate }}</span>
+                  <i class="bi bi-box-arrow-in-right"></i>
+                  <span>{{ 'auth.login' | translate }}</span>
                 </span>
                 <span class="btn-content" *ngIf="loading">
                   <span class="spinner"></span>
-                  <span>Sending...</span>
+                  <span>{{ 'auth.sendingOtp' | translate }}</span>
                 </span>
               </button>
             </form>
@@ -130,7 +142,7 @@
               <!-- Success Info -->
               <div class="alert alert-success alert-modern">
                 <i class="bi bi-check-circle-fill"></i>
-                <span>OTP sent to {{ mobile }}</span>
+                <span>{{ 'auth.otpSentTo' | translate }} {{ mobile }}</span>
               </div>
 
               <!-- OTP Input -->
@@ -152,7 +164,7 @@
                 </div>
                 <div class="error-message" *ngIf="otpForm.get('otp')?.invalid && otpForm.get('otp')?.touched">
                   <i class="bi bi-exclamation-circle"></i>
-                  Please enter a valid 4-digit OTP
+                  {{ 'kyc.validation.otpInvalid' | translate }}
                 </div>
               </div>
 
@@ -169,14 +181,14 @@
                 </span>
                 <span class="btn-content" *ngIf="loading">
                   <span class="spinner"></span>
-                  <span>Verifying...</span>
+                  <span>{{ 'auth.verifying' | translate }}</span>
                 </span>
               </button>
 
               <!-- Back Button -->
               <button type="button" class="btn-back-modern" (click)="goBack()">
                 <i class="bi bi-arrow-left"></i>
-                <span>Change Mobile Number</span>
+                <span>{{ 'auth.changeMobile' | translate }}</span>
               </button>
             </form>
 
@@ -184,7 +196,7 @@
             <div class="card-footer-custom">
               <p>
                 <i class="bi bi-shield-check"></i>
-                Your data is protected with bank-grade encryption
+                {{ 'auth.dataProtected' | translate }}
               </p>
             </div>
           </div>

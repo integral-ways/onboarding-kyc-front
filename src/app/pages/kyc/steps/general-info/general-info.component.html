@@ -23,12 +23,28 @@
           {{ error }}
         </div>
 
+        <!-- Info Box -->
+        <div class="info-box">
+          <i class="bi bi-graph-up"></i>
+          <p>Help us understand your investment profile to provide better recommendations and services.</p>
+        </div>
+
         <!-- Form -->
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <!-- Investment Profile Section -->
+          <div class="section-title">
+            <i class="bi bi-bar-chart-line"></i>
+            <span>Investment Profile</span>
+          </div>
+
           <div class="row g-3">
-            <!-- Investment Experience -->
-            <div class="col-12">
-              <label class="form-label-modern">{{ 'kyc.generalInfo.investmentExperience' | translate }} *</label>
+            <!-- Investment Experience & Knowledge (Same Row) -->
+            <div class="col-md-6">
+              <label class="form-label-modern">
+                <i class="bi bi-award"></i>
+                {{ 'kyc.generalInfo.investmentExperience' | translate }}
+                <span class="required">*</span>
+              </label>
               <select class="form-control form-control-modern" formControlName="investmentExperience">
                 <option value="">{{ 'kyc.common.select' | translate }}</option>
                 <option value="NONE">{{ 'kyc.generalInfo.none' | translate }}</option>
@@ -39,9 +55,12 @@
               </select>
             </div>
 
-            <!-- Investment Knowledge -->
-            <div class="col-12">
-              <label class="form-label-modern">{{ 'kyc.generalInfo.investmentKnowledge' | translate }} *</label>
+            <div class="col-md-6">
+              <label class="form-label-modern">
+                <i class="bi bi-book"></i>
+                {{ 'kyc.generalInfo.investmentKnowledge' | translate }}
+                <span class="required">*</span>
+              </label>
               <select class="form-control form-control-modern" formControlName="investmentKnowledge">
                 <option value="">{{ 'kyc.common.select' | translate }}</option>
                 <option value="NONE">{{ 'kyc.generalInfo.none' | translate }}</option>
@@ -53,30 +72,34 @@
 
             <!-- Risk Tolerance -->
             <div class="col-12">
-              <label class="form-label-modern">{{ 'kyc.generalInfo.riskTolerance' | translate }} *</label>
+              <label class="form-label-modern">
+                <i class="bi bi-speedometer2"></i>
+                {{ 'kyc.generalInfo.riskTolerance' | translate }}
+                <span class="required">*</span>
+              </label>
               <select class="form-control form-control-modern" formControlName="riskTolerance">
                 <option value="">{{ 'kyc.common.select' | translate }}</option>
-                <option value="LOW">{{ 'kyc.generalInfo.low' | translate }}</option>
-                <option value="MEDIUM">{{ 'kyc.generalInfo.medium' | translate }}</option>
-                <option value="HIGH">{{ 'kyc.generalInfo.high' | translate }}</option>
+                <option value="LOW">🛡️ {{ 'kyc.generalInfo.low' | translate }} - Conservative</option>
+                <option value="MEDIUM">⚖️ {{ 'kyc.generalInfo.medium' | translate }} - Balanced</option>
+                <option value="HIGH">🚀 {{ 'kyc.generalInfo.high' | translate }} - Aggressive</option>
               </select>
             </div>
           </div>
 
           <!-- Actions -->
-          <div class="d-flex justify-content-between mt-4">
-            <button type="button" class="btn btn-outline-secondary" (click)="goBack()">
-              <i class="bi bi-arrow-left me-2"></i>
-              {{ 'kyc.buttons.back' | translate }}
+          <div class="kyc-actions">
+            <button type="button" class="btn-previous-modern" (click)="goBack()">
+              <i class="bi bi-arrow-left"></i>
+              <span>{{ 'kyc.buttons.back' | translate }}</span>
             </button>
-            <button type="submit" class="btn btn-primary-modern" [disabled]="form.invalid || loading">
-              <span *ngIf="!loading">
-                {{ 'kyc.buttons.saveAndContinue' | translate }}
-                <i class="bi bi-arrow-right ms-2"></i>
+            <button type="submit" class="btn-save-modern" [disabled]="form.invalid || loading">
+              <span class="btn-content" *ngIf="!loading">
+                <span>{{ 'kyc.buttons.saveAndContinue' | translate }}</span>
+                <i class="bi bi-arrow-right"></i>
               </span>
-              <span *ngIf="loading">
-                <span class="spinner-border spinner-border-sm me-2"></span>
-                {{ 'kyc.buttons.saving' | translate }}
+              <span class="btn-content" *ngIf="loading">
+                <span class="spinner"></span>
+                <span>{{ 'kyc.buttons.saving' | translate }}</span>
               </span>
             </button>
           </div>
