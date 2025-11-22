@@ -1,0 +1,48 @@
+{
+  "site": {
+    "name": "KYC Onboarding Platform",
+    "title": "Secure KYC Onboarding | Customer Verification System",
+    "description": "Professional Know Your Customer (KYC) onboarding platform with secure identity verification, document management, and compliance solutions for financial institutions.",
+    "keywords": "KYC, Know Your Customer, identity verification, customer onboarding, compliance, FATCA, financial services, customer verification, digital onboarding, secure authentication",
+    "author": "KYC Platform Team",
+    "url": "https://kyc-platform.com",
+    "logo": "/assets/images/logo.png",
+    "favicon": "/assets/images/favicon.ico",
+    "language": "en",
+    "locale": "en_US",
+    "themeColor": "#4f46e5",
+    "backgroundColor": "#ffffff"
+  },
+  "seo": {
+    "robots": "index, follow",
+    "googleSiteVerification": "",
+    "bingSiteVerification": "",
+    "canonical": "https://kyc-platform.com"
+  },
+  "social": {
+    "twitter": {
+      "card": "summary_large_image",
+      "site": "@kycplatform",
+      "creator": "@kycplatform",
+      "image": "/assets/images/social-preview.png"
+    },
+    "openGraph": {
+      "type": "website",
+      "image": "/assets/images/og-image.png",
+      "imageWidth": "1200",
+      "imageHeight": "630"
+    }
+  },
+  "contact": {
+    "email": "support@kyc-platform.com",
+    "phone": "+1-800-KYC-HELP"
+  },
+  "features": [
+    "Secure Identity Verification",
+    "FATCA Compliance",
+    "Multi-language Support",
+    "Real-time Document Verification",
+    "Encrypted Data Storage",
+    "Mobile-Friendly Interface"
+  ]
+}

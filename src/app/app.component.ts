@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
+import { SeoService } from './services/seo.service';
 import * as AuthActions from './store/auth/auth.actions';
 
 @Component({
@@ -15,7 +16,8 @@ export class AppComponent implements OnInit {
 
   constructor(
     private store: Store,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private seoService: SeoService
   ) {
     // Initialize translation
     this.translate.addLangs(['en', 'ar']);
@@ -27,11 +29,22 @@ export class AppComponent implements OnInit {
     
     this.setLanguage(savedLang);
     this.setTheme(savedTheme);
+    
+    // Initialize SEO
+    this.initializeSEO();
   }
 
   ngOnInit() {
     // Load token from localStorage on app init
     this.store.dispatch(AuthActions.loadToken());
+  }
+  
+  private initializeSEO() {
+    this.seoService.loadConfig().subscribe(config => {
+      // Create structured data schemas
+      this.seoService.createOrganizationSchema(config);
+      this.seoService.createWebsiteSchema(config);
+    });
   }
 
   setTheme(theme: 'light' | 'dark') {

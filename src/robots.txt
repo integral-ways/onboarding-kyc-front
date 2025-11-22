@@ -1,0 +1,23 @@
+# robots.txt for KYC Onboarding Platform
+
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /private/
+
+# Sitemap location
+Sitemap: https://kyc-platform.com/sitemap.xml
+
+# Crawl delay (optional)
+Crawl-delay: 10
+
+# Specific bot rules
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /

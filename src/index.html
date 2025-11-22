@@ -1,13 +1,86 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <!-- Basic Meta Tags -->
   <meta charset="utf-8">
-  <title>KycFrontend</title>
+  <title>Secure KYC Onboarding | Customer Verification System</title>
   <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Professional Know Your Customer (KYC) onboarding platform with secure identity verification, document management, and compliance solutions for financial institutions.">
+  <meta name="keywords" content="KYC, Know Your Customer, identity verification, customer onboarding, compliance, FATCA, financial services">
+  <meta name="author" content="KYC Platform Team">
+  <meta name="robots" content="index, follow">
+  
+  <!-- Favicon and Icons -->
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon-16x16.png">
+  <link rel="manifest" href="manifest.json">
+  
+  <!-- Theme Colors -->
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="msapplication-TileColor" content="#4f46e5">
+  <meta name="msapplication-config" content="browserconfig.xml">
+  
+  <!-- Mobile App Meta Tags -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="KYC Platform">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://kyc-platform.com/">
+  <meta property="og:title" content="Secure KYC Onboarding | Customer Verification System">
+  <meta property="og:description" content="Professional Know Your Customer (KYC) onboarding platform with secure identity verification and compliance solutions.">
+  <meta property="og:image" content="https://kyc-platform.com/assets/images/og-image.png">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:site_name" content="KYC Onboarding Platform">
+  
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://kyc-platform.com/">
+  <meta name="twitter:title" content="Secure KYC Onboarding | Customer Verification System">
+  <meta name="twitter:description" content="Professional Know Your Customer (KYC) onboarding platform with secure identity verification and compliance solutions.">
+  <meta name="twitter:image" content="https://kyc-platform.com/assets/images/social-preview.png">
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://kyc-platform.com/">
+  
+  <!-- Preconnect for Performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  
+  <!-- DNS Prefetch -->
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+  
+  <!-- Security Headers -->
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <!-- Structured Data - Will be added dynamically by SEO service -->
 </head>
-<body>
+<body class="preload">
   <app-root></app-root>
+  
+  <!-- Remove preload class after page load to enable transitions -->
+  <script>
+    window.addEventListener('load', function() {
+      document.body.classList.remove('preload');
+    });
+  </script>
+  
+  <!-- Noscript fallback -->
+  <noscript>
+    <div style="text-align: center; padding: 50px; font-family: Arial, sans-serif;">
+      <h1>JavaScript Required</h1>
+      <p>This application requires JavaScript to be enabled in your browser.</p>
+      <p>Please enable JavaScript and reload the page.</p>
+    </div>
+  </noscript>
 </body>
 </html>
