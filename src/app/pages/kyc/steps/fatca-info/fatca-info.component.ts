@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { KycService } from '../../../../services/kyc.service';
 
@@ -15,7 +15,38 @@ export class FatcaInfoComponent implements OnInit {
   success = false;
   
   // Tax residency management
-  taxResidencies: Array<{country: string, tin: string}> = [];
+  taxResidencies: Array<{country: string, taxResidencyTin: string, noTinReason?: string}> = [];
+  showTaxResidencyDialog = false;
+  taxResidencyDialogForm!: FormGroup;
+  
+  // Countries list
+  countries = [
+    'United States',
+    'Saudi Arabia',
+    'United Kingdom',
+    'Canada',
+    'Australia',
+    'Germany',
+    'France',
+    'United Arab Emirates',
+    'Kuwait',
+    'Bahrain',
+    'Qatar',
+    'Oman',
+    'Egypt',
+    'Jordan',
+    'Lebanon',
+    'India',
+    'Pakistan',
+    'Bangladesh',
+    'Philippines',
+    'Indonesia',
+    'Malaysia',
+    'Singapore',
+    'China',
+    'Japan',
+    'South Korea'
+  ];
 
   constructor(
     private fb: FormBuilder,
@@ -25,23 +56,18 @@ export class FatcaInfoComponent implements OnInit {
 
   ngOnInit() {
     this.initForm();
+    this.initTaxResidencyDialogForm();
     this.loadData();
   }
 
   initForm() {
     this.form = this.fb.group({
-      // US Status
-      usCitizen: [false],
-      usGreenCard: [false],
-      usBirthCity: [''],
-      usBirthState: [''],
-      usTaxResident: [false],
+      // US Status - Radio button (only one can be selected)
+      usStatus: ['none'], // Options: 'none', 'citizen', 'taxResident'
       usTin: [''],
-      noUsTin: [false],
       
       // Tax Residency
-      taxResidencyCountries: [[]],
-      taxResidencyTins: [[]],
+      taxResidency: [[]],
       
       // Certifications
       certifyInformationCorrect: [false, Validators.requiredTrue],
@@ -54,24 +80,27 @@ export class FatcaInfoComponent implements OnInit {
     this.kycService.getFatcaInfo().subscribe({
       next: (data) => {
         if (data) {
-          this.form.patchValue(data);
-          
-          // Initialize tax residencies from loaded data
-          if (data.taxResidencyCountries && data.taxResidencyTins) {
-            this.taxResidencies = [];
-            const maxLength = Math.max(
-              data.taxResidencyCountries.length, 
-              data.taxResidencyTins.length
-            );
-            for (let i = 0; i < maxLength; i++) {
-              this.taxResidencies.push({
-                country: data.taxResidencyCountries[i] || '',
-                tin: data.taxResidencyTins[i] || ''
-              });
-            }
+          // Convert old boolean fields to radio button value
+          let usStatus = 'none';
+          if (data.usCitizen) {
+            usStatus = 'citizen';
+          } else if (data.usTaxResident) {
+            usStatus = 'taxResident';
           }
           
-
+          this.form.patchValue({
+            ...data,
+            usStatus: usStatus
+          });
+          
+          // Initialize tax residencies from loaded data
+          if (data.taxResidency && data.taxResidency.length > 0) {
+            this.taxResidencies = data.taxResidency.map((residency: any) => ({
+              country: residency.country,
+              taxResidencyTin: residency.taxResidencyTin || '',
+              noTinReason: residency.noTinReason
+            }));
+          }
         }
       },
       error: (err) => console.error('Failed to load data', err)
@@ -85,8 +114,16 @@ export class FatcaInfoComponent implements OnInit {
       
       // Update form with current tax residencies
       this.updateTaxResidencyForm();
+      
+      // Convert radio button value to boolean fields for backend
+      const usStatus = this.form.get('usStatus')?.value;
+      const formData = {
+        ...this.form.value,
+        usCitizen: usStatus === 'citizen',
+        usTaxResident: usStatus === 'taxResident'
+      };
 
-      this.kycService.saveFatcaInfo(this.form.value).subscribe({
+      this.kycService.saveFatcaInfo(formData).subscribe({
         next: () => {
           this.success = true;
           this.loading = false;
@@ -129,9 +166,54 @@ export class FatcaInfoComponent implements OnInit {
     this.router.navigate(['/kyc/general-info']);
   }
   
+  // Tax Residency Dialog Form
+  initTaxResidencyDialogForm() {
+    this.taxResidencyDialogForm = this.fb.group({
+      country: ['', Validators.required],
+      tin: [''],
+      noTinReason: ['']
+    });
+    
+    // Add validation: Either TIN or noTinReason must be provided
+    this.taxResidencyDialogForm.setValidators(this.atLeastOneRequired('tin', 'noTinReason'));
+  }
+  
+  // Custom validator: at least one field must have a value
+  atLeastOneRequired(...fields: string[]) {
+    return (control: AbstractControl) => {
+      const formGroup = control as FormGroup;
+      const hasValue = fields.some(field => {
+        const fieldControl = formGroup.get(field);
+        return fieldControl && fieldControl.value && fieldControl.value.toString().trim() !== '';
+      });
+      return hasValue ? null : { atLeastOneRequired: true };
+    };
+  }
+  
   // Tax Residency Management
-  addTaxResidency() {
-    this.taxResidencies.push({ country: '', tin: '' });
+  openTaxResidencyDialog() {
+    this.showTaxResidencyDialog = true;
+    this.taxResidencyDialogForm.reset();
+    document.body.classList.add('modal-open');
+  }
+  
+  closeTaxResidencyDialog() {
+    this.showTaxResidencyDialog = false;
+    this.taxResidencyDialogForm.reset();
+    document.body.classList.remove('modal-open');
+  }
+  
+  saveTaxResidency() {
+    if (this.taxResidencyDialogForm.valid) {
+      const formValue = this.taxResidencyDialogForm.value;
+      this.taxResidencies.push({
+        country: formValue.country,
+        taxResidencyTin: formValue.tin || '',
+        noTinReason: formValue.noTinReason || undefined
+      });
+      this.updateTaxResidencyForm();
+      this.closeTaxResidencyDialog();
+    }
   }
   
   removeTaxResidency(index: number) {
@@ -140,26 +222,18 @@ export class FatcaInfoComponent implements OnInit {
   }
   
   updateTaxResidencyForm() {
-    const countries = this.taxResidencies.map(r => r.country).filter(c => c);
-    const tins = this.taxResidencies.map(r => r.tin).filter(t => t);
     this.form.patchValue({
-      taxResidencyCountries: countries,
-      taxResidencyTins: tins
+      taxResidency: this.taxResidencies
     });
   }
   
   // Computed properties
   get hasUsIndicators(): boolean {
-    return this.form.get('usCitizen')?.value || 
-           this.form.get('usGreenCard')?.value || 
-           this.form.get('usTaxResident')?.value;
+    const status = this.form.get('usStatus')?.value;
+    return status !== 'none' && status !== null && status !== '';
   }
   
-  get showUsBirthPlace(): boolean {
-    return this.form.get('usCitizen')?.value === true;
-  }
-  
-  get showUsTin(): boolean {
-    return this.hasUsIndicators && !this.form.get('noUsTin')?.value;
+  get showTaxResidency(): boolean {
+    return this.form.get('usStatus')?.value === 'taxResident';
   }
 }

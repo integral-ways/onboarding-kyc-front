@@ -33,7 +33,7 @@
 
         <!-- Form -->
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
-          
+
           <!-- US Status Section -->
           <div class="section-title">
             <i class="bi bi-flag-usa"></i>
@@ -41,124 +41,32 @@
           </div>
 
           <div class="row g-3 mb-4">
+
             <!-- US Citizenship -->
             <div class="col-12">
               <div class="form-check-modern">
-                <input class="form-check-input" type="checkbox" id="usCitizen" formControlName="usCitizen">
+                <input class="form-check-input" type="radio" id="usCitizen" formControlName="usStatus" value="citizen">
                 <label class="form-check-label" for="usCitizen">
                   <i class="bi bi-passport me-2"></i>
                   {{ 'kyc.fatcaInfo.usCitizen' | translate }}
                 </label>
               </div>
-              
-              <!-- US Birth Place (conditional - appears right under US Citizen) -->
-              <div *ngIf="showUsBirthPlace" class="conditional-card mt-3">
-                <div class="conditional-card-header">
-                  <i class="bi bi-geo-alt-fill me-2"></i>
-                  <span>US Birth Information</span>
-                </div>
-                <div class="row g-3">
-                  <div class="col-md-6">
-                    <label class="form-label-modern">
-                      <i class="bi bi-geo-alt"></i>
-                      {{ 'kyc.fatcaInfo.usBirthCity' | translate }}
-                    </label>
-                    <input 
-                      type="text" 
-                      class="form-control form-control-modern" 
-                      formControlName="usBirthCity" 
-                      [placeholder]="'kyc.fatcaInfo.usBirthCityPlaceholder' | translate"
-                    />
-                  </div>
 
-                  <div class="col-md-6">
-                    <label class="form-label-modern">
-                      <i class="bi bi-map"></i>
-                      {{ 'kyc.fatcaInfo.usBirthState' | translate }}
-                    </label>
-                    <input 
-                      type="text" 
-                      class="form-control form-control-modern" 
-                      formControlName="usBirthState" 
-                      [placeholder]="'kyc.fatcaInfo.usBirthStatePlaceholder' | translate"
-                    />
-                  </div>
-                </div>
-              </div>
-              
               <!-- US TIN for Citizen (conditional) -->
-              <div *ngIf="form.get('usCitizen')?.value" class="conditional-card mt-3">
+              <div *ngIf="form.get('usStatus')?.value === 'citizen'" class="conditional-card mt-3">
                 <div class="conditional-card-header">
                   <i class="bi bi-card-heading me-2"></i>
                   <span>US Tax Identification</span>
                 </div>
                 <div class="row g-3">
-                  <div class="col-md-8">
+                  <div class="col-12">
                     <label class="form-label-modern">
                       <i class="bi bi-card-heading"></i>
                       {{ 'kyc.fatcaInfo.usTin' | translate }}
-                      <span class="required" *ngIf="!form.get('noUsTin')?.value">*</span>
+                      <span class="required">*</span>
                     </label>
-                    <input 
-                      type="text" 
-                      class="form-control form-control-modern" 
-                      formControlName="usTin" 
-                      [placeholder]="'kyc.fatcaInfo.usTinPlaceholder' | translate"
-                      [disabled]="form.get('noUsTin')?.value"
-                    />
-                  </div>
-
-                  <div class="col-md-4 d-flex align-items-end">
-                    <div class="form-check-modern w-100">
-                      <input class="form-check-input" type="checkbox" id="noUsTinCitizen" formControlName="noUsTin">
-                      <label class="form-check-label" for="noUsTinCitizen">
-                        {{ 'kyc.fatcaInfo.noUsTin' | translate }}
-                      </label>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- US Green Card -->
-            <div class="col-12">
-              <div class="form-check-modern">
-                <input class="form-check-input" type="checkbox" id="usGreenCard" formControlName="usGreenCard">
-                <label class="form-check-label" for="usGreenCard">
-                  <i class="bi bi-credit-card me-2"></i>
-                  {{ 'kyc.fatcaInfo.usGreenCard' | translate }}
-                </label>
-              </div>
-              
-              <!-- US TIN for Green Card Holder (conditional - only if citizen is not checked) -->
-              <div *ngIf="form.get('usGreenCard')?.value && !form.get('usCitizen')?.value" class="conditional-card mt-3">
-                <div class="conditional-card-header">
-                  <i class="bi bi-card-heading me-2"></i>
-                  <span>US Tax Identification</span>
-                </div>
-                <div class="row g-3">
-                  <div class="col-md-8">
-                    <label class="form-label-modern">
-                      <i class="bi bi-card-heading"></i>
-                      {{ 'kyc.fatcaInfo.usTin' | translate }}
-                      <span class="required" *ngIf="!form.get('noUsTin')?.value">*</span>
-                    </label>
-                    <input 
-                      type="text" 
-                      class="form-control form-control-modern" 
-                      formControlName="usTin" 
-                      [placeholder]="'kyc.fatcaInfo.usTinPlaceholder' | translate"
-                      [disabled]="form.get('noUsTin')?.value"
-                    />
-                  </div>
-
-                  <div class="col-md-4 d-flex align-items-end">
-                    <div class="form-check-modern w-100">
-                      <input class="form-check-input" type="checkbox" id="noUsTin" formControlName="noUsTin">
-                      <label class="form-check-label" for="noUsTin">
-                        {{ 'kyc.fatcaInfo.noUsTin' | translate }}
-                      </label>
-                    </div>
+                    <input type="text" class="form-control form-control-modern" formControlName="usTin"
+                      [placeholder]="'kyc.fatcaInfo.usTinPlaceholder' | translate" />
                   </div>
                 </div>
               </div>
@@ -167,107 +75,73 @@
             <!-- US Tax Resident -->
             <div class="col-12">
               <div class="form-check-modern">
-                <input class="form-check-input" type="checkbox" id="usTaxResident" formControlName="usTaxResident">
+                <input class="form-check-input" type="radio" id="usTaxResident" formControlName="usStatus" value="taxResident">
                 <label class="form-check-label" for="usTaxResident">
                   <i class="bi bi-house-check me-2"></i>
                   {{ 'kyc.fatcaInfo.usTaxResident' | translate }}
                 </label>
               </div>
-              
-              <!-- US TIN for Tax Resident (conditional - only if citizen and green card are not checked) -->
-              <div *ngIf="form.get('usTaxResident')?.value && !form.get('usCitizen')?.value && !form.get('usGreenCard')?.value" class="conditional-card mt-3">
+
+              <!-- US TIN for Tax Resident (conditional) -->
+              <div *ngIf="form.get('usStatus')?.value === 'taxResident'" class="conditional-card mt-3">
                 <div class="conditional-card-header">
                   <i class="bi bi-card-heading me-2"></i>
                   <span>US Tax Identification</span>
                 </div>
                 <div class="row g-3">
                   <div class="col-md-8">
-                    <label class="form-label-modern">
-                      <i class="bi bi-card-heading"></i>
-                      {{ 'kyc.fatcaInfo.usTin' | translate }}
-                      <span class="required" *ngIf="!form.get('noUsTin')?.value">*</span>
-                    </label>
-                    <input 
-                      type="text" 
-                      class="form-control form-control-modern" 
-                      formControlName="usTin" 
-                      [placeholder]="'kyc.fatcaInfo.usTinPlaceholder' | translate"
-                      [disabled]="form.get('noUsTin')?.value"
-                    />
+
+                    <!-- Tax Residency Section (conditional on US Tax Resident) -->
+                    <ng-container *ngIf="showTaxResidency">
+                     
+
+                      <div class="mb-4">
+                        <p class="text-muted small mb-3">
+                          <i class="bi bi-info-circle me-1"></i>
+                          Please add all countries where you are considered a tax resident and provide the corresponding
+                          Tax Identification Numbers.
+                        </p>
+
+                        <!-- Display added tax residencies -->
+                        <div *ngFor="let residency of taxResidencies; let i = index" class="tax-residency-card mb-3">
+                          <div class="d-flex justify-content-between align-items-start">
+                            <div class="flex-grow-1">
+                              <div class="residency-country">
+                                <i class="bi bi-flag-fill me-2"></i>
+                                <strong>{{ residency.country }}</strong>
+                              </div>
+                              <div class="residency-tin mt-2">
+                                <i class="bi bi-card-text me-2"></i>
+                                <span>TIN: {{ residency.taxResidencyTin || 'Not provided' }}</span>
+                              </div>
+                              <div *ngIf="residency.noTinReason" class="residency-reason mt-2">
+                                <i class="bi bi-info-circle me-2"></i>
+                                <span class="text-muted">Reason: {{ residency.noTinReason }}</span>
+                              </div>
+                            </div>
+                            <button type="button" class="btn btn-sm btn-outline-danger" (click)="removeTaxResidency(i)">
+                              <i class="bi bi-trash"></i>
+                            </button>
+                          </div>
+                        </div>
+
+                        <button type="button" class="btn btn-outline-primary" (click)="openTaxResidencyDialog()">
+                          <i class="bi bi-plus-circle me-2"></i>
+                          {{ 'kyc.fatcaInfo.addTaxResidency' | translate }}
+                        </button>
+                      </div>
+                    </ng-container>
+
+
                   </div>
 
-                  <div class="col-md-4 d-flex align-items-end">
-                    <div class="form-check-modern w-100">
-                      <input class="form-check-input" type="checkbox" id="noUsTin2" formControlName="noUsTin">
-                      <label class="form-check-label" for="noUsTin2">
-                        {{ 'kyc.fatcaInfo.noUsTin' | translate }}
-                      </label>
-                    </div>
-                  </div>
+
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- Tax Residency Section (conditional on US Tax Resident) -->
-          <ng-container *ngIf="form.get('usTaxResident')?.value">
-            <div class="section-title">
-              <i class="bi bi-globe"></i>
-              <span>{{ 'kyc.fatcaInfo.taxResidency' | translate }}</span>
-            </div>
 
-            <div class="mb-4">
-              <p class="text-muted small mb-3">
-                <i class="bi bi-info-circle me-1"></i>
-                Please add all countries where you are considered a tax resident and provide the corresponding Tax Identification Numbers.
-              </p>
-              
-              <div *ngFor="let residency of taxResidencies; let i = index" class="row g-3 mb-3 tax-residency-row">
-                <div class="col-md-5">
-                  <label class="form-label-modern">
-                    <i class="bi bi-flag"></i>
-                    {{ 'kyc.fatcaInfo.country' | translate }}
-                    <span class="required">*</span>
-                  </label>
-                  <input 
-                    type="text" 
-                    class="form-control form-control-modern" 
-                    [(ngModel)]="residency.country"
-                    [ngModelOptions]="{standalone: true}"
-                    (ngModelChange)="updateTaxResidencyForm()"
-                    [placeholder]="'kyc.fatcaInfo.countryPlaceholder' | translate"
-                  />
-                </div>
-
-                <div class="col-md-5">
-                  <label class="form-label-modern">
-                    <i class="bi bi-card-text"></i>
-                    {{ 'kyc.fatcaInfo.taxTin' | translate }}
-                    <span class="required">*</span>
-                  </label>
-                  <input 
-                    type="text" 
-                    class="form-control form-control-modern" 
-                    [(ngModel)]="residency.tin"
-                    [ngModelOptions]="{standalone: true}"
-                    (ngModelChange)="updateTaxResidencyForm()"
-                    [placeholder]="'kyc.fatcaInfo.taxTinPlaceholder' | translate"
-                  />
-                </div>
-
-                <div class="col-md-2 d-flex align-items-end">
-                  <button type="button" class="btn btn-outline-danger w-100" (click)="removeTaxResidency(i)">
-                    <i class="bi bi-trash"></i>
-                  </button>
-                </div>
-              </div>
-
-              <button type="button" class="btn btn-outline-primary" (click)="addTaxResidency()">
-                <i class="bi bi-plus-circle me-2"></i>
-                {{ 'kyc.fatcaInfo.addTaxResidency' | translate }}
-              </button>
-            </div>
-          </ng-container>
 
           <!-- Certification Section -->
           <div class="section-title">
@@ -277,12 +151,8 @@
 
           <div class="certification-box">
             <div class="form-check-modern mb-3">
-              <input 
-                class="form-check-input" 
-                type="checkbox" 
-                id="certifyInformationCorrect" 
-                formControlName="certifyInformationCorrect"
-              />
+              <input class="form-check-input" type="checkbox" id="certifyInformationCorrect"
+                formControlName="certifyInformationCorrect" />
               <label class="form-check-label" for="certifyInformationCorrect">
                 <strong>{{ 'kyc.fatcaInfo.certifyCorrect' | translate }}</strong>
                 <p class="text-muted small mb-0 mt-1">
@@ -292,12 +162,8 @@
             </div>
 
             <div class="form-check-modern">
-              <input 
-                class="form-check-input" 
-                type="checkbox" 
-                id="agreeToNotifyChanges" 
-                formControlName="agreeToNotifyChanges"
-              />
+              <input class="form-check-input" type="checkbox" id="agreeToNotifyChanges"
+                formControlName="agreeToNotifyChanges" />
               <label class="form-check-label" for="agreeToNotifyChanges">
                 <strong>{{ 'kyc.fatcaInfo.agreeNotify' | translate }}</strong>
                 <p class="text-muted small mb-0 mt-1">
@@ -329,3 +195,78 @@
     </div>
   </div>
 </div>
+
+
+<!-- Tax Residency Dialog Modal -->
+<div class="modal fade" [class.show]="showTaxResidencyDialog" id="taxResidencyModal" tabindex="-1"
+  aria-labelledby="taxResidencyModalLabel" [attr.aria-hidden]="!showTaxResidencyDialog" *ngIf="showTaxResidencyDialog">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="taxResidencyModalLabel">
+          <i class="bi bi-globe me-2"></i>
+          {{ 'kyc.fatcaInfo.addTaxResidencyDialog' | translate }}
+        </h5>
+        <button type="button" class="btn-close" (click)="closeTaxResidencyDialog()"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="taxResidencyDialogForm">
+          <!-- Country Dropdown -->
+          <div class="mb-3">
+            <label class="form-label-modern">
+              <i class="bi bi-flag"></i>
+              {{ 'kyc.fatcaInfo.country' | translate }}
+              <span class="required">*</span>
+            </label>
+            <select class="form-select form-control-modern" formControlName="country">
+              <option value="">{{ 'kyc.fatcaInfo.selectCountry' | translate }}</option>
+              <option *ngFor="let country of countries" [value]="country">{{ country }}</option>
+            </select>
+          </div>
+
+          <!-- US TIN -->
+          <div class="mb-3">
+            <label class="form-label-modern">
+              <i class="bi bi-card-heading"></i>
+              {{ 'kyc.fatcaInfo.usTin' | translate }}
+            </label>
+            <input type="text" class="form-control form-control-modern" formControlName="tin"
+              [placeholder]="'kyc.fatcaInfo.usTinPlaceholder' | translate" />
+          </div>
+
+          <!-- No TIN Reason Dropdown -->
+          <div class="mb-3">
+            <label class="form-label-modern">
+              <i class="bi bi-exclamation-circle"></i>
+              {{ 'kyc.fatcaInfo.noTinReasonLabel' | translate }}
+            </label>
+            <select class="form-select form-control-modern" formControlName="noTinReason">
+              <option value="">{{ 'kyc.fatcaInfo.selectReason' | translate }}</option>
+              <option value="not-required">{{ 'kyc.fatcaInfo.reasonNotRequired' | translate }}</option>
+              <option value="applied-pending">{{ 'kyc.fatcaInfo.reasonAppliedPending' | translate }}</option>
+              <option value="exempt">{{ 'kyc.fatcaInfo.reasonExempt' | translate }}</option>
+            </select>
+            <small class="text-muted d-block mt-2">
+              <i class="bi bi-info-circle me-1"></i>
+              Select a reason if you don't have a TIN for this country
+            </small>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeTaxResidencyDialog()">
+          {{ 'kyc.fatcaInfo.cancel' | translate }}
+        </button>
+        <button type="button" class="btn btn-primary" (click)="saveTaxResidency()"
+          [disabled]="taxResidencyDialogForm.invalid">
+          <i class="bi bi-check-circle me-2"></i>
+          {{ 'kyc.fatcaInfo.addButton' | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Backdrop -->
+<div class="modal-backdrop fade" [class.show]="showTaxResidencyDialog" *ngIf="showTaxResidencyDialog"
+  (click)="closeTaxResidencyDialog()"></div>
