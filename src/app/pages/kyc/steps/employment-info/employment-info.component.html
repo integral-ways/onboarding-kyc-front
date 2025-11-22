@@ -41,12 +41,11 @@
             <!-- Row 1: Employment Type, Employer Name, Job Title -->
             <div class="col-md-4">
               <label class="form-label-modern">
-                <i class="bi bi-briefcase"></i>
                 {{ 'kyc.employmentInfo.employmentType' | translate }}
                 <span class="required">*</span>
               </label>
               <select class="form-control form-control-modern" formControlName="employmentType">
-                <option value="">{{ 'kyc.common.select' | translate }}</option>
+                <option value="">-</option>
                 <option value="EMPLOYED">{{ 'kyc.employmentInfo.employed' | translate }}</option>
                 <option value="SELF_EMPLOYED">{{ 'kyc.employmentInfo.selfEmployed' | translate }}</option>
                 <option value="UNEMPLOYED">{{ 'kyc.employmentInfo.unemployed' | translate }}</option>

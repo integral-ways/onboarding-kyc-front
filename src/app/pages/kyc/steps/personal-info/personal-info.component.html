@@ -7,122 +7,173 @@
           <div class="step-number">1</div>
           <div class="ms-3">
             <h3 class="mb-1">{{ 'steps.personalInfo' | translate }}</h3>
-            <p class="text-secondary mb-0">Please provide your personal information</p>
+            <p class="text-secondary mb-0">{{ 'kyc.personalInfo.subtitle' | translate }}</p>
           </div>
         </div>
 
         <!-- Success Alert -->
-        <div *ngIf="success" class="alert alert-success">
-          <i class="bi bi-check-circle-fill"></i>
-          Saved successfully! Moving to next step...
+        <div *ngIf="success" class="alert alert-success alert-dismissible">
+          <div class="alert-content">
+            <i class="bi bi-check-circle-fill"></i>
+            <span>{{ 'kyc.messages.saveSuccess' | translate }} {{ 'kyc.messages.movingToNext' | translate }}</span>
+          </div>
+          <div class="alert-progress"></div>
         </div>
 
         <!-- Error Alert -->
-        <div *ngIf="error" class="alert alert-danger">
-          <i class="bi bi-exclamation-triangle-fill"></i>
-          {{ error }}
+        <div *ngIf="error" class="alert alert-danger alert-dismissible">
+          <div class="alert-content">
+            <i class="bi bi-exclamation-triangle-fill"></i>
+            <span>{{ error }}</span>
+          </div>
+          <button type="button" class="alert-close" (click)="error = null">
+            <i class="bi bi-x-lg"></i>
+          </button>
+          <div class="alert-progress"></div>
         </div>
 
         <!-- Form -->
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
-          <div class="row g-3">
-            <!-- Row 1: Title, First Name, Second Name -->
-            <div class="col-md-2">
-              <label class="form-label-modern">
-                <i class="bi bi-person-badge"></i>
-                Title
-              </label>
-              <select class="form-control form-control-modern" formControlName="title">
-                <option value="">Select...</option>
-                <option value="Mr">Mr</option>
-                <option value="Mrs">Mrs</option>
-                <option value="Ms">Ms</option>
-                <option value="Dr">Dr</option>
-              </select>
-            </div>
 
-            <div class="col-md-5">
-              <label class="form-label-modern">
-                <i class="bi bi-person"></i>
-                First Name <span class="required">*</span>
-              </label>
-              <input type="text" class="form-control form-control-modern" formControlName="firstName" placeholder="First name" />
-            </div>
+  <!-- Personal Details Section -->
+  <div class="section-title d-flex align-items-center gap-2 mb-3">
+    <i class="bi bi-person-circle"></i>
+    <span>{{ 'kyc.personalInfo.title' | translate }}</span>
+  </div>
 
-            <div class="col-md-5">
-              <label class="form-label-modern">
-                <i class="bi bi-person"></i>
-                Second Name
-              </label>
-              <input type="text" class="form-control form-control-modern" formControlName="secondName" placeholder="Second name" />
-            </div>
+  <!-- Horizontal Row 1 -->
+  <div class="row g-3 align-items-end">
 
-            <!-- Row 2: Last Name, Family Name -->
-            <div class="col-md-6">
-              <label class="form-label-modern">
-                <i class="bi bi-person"></i>
-                Last Name <span class="required">*</span>
-              </label>
-              <input type="text" class="form-control form-control-modern" formControlName="lastName" placeholder="Last name" />
-            </div>
+    <!-- Title -->
+    <div class="col-lg-2 col-md-3">
+      <label class="form-label-modern">
+        {{ 'fields.title' | translate }}
+      </label>
+      <select class="form-control form-control-modern" formControlName="title">
+        <option value="">-</option>
+        <option value="Mr">Mr</option>
+        <option value="Mrs">Mrs</option>
+        <option value="Ms">Ms</option>
+        <option value="Dr">Dr</option>
+      </select>
+    </div>
 
-            <div class="col-md-6">
-              <label class="form-label-modern">
-                <i class="bi bi-people"></i>
-                Family Name <span class="required">*</span>
-              </label>
-              <input type="text" class="form-control form-control-modern" formControlName="familyName" placeholder="Family name" />
-            </div>
+    <!-- First Name -->
+    <div class="col-lg-3 col-md-4">
+      <label class="form-label-modern">
+        <i class="bi bi-person"></i>
+        {{ 'fields.firstName' | translate }} <span class="required">*</span>
+      </label>
+      <input type="text" class="form-control form-control-modern"
+        formControlName="firstName" [placeholder]="'placeholders.firstName' | translate" />
+    </div>
 
-            <!-- Row 3: Dependents, Net Worth, Net Growth -->
-            <div class="col-md-4">
-              <label class="form-label-modern">
-                <i class="bi bi-people-fill"></i>
-                Dependents
-              </label>
-              <input type="number" class="form-control form-control-modern" formControlName="numOfDependents" min="0" placeholder="0" />
-            </div>
+    <!-- Second Name -->
+    <div class="col-lg-3 col-md-4">
+      <label class="form-label-modern">
+        <i class="bi bi-person"></i>
+        {{ 'fields.secondName' | translate }}
+      </label>
+      <input type="text" class="form-control form-control-modern"
+        formControlName="secondName" [placeholder]="'placeholders.secondName' | translate" />
+    </div>
 
-            <div class="col-md-4">
-              <label class="form-label-modern">
-                <i class="bi bi-wallet2"></i>
-                Net Worth
-              </label>
-              <input type="number" class="form-control form-control-modern" formControlName="netWorth" placeholder="Net worth" />
-            </div>
+    <!-- Family Name -->
+    <div class="col-lg-4 col-md-4">
+      <label class="form-label-modern">
+        <i class="bi bi-people"></i>
+        {{ 'fields.familyName' | translate }} <span class="required">*</span>
+      </label>
+      <input type="text" class="form-control form-control-modern"
+        formControlName="familyName" [placeholder]="'placeholders.familyName' | translate" />
+    </div>
 
-            <div class="col-md-4">
-              <label class="form-label-modern">
-                <i class="bi bi-graph-up-arrow"></i>
-                Net Growth
-              </label>
-              <input type="number" class="form-control form-control-modern" formControlName="netGrowth" placeholder="Net growth" />
-            </div>
+  </div>
 
-            <!-- Row 4: Income Source -->
-            <div class="col-12">
-              <label class="form-label-modern">
-                <i class="bi bi-briefcase"></i>
-                Income Source
-              </label>
-              <input type="text" class="form-control form-control-modern" formControlName="incomeSource" placeholder="e.g., Salary, Business, Investments" />
-            </div>
-          </div>
+  <hr class="section-divider my-4" />
 
-          <!-- Actions -->
-          <div class="kyc-actions justify-end">
-            <button type="submit" class="btn-save-modern" [disabled]="form.invalid || loading">
-              <span class="btn-content" *ngIf="!loading">
-                <span>{{ 'kyc.save' | translate }}</span>
-                <i class="bi bi-arrow-right"></i>
-              </span>
-              <span class="btn-content" *ngIf="loading">
-                <span class="spinner"></span>
-                <span>Saving...</span>
-              </span>
-            </button>
-          </div>
-        </form>
+  <!-- Financial Information Section -->
+  <div class="section-title d-flex align-items-center gap-2 mb-3">
+    <i class="bi bi-cash-stack"></i>
+    <span>Financial Information</span>
+  </div>
+
+  <!-- Horizontal Row 2 -->
+  <div class="row g-3 align-items-end">
+
+    <!-- Dependents -->
+    <div class="col-lg-4 col-md-4">
+      <label class="form-label-modern">
+        <i class="bi bi-people-fill"></i>
+        {{ 'fields.dependents' | translate }}
+      </label>
+      <input type="number" class="form-control form-control-modern" formControlName="numOfDependents"
+        min="0" [placeholder]="'placeholders.dependents' | translate" />
+    </div>
+
+    <!-- Net Worth -->
+    <div class="col-lg-4 col-md-4">
+      <label class="form-label-modern">
+        <i class="bi bi-wallet2"></i>
+        {{ 'fields.netWorth' | translate }}
+      </label>
+      <input type="number" class="form-control form-control-modern"
+        formControlName="netWorth" [placeholder]="'placeholders.netWorth' | translate" />
+    </div>
+
+    <!-- Net Growth -->
+    <div class="col-lg-4 col-md-4">
+      <label class="form-label-modern">
+        <i class="bi bi-graph-up-arrow"></i>
+        {{ 'fields.netGrowth' | translate }}
+      </label>
+      <input type="number" class="form-control form-control-modern"
+        formControlName="netGrowth" [placeholder]="'placeholders.netGrowth' | translate" />
+    </div>
+
+    <!-- Income Source - Multiple Select -->
+    <div class="col-12">
+      <label class="form-label-modern">
+        <i class="bi bi-briefcase"></i>
+        {{ 'fields.incomeSource' | translate }}
+      </label>
+      <div class="income-source-grid">
+        <div class="form-check income-source-option" *ngFor="let source of incomeSources">
+          <input 
+            class="form-check-input" 
+            type="checkbox" 
+            [id]="'income-' + source.value"
+            [value]="source.value"
+            (change)="onIncomeSourceChange($event, source.value)"
+            [checked]="isIncomeSourceSelected(source.value)"
+          >
+          <label class="form-check-label" [for]="'income-' + source.value">
+            <i [class]="source.icon"></i>
+            {{ source.label | translate }}
+          </label>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Actions -->
+  <div class="kyc-actions justify-end mt-4">
+    <button type="submit" class="btn-save-modern"
+      [disabled]="form.invalid || loading">
+      <span class="btn-content" *ngIf="!loading">
+        {{ 'kyc.save' | translate }}
+        <i class="bi bi-arrow-right"></i>
+      </span>
+      <span class="btn-content" *ngIf="loading">
+        <span class="spinner"></span>
+        {{ 'kyc.buttons.saving' | translate }}
+      </span>
+    </button>
+  </div>
+
+</form>
+
       </div>
     </div>
   </div>

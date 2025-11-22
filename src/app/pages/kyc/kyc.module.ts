@@ -13,6 +13,7 @@ import { EmploymentInfoComponent } from './steps/employment-info/employment-info
 import { GeneralInfoComponent } from './steps/general-info/general-info.component';
 import { FatcaInfoComponent } from './steps/fatca-info/fatca-info.component';
 import { BankInfoComponent } from './steps/bank-info/bank-info.component';
+import { SelectStateDirective } from '../../directives/select-state.directive';
 
 const routes: Routes = [
   {
@@ -40,7 +41,8 @@ const routes: Routes = [
     EmploymentInfoComponent,
     GeneralInfoComponent,
     FatcaInfoComponent,
-    BankInfoComponent
+    BankInfoComponent,
+    SelectStateDirective
   ],
   imports: [
     CommonModule,

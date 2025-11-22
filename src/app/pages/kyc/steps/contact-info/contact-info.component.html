@@ -54,19 +54,26 @@
               </select>
             </div>
 
-            <!-- Primary Contact -->
+            <!-- Primary Contact (Read-only - from login) -->
             <div class="col-12">
               <label class="form-label-modern">
                 <i class="bi bi-phone-vibrate"></i>
                 {{ 'kyc.contactInfo.primaryContact' | translate }}
                 <span class="required">*</span>
               </label>
-              <input 
-                type="tel" 
-                class="form-control form-control-modern" 
-                formControlName="primaryContact" 
-                placeholder="5XXXXXXXX"
-              />
+              <div class="input-readonly-wrapper">
+                <input 
+                  type="tel" 
+                  class="form-control form-control-modern readonly-input" 
+                  formControlName="primaryContact" 
+                  placeholder="5XXXXXXXX"
+                  readonly
+                />
+                <span class="readonly-badge">
+                  <i class="bi bi-lock-fill"></i>
+                  From Login
+                </span>
+              </div>
             </div>
 
             <!-- Alternative Mobile -->

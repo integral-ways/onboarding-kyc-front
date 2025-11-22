@@ -13,6 +13,18 @@ export class PersonalInfoComponent implements OnInit {
   loading = false;
   error: string | null = null;
   success = false;
+  selectedIncomeSources: string[] = [];
+
+  incomeSources = [
+    { value: 'SALARY', label: 'Salary', icon: 'bi bi-cash-coin' },
+    { value: 'BUSINESS', label: 'Business', icon: 'bi bi-shop' },
+    { value: 'INVESTMENTS', label: 'Investments', icon: 'bi bi-graph-up' },
+    { value: 'RENTAL', label: 'Rental Income', icon: 'bi bi-house-door' },
+    { value: 'PENSION', label: 'Pension', icon: 'bi bi-piggy-bank' },
+    { value: 'INHERITANCE', label: 'Inheritance', icon: 'bi bi-gift' },
+    { value: 'FREELANCE', label: 'Freelance', icon: 'bi bi-laptop' },
+    { value: 'OTHER', label: 'Other', icon: 'bi bi-three-dots' }
+  ];
 
   constructor(
     private fb: FormBuilder,
@@ -30,12 +42,12 @@ export class PersonalInfoComponent implements OnInit {
       title: ['', Validators.required],
       firstName: ['', Validators.required],
       secondName: [''],
-      lastName: ['', Validators.required],
+      // thirdName: ['', Validators.required],
       familyName: ['', Validators.required],
       numOfDependents: [0, [Validators.min(0)]],
       netWorth: [''],
       netGrowth: [''],
-      incomeSource: ['']
+      incomeSource: [[]]  // Changed to array
     });
   }
 
@@ -43,11 +55,41 @@ export class PersonalInfoComponent implements OnInit {
     this.kycService.getPersonalInfo().subscribe({
       next: (data) => {
         if (data) {
-          this.form.patchValue(data);
+          // Handle income sources - backend returns 'incomeSources' (plural)
+          const incomeSources = data.incomeSources || data.incomeSource;
+          if (incomeSources) {
+            if (typeof incomeSources === 'string') {
+              this.selectedIncomeSources = incomeSources.split(',').map((s: string) => s.trim());
+            } else if (Array.isArray(incomeSources)) {
+              this.selectedIncomeSources = [...incomeSources];
+            }
+          }
+          
+          // Patch form with data
+          this.form.patchValue({
+            ...data,
+            incomeSource: this.selectedIncomeSources
+          });
         }
       },
       error: (err) => console.error('Failed to load data', err)
     });
+  }
+
+  onIncomeSourceChange(event: any, value: string) {
+    if (event.target.checked) {
+      this.selectedIncomeSources.push(value);
+    } else {
+      const index = this.selectedIncomeSources.indexOf(value);
+      if (index > -1) {
+        this.selectedIncomeSources.splice(index, 1);
+      }
+    }
+    this.form.patchValue({ incomeSource: this.selectedIncomeSources });
+  }
+
+  isIncomeSourceSelected(value: string): boolean {
+    return this.selectedIncomeSources.includes(value);
   }
 
   onSubmit() {
@@ -55,7 +97,12 @@ export class PersonalInfoComponent implements OnInit {
       this.loading = true;
       this.error = null;
 
-      this.kycService.savePersonalInfo(this.form.value).subscribe({
+      const formData = {
+        ...this.form.value,
+        incomeSource: this.selectedIncomeSources  // Send as array
+      };
+
+      this.kycService.savePersonalInfo(formData).subscribe({
         next: () => {
           this.success = true;
           this.loading = false;

@@ -84,12 +84,190 @@
   }
 }
 
+/* Professional Amazing Select Dropdown */
 select.form-control-modern {
   cursor: pointer;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23667eea' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  font-weight: 500;
+  position: relative;
+  padding-right: 3.5rem !important;
+  background-image: 
+    linear-gradient(45deg, transparent 50%, var(--primary-color) 50%),
+    linear-gradient(135deg, var(--primary-color) 50%, transparent 50%);
+  background-position: 
+    calc(100% - 1.5rem) center,
+    calc(100% - 1.1rem) center;
+  background-size: 
+    0.4rem 0.4rem,
+    0.4rem 0.4rem;
   background-repeat: no-repeat;
-  background-position: right 1rem center;
-  padding-right: 2.5rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  // Add subtle gradient background
+  background-color: var(--input-bg);
+  
+  &:hover {
+    background-image: 
+      linear-gradient(45deg, transparent 50%, var(--primary-gradient-end) 50%),
+      linear-gradient(135deg, var(--primary-gradient-end) 50%, transparent 50%);
+    background-position: 
+      calc(100% - 1.5rem) center,
+      calc(100% - 1.1rem) center;
+    background-size: 
+      0.5rem 0.5rem,
+      0.5rem 0.5rem;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15), 0 4px 12px rgba(102, 126, 234, 0.2) !important;
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  // Style for empty/placeholder option
+  option[value=""], option[value="null"], option:disabled {
+    color: var(--text-muted) !important;
+    font-style: italic;
+    background: var(--surface-color);
+  }
+
+  option {
+    color: var(--text-primary);
+    background: var(--card-bg);
+    padding: 0.75rem 1rem;
+    font-weight: 500;
+    border-radius: 8px;
+    margin: 0.25rem;
+    
+    &:hover {
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.05) 100%);
+    }
+    
+    &:checked {
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.1) 100%);
+      color: var(--primary-color);
+      font-weight: 600;
+    }
+  }
+
+  // Checkmark when value is selected (using :has selector for better compatibility)
+  &.ng-valid.ng-touched:not(:focus),
+  &.ng-dirty:not(:focus):not(:invalid) {
+    // Check if not empty by checking if first option is not selected
+    &:not(:has(option[value=""]:checked)) {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Cpath fill='%2310b981' d='M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z'/%3E%3C/svg%3E") !important;
+      background-position: calc(100% - 1rem) center !important;
+      background-size: 1.25rem 1.25rem !important;
+      background-repeat: no-repeat !important;
+      background-color: var(--input-bg) !important;
+      border-color: #10b981 !important;
+      
+      &:hover {
+        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2) !important;
+        transform: translateY(-1px);
+      }
+    }
+  }
+  
+  // Alternative: Use attribute selector for selected state
+  &:not(:focus):not([value=""]):not(:invalid) {
+    option:first-child[value=""]:not(:checked) ~ & {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Cpath fill='%2310b981' d='M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z'/%3E%3C/svg%3E") !important;
+      background-position: calc(100% - 1rem) center !important;
+      background-size: 1.25rem 1.25rem !important;
+      background-repeat: no-repeat !important;
+      background-color: var(--input-bg) !important;
+      border-color: #10b981 !important;
+    }
+  }
+  
+  // Class-based approach (most reliable)
+  // Checkmark when has value (not focused, not hovered)
+  &.has-value:not(:focus):not(:hover) {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Cpath fill='%2310b981' d='M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z'/%3E%3C/svg%3E") !important;
+    background-position: calc(100% - 1rem) center !important;
+    background-size: 1.25rem 1.25rem !important;
+    background-repeat: no-repeat !important;
+    background-color: var(--input-bg) !important;
+    border-color: #10b981 !important;
+  }
+  
+  // On hover with value, show purple arrows with green border
+  &.has-value:hover:not(:focus) {
+    background-image: 
+      linear-gradient(45deg, transparent 50%, var(--primary-color) 50%),
+      linear-gradient(135deg, var(--primary-color) 50%, transparent 50%) !important;
+    background-position: 
+      calc(100% - 1.5rem) center,
+      calc(100% - 1.1rem) center !important;
+    background-size: 
+      0.5rem 0.5rem,
+      0.5rem 0.5rem !important;
+    background-repeat: no-repeat !important;
+    background-color: var(--input-bg) !important;
+    border-color: #10b981 !important;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2) !important;
+    transform: translateY(-1px);
+  }
+}
+
+// Dark theme adjustments
+[data-theme="dark"] {
+  select.form-control-modern {
+    option {
+      background: var(--input-bg);
+      
+      &:hover {
+        background: rgba(102, 126, 234, 0.15);
+      }
+      
+      &:checked {
+        background: rgba(102, 126, 234, 0.25);
+      }
+    }
+  }
+}
+
+// Add a wrapper for enhanced dropdown with icon
+.select-wrapper {
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 2rem;
+    height: 2rem;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.05) 100%);
+    border-radius: 8px;
+    pointer-events: none;
+    transition: all 0.3s ease;
+    z-index: 0;
+  }
+  
+  &:hover::before {
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.1) 100%);
+  }
+  
+  select {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+[dir="rtl"] {
+  .select-wrapper::before {
+    right: auto;
+    left: 1rem;
+  }
 }
 
 /* Form Groups with Icons */
@@ -412,5 +590,75 @@ select.form-control-modern {
 
   .card-modern {
     border-radius: 16px;
+  }
+}
+
+
+/* Income Source Grid - Multiple Select */
+.income-source-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.income-source-option {
+  padding: 0.875rem 1rem;
+  background: var(--surface-color);
+  border: 2px solid var(--input-border) !important;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  margin-bottom: 0;
+  cursor: pointer;
+
+  &:hover {
+    background: var(--input-bg-focus);
+    border-color: var(--input-border-hover) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.1);
+  }
+
+  .form-check-input {
+    margin-top: 0.125rem;
+  }
+
+  .form-check-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    margin-left: 0.5rem;
+    font-size: 0.9rem;
+
+    i {
+      color: var(--primary-color);
+      font-size: 1.125rem;
+    }
+  }
+
+  &:has(.form-check-input:checked) {
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.05) 100%);
+    border-color: var(--primary-color) !important;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+
+    .form-check-label {
+      color: var(--primary-color);
+      font-weight: 600;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .income-source-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 0.5rem;
+  }
+
+  .income-source-option {
+    padding: 0.75rem 0.875rem;
+
+    .form-check-label {
+      font-size: 0.85rem;
+    }
   }
 }

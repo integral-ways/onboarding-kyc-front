@@ -41,12 +41,11 @@
             <!-- Investment Experience & Knowledge (Same Row) -->
             <div class="col-md-6">
               <label class="form-label-modern">
-                <i class="bi bi-award"></i>
                 {{ 'kyc.generalInfo.investmentExperience' | translate }}
                 <span class="required">*</span>
               </label>
               <select class="form-control form-control-modern" formControlName="investmentExperience">
-                <option value="">{{ 'kyc.common.select' | translate }}</option>
+                <option value="">-</option>
                 <option value="NONE">{{ 'kyc.generalInfo.none' | translate }}</option>
                 <option value="BEGINNER">{{ 'kyc.generalInfo.beginner' | translate }}</option>
                 <option value="INTERMEDIATE">{{ 'kyc.generalInfo.intermediate' | translate }}</option>
@@ -57,12 +56,11 @@
 
             <div class="col-md-6">
               <label class="form-label-modern">
-                <i class="bi bi-book"></i>
                 {{ 'kyc.generalInfo.investmentKnowledge' | translate }}
                 <span class="required">*</span>
               </label>
               <select class="form-control form-control-modern" formControlName="investmentKnowledge">
-                <option value="">{{ 'kyc.common.select' | translate }}</option>
+                <option value="">-</option>
                 <option value="NONE">{{ 'kyc.generalInfo.none' | translate }}</option>
                 <option value="BASIC">{{ 'kyc.generalInfo.basic' | translate }}</option>
                 <option value="GOOD">{{ 'kyc.generalInfo.good' | translate }}</option>
@@ -73,12 +71,11 @@
             <!-- Risk Tolerance -->
             <div class="col-12">
               <label class="form-label-modern">
-                <i class="bi bi-speedometer2"></i>
                 {{ 'kyc.generalInfo.riskTolerance' | translate }}
                 <span class="required">*</span>
               </label>
               <select class="form-control form-control-modern" formControlName="riskTolerance">
-                <option value="">{{ 'kyc.common.select' | translate }}</option>
+                <option value="">-</option>
                 <option value="LOW">🛡️ {{ 'kyc.generalInfo.low' | translate }} - Conservative</option>
                 <option value="MEDIUM">⚖️ {{ 'kyc.generalInfo.medium' | translate }} - Balanced</option>
                 <option value="HIGH">🚀 {{ 'kyc.generalInfo.high' | translate }} - Aggressive</option>
