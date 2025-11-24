@@ -6,6 +6,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { StartOnboardingComponent } from './start-onboarding/start-onboarding.component';
+import { NafathDialogComponent } from './nafath-dialog/nafath-dialog.component';
 
 const routes: Routes = [
   { path: 'login', component: StartOnboardingComponent },
@@ -14,7 +15,8 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
-    StartOnboardingComponent
+    StartOnboardingComponent,
+    NafathDialogComponent
   ],
   imports: [
     CommonModule,

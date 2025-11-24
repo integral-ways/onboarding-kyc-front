@@ -263,5 +263,33 @@
     "arabic": "العربية",
     "toggle": "Toggle Language",
     "switchTo": "Switch to"
+  },
+  "nafath": {
+    "title": "Nafath Authentication",
+    "subtitle": "Secure identity verification",
+    "transactionId": "Transaction ID",
+    "requestId": "Request ID",
+    "elapsedTime": "Elapsed Time",
+    "waiting": {
+      "title": "Waiting for Approval",
+      "instruction": "Please open your Nafath app and approve the authentication request"
+    },
+    "steps": {
+      "openApp": "Open Nafath mobile app",
+      "approve": "Approve the authentication request",
+      "wait": "Wait for confirmation"
+    },
+    "success": {
+      "title": "Authentication Successful!",
+      "message": "Your identity has been verified successfully"
+    },
+    "error": {
+      "title": "Authentication Failed",
+      "message": "Please try again or contact support"
+    },
+    "buttons": {
+      "cancel": "Cancel",
+      "retry": "Try Again"
+    }
   }
 }

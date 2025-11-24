@@ -1,0 +1,101 @@
+<div class="nafath-dialog-overlay">
+  <div class="nafath-dialog" [class]="getStatusClass()">
+    <!-- Header -->
+    <div class="dialog-header">
+      <div class="header-icon">
+        <i class="bi bi-shield-check"></i>
+      </div>
+      <h3>{{ 'nafath.title' | translate }}</h3>
+      <p class="subtitle">{{ 'nafath.subtitle' | translate }}</p>
+    </div>
+
+    <!-- Content -->
+    <div class="dialog-content">
+      <!-- Status Icon -->
+      <div class="status-icon" [class]="getStatusClass()">
+        <i class="bi" [class]="getStatusIcon()"></i>
+      </div>
+
+      <!-- Waiting State -->
+      <div *ngIf="status === 'WAITING' || status === 'USER_ACTION_REQUIRED'" class="status-waiting">
+        <div class="spinner-container">
+          <div class="spinner"></div>
+        </div>
+        
+        <h4>{{ 'nafath.waiting.title' | translate }}</h4>
+        <p class="instruction">{{ 'nafath.waiting.instruction' | translate }}</p>
+        
+        <div class="steps">
+          <div class="step">
+            <span class="step-number">1</span>
+            <span class="step-text">{{ 'nafath.steps.openApp' | translate }}</span>
+          </div>
+          <div class="step">
+            <span class="step-number">2</span>
+            <span class="step-text">{{ 'nafath.steps.approve' | translate }}</span>
+          </div>
+          <div class="step">
+            <span class="step-number">3</span>
+            <span class="step-text">{{ 'nafath.steps.wait' | translate }}</span>
+          </div>
+        </div>
+
+        <div class="transaction-info">
+          <div class="info-item">
+            <span class="label">{{ 'nafath.transactionId' | translate }}:</span>
+            <span class="value">{{ transactionId }}</span>
+          </div>
+          <div class="info-item" *ngIf="requestId">
+            <span class="label">{{ 'nafath.requestId' | translate }}:</span>
+            <span class="value">{{ requestId }}</span>
+          </div>
+          <div class="info-item">
+            <span class="label">{{ 'nafath.elapsedTime' | translate }}:</span>
+            <span class="value">{{ getFormattedTime() }}</span>
+          </div>
+        </div>
+
+        <div class="progress-bar">
+          <div class="progress-fill" [style.width.%]="(elapsedTime / maxWaitTime) * 100"></div>
+        </div>
+      </div>
+
+      <!-- Success State -->
+      <div *ngIf="status === 'SUCCESS'" class="status-success">
+        <h4>{{ 'nafath.success.title' | translate }}</h4>
+        <p>{{ 'nafath.success.message' | translate }}</p>
+      </div>
+
+      <!-- Error State -->
+      <div *ngIf="status === 'REJECTED' || status === 'EXPIRED'" class="status-error">
+        <h4>{{ 'nafath.error.title' | translate }}</h4>
+        <p>{{ message || ('nafath.error.message' | translate) }}</p>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="dialog-actions">
+      <button 
+        *ngIf="status === 'WAITING' || status === 'USER_ACTION_REQUIRED'" 
+        class="btn-cancel" 
+        (click)="cancel()">
+        <i class="bi bi-x-lg me-2"></i>
+        {{ 'nafath.buttons.cancel' | translate }}
+      </button>
+      
+      <button 
+        *ngIf="status === 'REJECTED' || status === 'EXPIRED'" 
+        class="btn-retry" 
+        (click)="cancel()">
+        <i class="bi bi-arrow-clockwise me-2"></i>
+        {{ 'nafath.buttons.retry' | translate }}
+      </button>
+    </div>
+
+    <!-- Nafath Logo -->
+    <div class="nafath-branding">
+      <span>Powered by</span>
+      <strong>Nafath</strong>
+    </div>
+  </div>
+</div>

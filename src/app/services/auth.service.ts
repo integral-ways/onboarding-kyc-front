@@ -12,10 +12,18 @@ export interface VerifyOtpRequest {
   mobile: string;
   otp: string;
   trxRef?: string;
+  initiateNafath?: boolean;
 }
 
 export interface JwtResponse {
   token: string;
+}
+
+export interface VerifyOtpResponse {
+  token: string;
+  nafathInitiated?: boolean;
+  nafathTransactionId?: string;
+  nafathRequestId?: string;
 }
 
 export interface ApiResponse<T> {
@@ -42,12 +50,19 @@ export class AuthService {
     return this.http.post<ApiResponse<StartOnboardingData>>(`${this.apiUrl}/login`, data);
   }
 
-  verifyOtp(mobile: string, otp: string, trxRef?: string): Observable<ApiResponse<JwtResponse>> {
-    const payload: any = { mobile, otp };
+  verifyOtp(mobile: string, otp: string, trxRef?: string, initiateNafath: boolean = false): Observable<ApiResponse<VerifyOtpResponse>> {
+    const payload: any = { mobile, otp, initiateNafath };
     if (trxRef) {
       payload.trxRef = trxRef;
     }
-    return this.http.post<ApiResponse<JwtResponse>>(`${this.apiUrl}/verify`, payload);
+    return this.http.post<ApiResponse<VerifyOtpResponse>>(`${this.apiUrl}/verify`, payload);
+  }
+
+  completeNafathAuth(nafathToken: string, customerId: string): Observable<ApiResponse<any>> {
+    return this.http.post<ApiResponse<any>>(`${this.apiUrl}/nafath/complete`, {
+      nafathToken,
+      customerId
+    });
   }
 
   nafathStart(idNumber: string): Observable<any> {

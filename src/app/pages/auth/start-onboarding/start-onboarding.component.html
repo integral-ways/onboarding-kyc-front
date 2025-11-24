@@ -205,3 +205,13 @@
     </div>
   </div>
 </div>
+
+<!-- Nafath Dialog -->
+<app-nafath-dialog
+  *ngIf="showNafathDialog"
+  [transactionId]="nafathTransactionId"
+  [requestId]="nafathRequestId"
+  (completed)="onNafathCompleted($event)"
+  (cancelled)="onNafathCancelled()"
+  (failed)="onNafathFailed($event)">
+</app-nafath-dialog>
