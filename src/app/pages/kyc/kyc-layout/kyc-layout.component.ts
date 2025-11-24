@@ -21,6 +21,7 @@ export class KycLayoutComponent implements OnInit {
   mobileMenuOpen = false;
   currentYear = new Date().getFullYear();
   stepperOrientation: 'horizontal' | 'vertical' = 'vertical'; // Configurable
+  isSmallScreen = false; // Track if screen is small
   private hasRedirected = false;
 
   constructor(
@@ -43,6 +44,12 @@ export class KycLayoutComponent implements OnInit {
     document.body.classList.toggle('ltr', this.currentLang === 'en');
     this.translate.use(this.currentLang);
     
+    // Check screen size and set stepper orientation
+    this.checkScreenSize();
+    
+    // Listen to window resize
+    window.addEventListener('resize', () => this.checkScreenSize());
+    
     this.loadProgress();
     
     // Listen to route changes to update active step
@@ -57,6 +64,22 @@ export class KycLayoutComponent implements OnInit {
       // Update current step indicator based on URL
       this.updateCurrentStepFromUrl();
     });
+  }
+
+  private checkScreenSize() {
+    const width = window.innerWidth;
+    const wasSmallScreen = this.isSmallScreen;
+    
+    // Consider screens <= 992px as small (tablets and mobile)
+    this.isSmallScreen = width <= 992;
+    
+    // Force horizontal orientation on small screens
+    if (this.isSmallScreen) {
+      this.stepperOrientation = 'horizontal';
+    } else if (wasSmallScreen && !this.isSmallScreen) {
+      // When transitioning from small to large screen, restore vertical
+      this.stepperOrientation = 'vertical';
+    }
   }
 
   loadProgress() {
@@ -238,6 +261,13 @@ export class KycLayoutComponent implements OnInit {
   }
 
   toggleStepperOrientation() {
-    this.stepperOrientation = this.stepperOrientation === 'horizontal' ? 'vertical' : 'horizontal';
+    // Only allow toggle on large screens
+    if (!this.isSmallScreen) {
+      this.stepperOrientation = this.stepperOrientation === 'horizontal' ? 'vertical' : 'horizontal';
+    }
+  }
+
+  isToggleDisabled(): boolean {
+    return this.isSmallScreen;
   }
 }

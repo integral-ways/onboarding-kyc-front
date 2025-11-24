@@ -72,8 +72,14 @@
           <span class="progress-percentage">{{ ((completedSteps / totalSteps) * 100) | number:'1.0-0' }}%</span>
         </div>
         
-        <!-- Orientation Toggle -->
-        <button class="orientation-toggle" (click)="toggleStepperOrientation()" [attr.aria-label]="'Toggle Stepper Orientation'">
+        <!-- Orientation Toggle (disabled on small screens) -->
+        <button 
+          class="orientation-toggle" 
+          (click)="toggleStepperOrientation()" 
+          [disabled]="isToggleDisabled()"
+          [class.disabled]="isToggleDisabled()"
+          [attr.aria-label]="'Toggle Stepper Orientation'"
+          [title]="isToggleDisabled() ? 'Orientation locked to horizontal on small screens' : 'Toggle Stepper Orientation'">
           <i [class]="stepperOrientation === 'horizontal' ? 'bi bi-layout-sidebar' : 'bi bi-layout-three-columns'"></i>
         </button>
       </div>

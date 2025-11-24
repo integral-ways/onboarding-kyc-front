@@ -331,11 +331,25 @@ body.rtl,
       font-size: 1.125rem;
     }
 
-    &:hover {
+    &:hover:not(:disabled):not(.disabled) {
       background: var(--primary-color);
       color: white;
       border-color: var(--primary-color);
       transform: scale(1.05);
+    }
+
+    // Disabled state (for small screens)
+    &:disabled,
+    &.disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      background: var(--background-color);
+      color: var(--text-muted);
+      border-color: var(--border-color);
+      
+      &:hover {
+        transform: none;
+      }
     }
   }
 
