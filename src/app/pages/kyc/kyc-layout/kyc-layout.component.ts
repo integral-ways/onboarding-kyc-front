@@ -34,6 +34,15 @@ export class KycLayoutComponent implements OnInit {
   }
 
   ngOnInit() {
+    // Set initial dir and lang attributes
+    const direction = this.currentLang === 'ar' ? 'rtl' : 'ltr';
+    document.documentElement.setAttribute('dir', direction);
+    document.documentElement.setAttribute('lang', this.currentLang);
+    document.body.setAttribute('dir', direction);
+    document.body.classList.toggle('rtl', this.currentLang === 'ar');
+    document.body.classList.toggle('ltr', this.currentLang === 'en');
+    this.translate.use(this.currentLang);
+    
     this.loadProgress();
     
     // Listen to route changes to update active step
@@ -190,9 +199,30 @@ export class KycLayoutComponent implements OnInit {
 
   toggleLanguage() {
     this.currentLang = this.currentLang === 'en' ? 'ar' : 'en';
-    this.translate.use(this.currentLang);
-    document.documentElement.setAttribute('dir', this.currentLang === 'ar' ? 'rtl' : 'ltr');
+    const direction = this.currentLang === 'ar' ? 'rtl' : 'ltr';
+    
+    // Set direction on html and body
+    document.documentElement.setAttribute('dir', direction);
+    document.documentElement.setAttribute('lang', this.currentLang);
+    document.body.setAttribute('dir', direction);
+    
+    // Toggle RTL/LTR classes
+    if (this.currentLang === 'ar') {
+      document.body.classList.add('rtl');
+      document.body.classList.remove('ltr');
+    } else {
+      document.body.classList.add('ltr');
+      document.body.classList.remove('rtl');
+    }
+    
+    // Save to localStorage
     localStorage.setItem('language', this.currentLang);
+    
+    // Use translate service - this will update translations instantly
+    this.translate.use(this.currentLang).subscribe(() => {
+      // Translations updated successfully
+      console.log('Language changed to:', this.currentLang);
+    });
   }
 
   logout() {

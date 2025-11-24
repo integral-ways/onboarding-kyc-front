@@ -200,7 +200,9 @@
 }
 
 /* RTL Support for Header */
-[dir="rtl"] {
+[dir="rtl"],
+body.rtl,
+:host-context([dir="rtl"]) {
   .brand-logo:hover {
     transform: translateX(-5px);
   }
@@ -617,10 +619,12 @@
   }
 }
 
-/* RTL Support */
-[dir="rtl"] {
+/* RTL Support - Progress on RIGHT, Content on LEFT */
+[dir="rtl"],
+body.rtl,
+:host-context([dir="rtl"]) {
   .progress-section.vertical-layout {
-    /* RTL: Right side */
+    /* RTL: Progress section on RIGHT side */
     left: auto !important;
     right: 0 !important;
     border-right: none !important;
@@ -643,6 +647,7 @@
   }
 
   .main-content.with-vertical-stepper {
+    /* RTL: Main content on LEFT side */
     margin-left: 0 !important;
     margin-right: 320px !important;
   }
@@ -726,7 +731,9 @@
 }
 
 /* RTL Support for Footer */
-[dir="rtl"] {
+[dir="rtl"],
+body.rtl,
+:host-context([dir="rtl"]) {
   .compact-footer {
     .footer-content {
       flex-direction: row-reverse;
