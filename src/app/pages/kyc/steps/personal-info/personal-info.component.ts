@@ -42,15 +42,37 @@ export class PersonalInfoComponent implements OnInit {
 
   initForm() {
     this.form = this.fb.group({
+      // Personal Information
       title: ['', Validators.required],
       firstName: ['', Validators.required],
       secondName: [''],
-      // thirdName: ['', Validators.required],
+      lastName: [''],
       familyName: ['', Validators.required],
+      fullNameAr: [{ value: '', disabled: true }], // Read-only from Nafath
+      gender: [{ value: '', disabled: true }], // Read-only from Nafath
+      birthDateHijri: [{ value: '', disabled: true }], // Read-only from Nafath
+      birthDateGregorian: [{ value: '', disabled: true }], // Read-only from Nafath
+      
+      // Financial Information
       numOfDependents: [0, [Validators.min(0)]],
       netWorth: [''],
       netGrowth: [''],
-      incomeSource: [[]]  // Changed to array
+      incomeSource: [[]], // Array
+      
+      // Contact Information
+      primaryContact: [{ value: '', disabled: true }], // Read-only from Nafath
+      altMobile: [''],
+      countryCode: ['+966'],
+      
+      // Address Information
+      country: [''],
+      region: [''],
+      city: [''],
+      district: [''],
+      street: [''],
+      buildingNumber: [''],
+      postalCode: [''],
+      unitNumber: ['']
     });
   }
 
@@ -95,13 +117,68 @@ export class PersonalInfoComponent implements OnInit {
     return this.selectedIncomeSources.includes(value);
   }
 
+  // Helper methods for header display
+  getFullName(): string {
+    const firstName = this.form.get('firstName')?.value || '';
+    const secondName = this.form.get('secondName')?.value || '';
+    const familyName = this.form.get('familyName')?.value || '';
+    
+    if (!firstName && !familyName) {
+      return 'Guest'; // Default if no name
+    }
+    
+    return [firstName, secondName, familyName].filter(n => n).join(' ');
+  }
+
+  getFullNameAr(): string {
+    return this.form.get('fullNameAr')?.value || '';
+  }
+
+  getGender(): string {
+    return this.form.get('gender')?.value || '';
+  }
+
+  getGenderIcon(): string {
+    const gender = this.getGender().toLowerCase();
+    if (gender === 'male') {
+      return 'bi bi-gender-male';
+    } else if (gender === 'female') {
+      return 'bi bi-gender-female';
+    }
+    return 'bi bi-person';
+  }
+
+  getBirthDate(): string {
+    const gregorian = this.form.get('birthDateGregorian')?.value;
+    const hijri = this.form.get('birthDateHijri')?.value;
+    
+    if (gregorian && hijri) {
+      return `${gregorian} (${hijri})`;
+    } else if (gregorian) {
+      return gregorian;
+    } else if (hijri) {
+      return hijri;
+    }
+    return '';
+  }
+
+  hasNafathData(): boolean {
+    return !!(this.form.get('fullNameAr')?.value || this.form.get('gender')?.value);
+  }
+
   onSubmit() {
     if (this.form.valid) {
       this.loading = true;
       this.error = null;
 
+      // Include disabled fields (Nafath data) in submission
       const formData = {
         ...this.form.value,
+        fullNameAr: this.form.get('fullNameAr')?.value,
+        gender: this.form.get('gender')?.value,
+        birthDateHijri: this.form.get('birthDateHijri')?.value,
+        birthDateGregorian: this.form.get('birthDateGregorian')?.value,
+        primaryContact: this.form.get('primaryContact')?.value,
         incomeSource: this.selectedIncomeSources  // Send as array
       };
 
@@ -110,7 +187,7 @@ export class PersonalInfoComponent implements OnInit {
           this.success = true;
           this.loading = false;
           setTimeout(() => {
-            this.router.navigate(['/kyc/address-info']);
+            this.router.navigate(['/kyc/employment-info']);
           }, 1000);
         },
         error: (err) => {

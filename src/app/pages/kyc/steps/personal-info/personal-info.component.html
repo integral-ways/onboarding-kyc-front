@@ -7,9 +7,40 @@
           <div class="step-number-modern">
             <span>1</span>
           </div>
-          <div class="ms-3">
+          <div class="ms-3 flex-grow-1">
             <h3 class="mb-1 fw-bold">{{ 'steps.personalInfo' | translate }}</h3>
             <p class="text-muted mb-0">{{ 'kyc.personalInfo.subtitle' | translate }}</p>
+          </div>
+        </div>
+
+        <!-- Enhanced Welcome Header (if Nafath data exists) -->
+        <div *ngIf="hasNafathData()" class="welcome-header-modern mb-4">
+          <div class="welcome-content">
+            <div class="welcome-icon">
+              <i [class]="getGenderIcon()"></i>
+            </div>
+            <div class="welcome-text">
+              <h4 class="welcome-title">
+                Welcome, <span class="highlight-name">{{ getFullName() }}</span>
+              </h4>
+              <p class="welcome-subtitle" *ngIf="getFullNameAr()">
+                <span class="arabic-name">{{ getFullNameAr() }}</span>
+              </p>
+              <div class="welcome-meta">
+                <span class="meta-item" *ngIf="getGender()">
+                  <i [class]="getGenderIcon()"></i>
+                  {{ getGender() }}
+                </span>
+                <span class="meta-item" *ngIf="getBirthDate()">
+                  <i class="bi bi-calendar-event"></i>
+                  {{ getBirthDate() }}
+                </span>
+                <span class="meta-badge">
+                  <i class="bi bi-shield-check"></i>
+                  Verified by Nafath
+                </span>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -116,6 +147,179 @@
               <div class="invalid-feedback" *ngIf="form.get('familyName')?.invalid && form.get('familyName')?.touched">
                 Family name is required
               </div>
+            </div>
+          </div>
+
+      
+
+          <hr class="section-divider my-4" />
+
+          <!-- Contact Information Section -->
+          <div class="section-header mb-4">
+            <div class="section-icon">
+              <i class="bi bi-telephone"></i>
+            </div>
+            <div>
+              <h5 class="mb-0 fw-bold">Contact Information</h5>
+              <small class="text-muted">Your contact details</small>
+            </div>
+          </div>
+
+          <!-- Contact Fields - Horizontal Layout -->
+          <div class="form-row-horizontal mb-4">
+            <!-- Country Code -->
+            <div class="form-group-horizontal" style="flex: 0 0 180px;">
+              <label class="form-label-horizontal">
+                <i class="bi bi-flag me-1"></i>
+                Country Code
+              </label>
+              <select class="form-control-horizontal" formControlName="countryCode">
+                <option value="+966">🇸🇦 +966</option>
+                <option value="+971">🇦🇪 +971</option>
+                <option value="+965">🇰🇼 +965</option>
+                <option value="+973">🇧🇭 +973</option>
+                <option value="+974">🇶🇦 +974</option>
+              </select>
+            </div>
+
+            <!-- Primary Contact (Read-only from Nafath) -->
+            <div class="form-group-horizontal" style="flex: 1;">
+              <label class="form-label-horizontal">
+                <i class="bi bi-phone-vibrate me-1"></i>
+                Primary Mobile
+              </label>
+              <div class="input-readonly-wrapper">
+                <input type="tel" class="form-control-horizontal readonly-input"
+                  formControlName="primaryContact" 
+                  placeholder="From Nafath"
+                  readonly />
+                <span class="readonly-badge">
+                  <i class="bi bi-shield-check me-1"></i>
+                  Nafath
+                </span>
+              </div>
+            </div>
+
+            <!-- Alternative Mobile -->
+            <div class="form-group-horizontal" style="flex: 1;">
+              <label class="form-label-horizontal">
+                <i class="bi bi-phone me-1"></i>
+                Alternative Mobile
+                <small class="text-muted ms-1">(Optional)</small>
+              </label>
+              <input type="tel" class="form-control-horizontal"
+                formControlName="altMobile" 
+                placeholder="5XXXXXXXX" />
+            </div>
+          </div>
+
+          <hr class="section-divider my-4" />
+
+          <!-- Address Information Section -->
+          <div class="section-header mb-4">
+            <div class="section-icon">
+              <i class="bi bi-geo-alt"></i>
+            </div>
+            <div>
+              <h5 class="mb-0 fw-bold">Address Information</h5>
+              <small class="text-muted">Your residential address</small>
+            </div>
+          </div>
+
+          <!-- Country & Region - Horizontal Layout -->
+          <div class="form-row-horizontal mb-4">
+            <!-- Country -->
+            <div class="form-group-horizontal" style="flex: 1;">
+              <label class="form-label-horizontal">
+                <i class="bi bi-globe me-1"></i>
+                Country
+              </label>
+              <input type="text" class="form-control-horizontal"
+                formControlName="country" 
+                placeholder="Saudi Arabia" />
+            </div>
+
+            <!-- Region -->
+            <div class="form-group-horizontal" style="flex: 1;">
+              <label class="form-label-horizontal">
+                <i class="bi bi-map me-1"></i>
+                Region
+              </label>
+              <input type="text" class="form-control-horizontal"
+                formControlName="region" 
+                placeholder="Riyadh" />
+            </div>
+          </div>
+
+          <!-- City & District - Horizontal Layout -->
+          <div class="form-row-horizontal mb-4">
+            <!-- City -->
+            <div class="form-group-horizontal" style="flex: 1;">
+              <label class="form-label-horizontal">
+                <i class="bi bi-building me-1"></i>
+                City
+              </label>
+              <input type="text" class="form-control-horizontal"
+                formControlName="city" 
+                placeholder="Riyadh" />
+            </div>
+
+            <!-- District -->
+            <div class="form-group-horizontal" style="flex: 1;">
+              <label class="form-label-horizontal">
+                <i class="bi bi-signpost-2 me-1"></i>
+                District
+              </label>
+              <input type="text" class="form-control-horizontal"
+                formControlName="district" 
+                placeholder="Olaya" />
+            </div>
+          </div>
+
+          <!-- Street - Full Width -->
+          <div class="form-group-full mb-4">
+            <label class="form-label-horizontal">
+              <i class="bi bi-signpost me-1"></i>
+              Street
+            </label>
+            <input type="text" class="form-control-horizontal"
+              formControlName="street" 
+              placeholder="King Fahd Road" />
+          </div>
+
+          <!-- Building Number, Postal Code, Unit Number - Horizontal Layout -->
+          <div class="form-row-horizontal mb-4">
+            <!-- Building Number -->
+            <div class="form-group-horizontal" style="flex: 1;">
+              <label class="form-label-horizontal">
+                <i class="bi bi-hash me-1"></i>
+                Building Number
+              </label>
+              <input type="text" class="form-control-horizontal"
+                formControlName="buildingNumber" 
+                placeholder="1234" />
+            </div>
+
+            <!-- Postal Code -->
+            <div class="form-group-horizontal" style="flex: 1;">
+              <label class="form-label-horizontal">
+                <i class="bi bi-mailbox me-1"></i>
+                Postal Code
+              </label>
+              <input type="text" class="form-control-horizontal"
+                formControlName="postalCode" 
+                placeholder="12345" />
+            </div>
+
+            <!-- Unit Number -->
+            <div class="form-group-horizontal" style="flex: 1;">
+              <label class="form-label-horizontal">
+                <i class="bi bi-door-open me-1"></i>
+                Unit Number
+              </label>
+              <input type="text" class="form-control-horizontal"
+                formControlName="unitNumber" 
+                placeholder="2" />
             </div>
           </div>
 
