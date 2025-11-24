@@ -6,7 +6,10 @@ import { KycService } from '../../../../services/kyc.service';
 @Component({
   selector: 'app-personal-info',
   templateUrl: './personal-info.component.html',
-  styleUrls: ['./personal-info.component.scss']
+  styleUrls: [
+    './personal-info.component.scss',
+    '../shared-horizontal-form-styles.scss'
+  ]
 })
 export class PersonalInfoComponent implements OnInit {
   form!: FormGroup;

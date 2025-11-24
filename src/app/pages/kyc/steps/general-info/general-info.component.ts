@@ -6,7 +6,10 @@ import { KycService } from '../../../../services/kyc.service';
 @Component({
   selector: 'app-general-info',
   templateUrl: './general-info.component.html',
-  styleUrls: ['./general-info.component.scss']
+  styleUrls: [
+    './general-info.component.scss',
+    '../shared-horizontal-form-styles.scss'
+  ]
 })
 export class GeneralInfoComponent implements OnInit {
   form!: FormGroup;

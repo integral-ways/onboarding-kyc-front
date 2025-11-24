@@ -1,110 +1,128 @@
 <div class="step-container fade-in">
   <div class="row justify-content-center">
-    <div class="col-lg-8">
+    <div class="col-lg-10">
       <div class="card-modern p-4">
         <!-- Header -->
         <div class="d-flex align-items-center mb-4">
-          <div class="step-number">3</div>
+          <div class="step-number-modern">
+            <span>3</span>
+          </div>
           <div class="ms-3">
-            <h3 class="mb-1">{{ 'kyc.contactInfo.title' | translate }}</h3>
-            <p class="text-secondary mb-0">{{ 'kyc.contactInfo.subtitle' | translate }}</p>
+            <h3 class="mb-1 fw-bold">{{ 'kyc.contactInfo.title' | translate }}</h3>
+            <p class="text-muted mb-0">{{ 'kyc.contactInfo.subtitle' | translate }}</p>
           </div>
         </div>
 
         <!-- Success Alert -->
-        <div *ngIf="success" class="alert alert-success">
-          <i class="bi bi-check-circle-fill me-2"></i>
-          {{ 'kyc.messages.saveSuccess' | translate }}
+        <div *ngIf="success" class="alert alert-success-modern alert-dismissible">
+          <div class="alert-content">
+            <i class="bi bi-check-circle-fill"></i>
+            <span>{{ 'kyc.messages.saveSuccess' | translate }}</span>
+          </div>
+          <div class="alert-progress"></div>
         </div>
 
         <!-- Error Alert -->
-        <div *ngIf="error" class="alert alert-danger">
-          <i class="bi bi-exclamation-triangle-fill me-2"></i>
-          {{ error }}
+        <div *ngIf="error" class="alert alert-danger-modern alert-dismissible">
+          <div class="alert-content">
+            <i class="bi bi-exclamation-triangle-fill"></i>
+            <span>{{ error }}</span>
+          </div>
+          <button type="button" class="alert-close" (click)="error = null">
+            <i class="bi bi-x-lg"></i>
+          </button>
+          <div class="alert-progress"></div>
         </div>
 
         <!-- Info Box -->
-        <div class="info-box">
+        <div class="info-box-modern mb-4">
           <i class="bi bi-telephone-fill"></i>
-          <p>Provide your contact information. We'll use this to reach you regarding your application.</p>
+          <p class="mb-0">Provide your contact information. We'll use this to reach you regarding your application.</p>
         </div>
 
         <!-- Form -->
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
-          <!-- Primary Contact Section -->
-          <div class="section-title">
-            <i class="bi bi-phone"></i>
-            <span>Contact Information</span>
+          <!-- Contact Information Section -->
+          <div class="section-header mb-4">
+            <div class="section-icon">
+              <i class="bi bi-phone"></i>
+            </div>
+            <div>
+              <h5 class="mb-0 fw-bold">Contact Information</h5>
+              <small class="text-muted">Enter your phone numbers and contact details</small>
+            </div>
           </div>
 
-          <div class="row g-3">
+          <!-- Country Code & Primary Contact - Horizontal -->
+          <div class="form-row-horizontal mb-4">
             <!-- Country Code -->
-            <div class="col-12">
-              <label class="form-label-modern">
-                <i class="bi bi-flag"></i>
+            <div class="form-group-horizontal" style="flex: 0 0 200px;">
+              <label class="form-label-horizontal">
+                <i class="bi bi-flag me-1"></i>
                 {{ 'kyc.contactInfo.countryCode' | translate }}
-                <span class="required">*</span>
+                <span class="text-danger">*</span>
               </label>
-              <select class="form-control form-control-modern" formControlName="countryCode">
-                <option value="+966">+966 (Saudi Arabia)</option>
-                <option value="+971">+971 (UAE)</option>
-                <option value="+965">+965 (Kuwait)</option>
-                <option value="+973">+973 (Bahrain)</option>
-                <option value="+974">+974 (Qatar)</option>
+              <select class="form-control-horizontal" formControlName="countryCode">
+                <option value="+966">🇸🇦 +966 (Saudi Arabia)</option>
+                <option value="+971">🇦🇪 +971 (UAE)</option>
+                <option value="+965">🇰🇼 +965 (Kuwait)</option>
+                <option value="+973">🇧🇭 +973 (Bahrain)</option>
+                <option value="+974">🇶🇦 +974 (Qatar)</option>
               </select>
             </div>
 
-            <!-- Primary Contact (Read-only - from login) -->
-            <div class="col-12">
-              <label class="form-label-modern">
-                <i class="bi bi-phone-vibrate"></i>
+            <!-- Primary Contact (Read-only) -->
+            <div class="form-group-horizontal" style="flex: 1;">
+              <label class="form-label-horizontal">
+                <i class="bi bi-phone-vibrate me-1"></i>
                 {{ 'kyc.contactInfo.primaryContact' | translate }}
-                <span class="required">*</span>
+                <span class="text-danger">*</span>
               </label>
               <div class="input-readonly-wrapper">
                 <input 
                   type="tel" 
-                  class="form-control form-control-modern readonly-input" 
+                  class="form-control-horizontal readonly-input" 
                   formControlName="primaryContact" 
                   placeholder="5XXXXXXXX"
                   readonly
                 />
                 <span class="readonly-badge">
-                  <i class="bi bi-lock-fill"></i>
+                  <i class="bi bi-lock-fill me-1"></i>
                   From Login
                 </span>
               </div>
             </div>
+          </div>
 
-            <!-- Alternative Mobile -->
-            <div class="col-12">
-              <label class="form-label-modern">
-                <i class="bi bi-phone"></i>
-                {{ 'kyc.contactInfo.altMobile' | translate }}
-              </label>
-              <input 
-                type="tel" 
-                class="form-control form-control-modern" 
-                formControlName="altMobile" 
-                placeholder="5XXXXXXXX (Optional)"
-              />
-            </div>
+          <!-- Alternative Mobile - Full Width -->
+          <div class="form-group-full mb-4">
+            <label class="form-label-horizontal">
+              <i class="bi bi-phone me-1"></i>
+              {{ 'kyc.contactInfo.altMobile' | translate }}
+              <small class="text-muted ms-2">(Optional)</small>
+            </label>
+            <input 
+              type="tel" 
+              class="form-control-horizontal" 
+              formControlName="altMobile" 
+              placeholder="5XXXXXXXX (Alternative contact number)"
+            />
           </div>
 
           <!-- Actions -->
-          <div class="kyc-actions">
-            <button type="button" class="btn-previous-modern" (click)="goBack()">
-              <i class="bi bi-arrow-left"></i>
-              <span>{{ 'kyc.buttons.back' | translate }}</span>
+          <div class="form-actions-horizontal mt-4">
+            <button type="button" class="btn-secondary-modern" (click)="goBack()">
+              <i class="bi bi-arrow-left me-2"></i>
+              {{ 'kyc.buttons.back' | translate }}
             </button>
-            <button type="submit" class="btn-save-modern" [disabled]="form.invalid || loading">
-              <span class="btn-content" *ngIf="!loading">
-                <span>{{ 'kyc.buttons.saveAndContinue' | translate }}</span>
-                <i class="bi bi-arrow-right"></i>
+            <button type="submit" class="btn-primary-modern" [disabled]="form.invalid || loading">
+              <span *ngIf="!loading">
+                {{ 'kyc.buttons.saveAndContinue' | translate }}
+                <i class="bi bi-arrow-right ms-2"></i>
               </span>
-              <span class="btn-content" *ngIf="loading">
-                <span class="spinner"></span>
-                <span>{{ 'kyc.buttons.saving' | translate }}</span>
+              <span *ngIf="loading">
+                <span class="spinner-border spinner-border-sm me-2"></span>
+                {{ 'kyc.buttons.saving' | translate }}
               </span>
             </button>
           </div>

@@ -1,51 +1,69 @@
 <div class="step-container fade-in">
   <div class="row justify-content-center">
-    <div class="col-lg-8">
+    <div class="col-lg-10">
       <div class="card-modern p-4">
         <!-- Header -->
         <div class="d-flex align-items-center mb-4">
-          <div class="step-number">4</div>
+          <div class="step-number-modern">
+            <span>4</span>
+          </div>
           <div class="ms-3">
-            <h3 class="mb-1">{{ 'kyc.employmentInfo.title' | translate }}</h3>
-            <p class="text-secondary mb-0">{{ 'kyc.employmentInfo.subtitle' | translate }}</p>
+            <h3 class="mb-1 fw-bold">{{ 'kyc.employmentInfo.title' | translate }}</h3>
+            <p class="text-muted mb-0">{{ 'kyc.employmentInfo.subtitle' | translate }}</p>
           </div>
         </div>
 
         <!-- Success Alert -->
-        <div *ngIf="success" class="alert alert-success">
-          <i class="bi bi-check-circle-fill me-2"></i>
-          {{ 'kyc.messages.saveSuccess' | translate }}
+        <div *ngIf="success" class="alert alert-success-modern alert-dismissible">
+          <div class="alert-content">
+            <i class="bi bi-check-circle-fill"></i>
+            <span>{{ 'kyc.messages.saveSuccess' | translate }}</span>
+          </div>
+          <div class="alert-progress"></div>
         </div>
 
         <!-- Error Alert -->
-        <div *ngIf="error" class="alert alert-danger">
-          <i class="bi bi-exclamation-triangle-fill me-2"></i>
-          {{ error }}
+        <div *ngIf="error" class="alert alert-danger-modern alert-dismissible">
+          <div class="alert-content">
+            <i class="bi bi-exclamation-triangle-fill"></i>
+            <span>{{ error }}</span>
+          </div>
+          <button type="button" class="alert-close" (click)="error = null">
+            <i class="bi bi-x-lg"></i>
+          </button>
+          <div class="alert-progress"></div>
         </div>
 
         <!-- Info Box -->
-        <div class="info-box">
+        <div class="info-box-modern mb-4">
           <i class="bi bi-briefcase-fill"></i>
-          <p>Tell us about your current employment status and work experience.</p>
+          <p class="mb-0">Tell us about your current employment status and work experience.</p>
         </div>
 
         <!-- Form -->
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
           <!-- Employment Status Section -->
-          <div class="section-title">
-            <i class="bi bi-person-workspace"></i>
-            <span>Employment Status</span>
+          <div class="section-header mb-4">
+            <div class="section-icon">
+              <i class="bi bi-person-workspace"></i>
+            </div>
+            <div>
+              <h5 class="mb-0 fw-bold">Employment Status</h5>
+              <small class="text-muted">Provide your current employment information</small>
+            </div>
           </div>
 
-          <div class="row g-3">
-            <!-- Row 1: Employment Type, Employer Name, Job Title -->
-            <div class="col-md-4">
-              <label class="form-label-modern">
+          <!-- Employment Type & Employer Name - Horizontal -->
+          <div class="form-row-horizontal mb-4">
+            <!-- Employment Type -->
+            <div class="form-group-horizontal" style="flex: 1;">
+              <label class="form-label-horizontal">
+                <i class="bi bi-briefcase me-1"></i>
                 {{ 'kyc.employmentInfo.employmentType' | translate }}
-                <span class="required">*</span>
+                <span class="text-danger">*</span>
               </label>
-              <select class="form-control form-control-modern" formControlName="employmentType">
-                <option value="">-</option>
+              <select class="form-control-horizontal" formControlName="employmentType">
+                <option value="">Select employment type</option>
                 <option value="EMPLOYED">{{ 'kyc.employmentInfo.employed' | translate }}</option>
                 <option value="SELF_EMPLOYED">{{ 'kyc.employmentInfo.selfEmployed' | translate }}</option>
                 <option value="UNEMPLOYED">{{ 'kyc.employmentInfo.unemployed' | translate }}</option>
@@ -54,94 +72,111 @@
               </select>
             </div>
 
-            <div class="col-md-4">
-              <label class="form-label-modern">
-                <i class="bi bi-building"></i>
+            <!-- Employer Name -->
+            <div class="form-group-horizontal" style="flex: 1;">
+              <label class="form-label-horizontal">
+                <i class="bi bi-building me-1"></i>
                 {{ 'kyc.employmentInfo.employerName' | translate }}
-                <span class="required">*</span>
+                <span class="text-danger">*</span>
               </label>
               <input 
                 type="text" 
-                class="form-control form-control-modern" 
+                class="form-control-horizontal" 
                 formControlName="employerName"
-                placeholder="Employer name"
-              />
-            </div>
-
-            <div class="col-md-4">
-              <label class="form-label-modern">
-                <i class="bi bi-person-badge"></i>
-                {{ 'kyc.employmentInfo.jobTitle' | translate }}
-                <span class="required">*</span>
-              </label>
-              <input 
-                type="text" 
-                class="form-control form-control-modern" 
-                formControlName="jobTitle"
-                placeholder="Job title"
-              />
-            </div>
-
-            <!-- Row 2: Occupation, Employment Years, Monthly Income -->
-            <div class="col-md-4">
-              <label class="form-label-modern">
-                <i class="bi bi-tools"></i>
-                {{ 'kyc.employmentInfo.occupation' | translate }}
-                <span class="required">*</span>
-              </label>
-              <input 
-                type="text" 
-                class="form-control form-control-modern" 
-                formControlName="occupation"
-                placeholder="Occupation"
-              />
-            </div>
-
-            <div class="col-md-4">
-              <label class="form-label-modern">
-                <i class="bi bi-calendar-check"></i>
-                {{ 'kyc.employmentInfo.employmentYears' | translate }}
-                <span class="required">*</span>
-              </label>
-              <input 
-                type="number" 
-                class="form-control form-control-modern" 
-                formControlName="employmentYears" 
-                min="0"
-                placeholder="Years"
-              />
-            </div>
-
-            <div class="col-md-4">
-              <label class="form-label-modern">
-                <i class="bi bi-currency-dollar"></i>
-                {{ 'kyc.employmentInfo.monthlyIncome' | translate }}
-                <span class="required">*</span>
-              </label>
-              <input 
-                type="number" 
-                class="form-control form-control-modern" 
-                formControlName="monthlyIncome" 
-                min="0"
-                placeholder="Monthly income"
+                placeholder="Enter employer name"
               />
             </div>
           </div>
 
+          <!-- Job Title & Occupation - Horizontal -->
+          <div class="form-row-horizontal mb-4">
+            <!-- Job Title -->
+            <div class="form-group-horizontal" style="flex: 1;">
+              <label class="form-label-horizontal">
+                <i class="bi bi-person-badge me-1"></i>
+                {{ 'kyc.employmentInfo.jobTitle' | translate }}
+                <span class="text-danger">*</span>
+              </label>
+              <input 
+                type="text" 
+                class="form-control-horizontal" 
+                formControlName="jobTitle"
+                placeholder="Enter job title"
+              />
+            </div>
+
+            <!-- Occupation -->
+            <div class="form-group-horizontal" style="flex: 1;">
+              <label class="form-label-horizontal">
+                <i class="bi bi-tools me-1"></i>
+                {{ 'kyc.employmentInfo.occupation' | translate }}
+                <span class="text-danger">*</span>
+              </label>
+              <input 
+                type="text" 
+                class="form-control-horizontal" 
+                formControlName="occupation"
+                placeholder="Enter occupation"
+              />
+            </div>
+          </div>
+
+          <!-- Employment Years & Monthly Income - Horizontal -->
+          <div class="form-row-horizontal mb-4">
+            <!-- Employment Years -->
+            <div class="form-group-horizontal" style="flex: 1;">
+              <label class="form-label-horizontal">
+                <i class="bi bi-calendar-check me-1"></i>
+                {{ 'kyc.employmentInfo.employmentYears' | translate }}
+                <span class="text-danger">*</span>
+              </label>
+              <div class="input-group-horizontal">
+                <input 
+                  type="number" 
+                  class="form-control-horizontal" 
+                  formControlName="employmentYears" 
+                  min="0"
+                  placeholder="0"
+                  style="border-radius: 8px 0 0 8px;"
+                />
+                <span class="input-group-text-horizontal" style="border-radius: 0 8px 8px 0;">Years</span>
+              </div>
+            </div>
+
+            <!-- Monthly Income -->
+            <div class="form-group-horizontal" style="flex: 1;">
+              <label class="form-label-horizontal">
+                <i class="bi bi-currency-dollar me-1"></i>
+                {{ 'kyc.employmentInfo.monthlyIncome' | translate }}
+                <span class="text-danger">*</span>
+              </label>
+              <div class="input-group-horizontal">
+                <span class="input-group-text-horizontal">SAR</span>
+                <input 
+                  type="number" 
+                  class="form-control-horizontal" 
+                  formControlName="monthlyIncome" 
+                  min="0"
+                  placeholder="0.00"
+                />
+              </div>
+            </div>
+          </div>
+
           <!-- Actions -->
-          <div class="kyc-actions">
-            <button type="button" class="btn-previous-modern" (click)="goBack()">
-              <i class="bi bi-arrow-left"></i>
-              <span>{{ 'kyc.buttons.back' | translate }}</span>
+          <div class="form-actions-horizontal mt-4">
+            <button type="button" class="btn-secondary-modern" (click)="goBack()">
+              <i class="bi bi-arrow-left me-2"></i>
+              {{ 'kyc.buttons.back' | translate }}
             </button>
-            <button type="submit" class="btn-save-modern" [disabled]="form.invalid || loading">
-              <span class="btn-content" *ngIf="!loading">
-                <span>{{ 'kyc.buttons.saveAndContinue' | translate }}</span>
-                <i class="bi bi-arrow-right"></i>
+            <button type="submit" class="btn-primary-modern" [disabled]="form.invalid || loading">
+              <span *ngIf="!loading">
+                {{ 'kyc.buttons.saveAndContinue' | translate }}
+                <i class="bi bi-arrow-right ms-2"></i>
               </span>
-              <span class="btn-content" *ngIf="loading">
-                <span class="spinner"></span>
-                <span>{{ 'kyc.buttons.saving' | translate }}</span>
+              <span *ngIf="loading">
+                <span class="spinner-border spinner-border-sm me-2"></span>
+                {{ 'kyc.buttons.saving' | translate }}
               </span>
             </button>
           </div>

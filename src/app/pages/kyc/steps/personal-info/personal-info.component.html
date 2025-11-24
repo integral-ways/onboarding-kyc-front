@@ -4,15 +4,17 @@
       <div class="card-modern p-4">
         <!-- Header -->
         <div class="d-flex align-items-center mb-4">
-          <div class="step-number">1</div>
+          <div class="step-number-modern">
+            <span>1</span>
+          </div>
           <div class="ms-3">
-            <h3 class="mb-1">{{ 'steps.personalInfo' | translate }}</h3>
-            <p class="text-secondary mb-0">{{ 'kyc.personalInfo.subtitle' | translate }}</p>
+            <h3 class="mb-1 fw-bold">{{ 'steps.personalInfo' | translate }}</h3>
+            <p class="text-muted mb-0">{{ 'kyc.personalInfo.subtitle' | translate }}</p>
           </div>
         </div>
 
         <!-- Success Alert -->
-        <div *ngIf="success" class="alert alert-success alert-dismissible">
+        <div *ngIf="success" class="alert alert-success-modern alert-dismissible">
           <div class="alert-content">
             <i class="bi bi-check-circle-fill"></i>
             <span>{{ 'kyc.messages.saveSuccess' | translate }} {{ 'kyc.messages.movingToNext' | translate }}</span>
@@ -21,7 +23,7 @@
         </div>
 
         <!-- Error Alert -->
-        <div *ngIf="error" class="alert alert-danger alert-dismissible">
+        <div *ngIf="error" class="alert alert-danger-modern alert-dismissible">
           <div class="alert-content">
             <i class="bi bi-exclamation-triangle-fill"></i>
             <span>{{ error }}</span>
@@ -35,146 +37,450 @@
         <!-- Form -->
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
 
-  <!-- Personal Details Section -->
-  <div class="section-title d-flex align-items-center gap-2 mb-3">
-    <i class="bi bi-person-circle"></i>
-    <span>{{ 'kyc.personalInfo.title' | translate }}</span>
-  </div>
+          <!-- Personal Details Section -->
+          <div class="section-header mb-4">
+            <div class="section-icon">
+              <i class="bi bi-person-circle"></i>
+            </div>
+            <div>
+              <h5 class="mb-0 fw-bold">{{ 'kyc.personalInfo.title' | translate }}</h5>
+              <small class="text-muted">Enter your personal information</small>
+            </div>
+          </div>
 
-  <!-- Horizontal Row 1 -->
-  <div class="row g-3 align-items-end">
+          <!-- Name Fields - Horizontal Layout -->
+          <div class="form-row-horizontal mb-4">
+            <!-- Title -->
+            <div class="form-group-horizontal" style="flex: 0 0 120px;">
+              <label class="form-label-horizontal">
+                <i class="bi bi-award me-1"></i>
+                {{ 'fields.title' | translate }}
+              </label>
+              <select class="form-control-horizontal" formControlName="title">
+                <option value="">Select</option>
+                <option value="Mr">Mr</option>
+                <option value="Mrs">Mrs</option>
+                <option value="Ms">Ms</option>
+                <option value="Dr">Dr</option>
+              </select>
+            </div>
 
-    <!-- Title -->
-    <div class="col-lg-2 col-md-3">
-      <label class="form-label-modern">
-        {{ 'fields.title' | translate }}
-      </label>
-      <select class="form-control form-control-modern" formControlName="title">
-        <option value="">-</option>
-        <option value="Mr">Mr</option>
-        <option value="Mrs">Mrs</option>
-        <option value="Ms">Ms</option>
-        <option value="Dr">Dr</option>
-      </select>
-    </div>
+            <!-- First Name -->
+            <div class="form-group-horizontal" style="flex: 1;">
+              <label class="form-label-horizontal">
+                <i class="bi bi-person me-1"></i>
+                {{ 'fields.firstName' | translate }} <span class="text-danger">*</span>
+              </label>
+              <input type="text" class="form-control-horizontal"
+                formControlName="firstName" 
+                [placeholder]="'placeholders.firstName' | translate" />
+              <div class="invalid-feedback" *ngIf="form.get('firstName')?.invalid && form.get('firstName')?.touched">
+                First name is required
+              </div>
+            </div>
 
-    <!-- First Name -->
-    <div class="col-lg-3 col-md-4">
-      <label class="form-label-modern">
-        <i class="bi bi-person"></i>
-        {{ 'fields.firstName' | translate }} <span class="required">*</span>
-      </label>
-      <input type="text" class="form-control form-control-modern"
-        formControlName="firstName" [placeholder]="'placeholders.firstName' | translate" />
-    </div>
+            <!-- Second Name -->
+            <div class="form-group-horizontal" style="flex: 1;">
+              <label class="form-label-horizontal">
+                <i class="bi bi-person me-1"></i>
+                {{ 'fields.secondName' | translate }}
+              </label>
+              <input type="text" class="form-control-horizontal"
+                formControlName="secondName" 
+                [placeholder]="'placeholders.secondName' | translate" />
+            </div>
+          </div>
 
-    <!-- Second Name -->
-    <div class="col-lg-3 col-md-4">
-      <label class="form-label-modern">
-        <i class="bi bi-person"></i>
-        {{ 'fields.secondName' | translate }}
-      </label>
-      <input type="text" class="form-control form-control-modern"
-        formControlName="secondName" [placeholder]="'placeholders.secondName' | translate" />
-    </div>
+          <!-- Last Name & Family Name - Horizontal Layout -->
+          <div class="form-row-horizontal mb-4">
+            <!-- Last Name -->
+            <div class="form-group-horizontal" style="flex: 1;">
+              <label class="form-label-horizontal">
+                <i class="bi bi-person-badge me-1"></i>
+                {{ 'fields.lastName' | translate }}
+              </label>
+              <input type="text" class="form-control-horizontal"
+                formControlName="lastName" 
+                [placeholder]="'placeholders.lastName' | translate" />
+            </div>
 
-    <!-- Family Name -->
-    <div class="col-lg-4 col-md-4">
-      <label class="form-label-modern">
-        <i class="bi bi-people"></i>
-        {{ 'fields.familyName' | translate }} <span class="required">*</span>
-      </label>
-      <input type="text" class="form-control form-control-modern"
-        formControlName="familyName" [placeholder]="'placeholders.familyName' | translate" />
-    </div>
+            <!-- Family Name -->
+            <div class="form-group-horizontal" style="flex: 1;">
+              <label class="form-label-horizontal">
+                <i class="bi bi-people me-1"></i>
+                {{ 'fields.familyName' | translate }} <span class="text-danger">*</span>
+              </label>
+              <input type="text" class="form-control-horizontal"
+                formControlName="familyName" 
+                [placeholder]="'placeholders.familyName' | translate" />
+              <div class="invalid-feedback" *ngIf="form.get('familyName')?.invalid && form.get('familyName')?.touched">
+                Family name is required
+              </div>
+            </div>
+          </div>
 
-  </div>
+          <hr class="section-divider my-4" />
 
-  <hr class="section-divider my-4" />
+          <!-- Financial Information Section -->
+          <div class="section-header mb-4">
+            <div class="section-icon">
+              <i class="bi bi-cash-stack"></i>
+            </div>
+            <div>
+              <h5 class="mb-0 fw-bold">Financial Information</h5>
+              <small class="text-muted">Provide your financial details</small>
+            </div>
+          </div>
 
-  <!-- Financial Information Section -->
-  <div class="section-title d-flex align-items-center gap-2 mb-3">
-    <i class="bi bi-cash-stack"></i>
-    <span>Financial Information</span>
-  </div>
+          <!-- Financial Fields - Horizontal Layout -->
+          <div class="form-row-horizontal mb-4">
+            <!-- Dependents -->
+            <div class="form-group-horizontal" style="flex: 1;">
+              <label class="form-label-horizontal">
+                <i class="bi bi-people-fill me-1"></i>
+                {{ 'fields.dependents' | translate }}
+              </label>
+              <input type="number" class="form-control-horizontal" 
+                formControlName="numOfDependents"
+                min="0" 
+                [placeholder]="'placeholders.dependents' | translate" />
+            </div>
 
-  <!-- Horizontal Row 2 -->
-  <div class="row g-3 align-items-end">
+            <!-- Net Worth -->
+            <div class="form-group-horizontal" style="flex: 1;">
+              <label class="form-label-horizontal">
+                <i class="bi bi-wallet2 me-1"></i>
+                {{ 'fields.netWorth' | translate }}
+              </label>
+              <div class="input-group-horizontal">
+                <span class="input-group-text-horizontal">SAR</span>
+                <input type="number" class="form-control-horizontal"
+                  formControlName="netWorth" 
+                  [placeholder]="'placeholders.netWorth' | translate" />
+              </div>
+            </div>
 
-    <!-- Dependents -->
-    <div class="col-lg-4 col-md-4">
-      <label class="form-label-modern">
-        <i class="bi bi-people-fill"></i>
-        {{ 'fields.dependents' | translate }}
-      </label>
-      <input type="number" class="form-control form-control-modern" formControlName="numOfDependents"
-        min="0" [placeholder]="'placeholders.dependents' | translate" />
-    </div>
+            <!-- Net Growth -->
+            <div class="form-group-horizontal" style="flex: 1;">
+              <label class="form-label-horizontal">
+                <i class="bi bi-graph-up-arrow me-1"></i>
+                {{ 'fields.netGrowth' | translate }}
+              </label>
+              <div class="input-group-horizontal">
+                <span class="input-group-text-horizontal">SAR</span>
+                <input type="number" class="form-control-horizontal"
+                  formControlName="netGrowth" 
+                  [placeholder]="'placeholders.netGrowth' | translate" />
+              </div>
+            </div>
+          </div>
 
-    <!-- Net Worth -->
-    <div class="col-lg-4 col-md-4">
-      <label class="form-label-modern">
-        <i class="bi bi-wallet2"></i>
-        {{ 'fields.netWorth' | translate }}
-      </label>
-      <input type="number" class="form-control form-control-modern"
-        formControlName="netWorth" [placeholder]="'placeholders.netWorth' | translate" />
-    </div>
+          <!-- Income Source - Horizontal Checkboxes -->
+          <div class="form-group-full mb-4">
+            <label class="form-label-horizontal mb-3">
+              <i class="bi bi-briefcase me-1"></i>
+              {{ 'fields.incomeSource' | translate }}
+            </label>
+            <div class="income-source-horizontal">
+              <div class="income-source-item" *ngFor="let source of incomeSources">
+                <input 
+                  class="form-check-input-modern" 
+                  type="checkbox" 
+                  [id]="'income-' + source.value"
+                  [value]="source.value"
+                  (change)="onIncomeSourceChange($event, source.value)"
+                  [checked]="isIncomeSourceSelected(source.value)"
+                >
+                <label class="income-source-label" [for]="'income-' + source.value">
+                  <i [class]="source.icon"></i>
+                  <span>{{ source.label | translate }}</span>
+                </label>
+              </div>
+            </div>
+          </div>
 
-    <!-- Net Growth -->
-    <div class="col-lg-4 col-md-4">
-      <label class="form-label-modern">
-        <i class="bi bi-graph-up-arrow"></i>
-        {{ 'fields.netGrowth' | translate }}
-      </label>
-      <input type="number" class="form-control form-control-modern"
-        formControlName="netGrowth" [placeholder]="'placeholders.netGrowth' | translate" />
-    </div>
+          <!-- Actions -->
+          <div class="form-actions-horizontal mt-4">
+            <button type="button" class="btn-secondary-modern" routerLink="/kyc">
+              <i class="bi bi-arrow-left me-2"></i>
+              {{ 'kyc.buttons.back' | translate }}
+            </button>
+            <button type="submit" class="btn-primary-modern"
+              [disabled]="form.invalid || loading">
+              <span *ngIf="!loading">
+                {{ 'kyc.save' | translate }}
+                <i class="bi bi-arrow-right ms-2"></i>
+              </span>
+              <span *ngIf="loading">
+                <span class="spinner-border spinner-border-sm me-2"></span>
+                {{ 'kyc.buttons.saving' | translate }}
+              </span>
+            </button>
+          </div>
 
-    <!-- Income Source - Multiple Select -->
-    <div class="col-12">
-      <label class="form-label-modern">
-        <i class="bi bi-briefcase"></i>
-        {{ 'fields.incomeSource' | translate }}
-      </label>
-      <div class="income-source-grid">
-        <div class="form-check income-source-option" *ngFor="let source of incomeSources">
-          <input 
-            class="form-check-input" 
-            type="checkbox" 
-            [id]="'income-' + source.value"
-            [value]="source.value"
-            (change)="onIncomeSourceChange($event, source.value)"
-            [checked]="isIncomeSourceSelected(source.value)"
-          >
-          <label class="form-check-label" [for]="'income-' + source.value">
-            <i [class]="source.icon"></i>
-            {{ source.label | translate }}
-          </label>
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- Actions -->
-  <div class="kyc-actions justify-end mt-4">
-    <button type="submit" class="btn-save-modern"
-      [disabled]="form.invalid || loading">
-      <span class="btn-content" *ngIf="!loading">
-        {{ 'kyc.save' | translate }}
-        <i class="bi bi-arrow-right"></i>
-      </span>
-      <span class="btn-content" *ngIf="loading">
-        <span class="spinner"></span>
-        {{ 'kyc.buttons.saving' | translate }}
-      </span>
-    </button>
-  </div>
-
-</form>
+        </form>
 
       </div>
     </div>
   </div>
 </div>
+
+<style>
+/* Step Number Modern */
+.step-number-modern {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  box-shadow: 0 4px 6px rgba(99, 102, 241, 0.3);
+}
+
+/* Section Header */
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.section-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: #6366f1;
+}
+
+/* Horizontal Form Layout */
+.form-row-horizontal {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.form-group-horizontal {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.form-group-full {
+  width: 100%;
+}
+
+.form-label-horizontal {
+  font-weight: 600;
+  color: #475569;
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+}
+
+.form-control-horizontal {
+  padding: 0.75rem 1rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 0.9375rem;
+  transition: all 0.3s ease;
+  background: white;
+}
+
+.form-control-horizontal:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+  outline: none;
+}
+
+.form-control-horizontal:disabled {
+  background: #f8fafc;
+  cursor: not-allowed;
+}
+
+/* Input Group Horizontal */
+.input-group-horizontal {
+  display: flex;
+  align-items: stretch;
+}
+
+.input-group-text-horizontal {
+  padding: 0.75rem 1rem;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  border: 2px solid #e2e8f0;
+  border-right: none;
+  border-radius: 8px 0 0 8px;
+  font-weight: 600;
+  color: #64748b;
+  font-size: 0.875rem;
+}
+
+.input-group-horizontal .form-control-horizontal {
+  border-radius: 0 8px 8px 0;
+}
+
+/* Income Source Horizontal */
+.income-source-horizontal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.income-source-item {
+  position: relative;
+}
+
+.form-check-input-modern {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.income-source-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  color: #475569;
+  user-select: none;
+}
+
+.income-source-label i {
+  font-size: 1.125rem;
+  color: #6366f1;
+}
+
+.income-source-label:hover {
+  border-color: #6366f1;
+  background: #f8fafc;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(99, 102, 241, 0.1);
+}
+
+.form-check-input-modern:checked + .income-source-label {
+  border-color: #6366f1;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  color: white;
+  box-shadow: 0 4px 6px rgba(99, 102, 241, 0.3);
+}
+
+.form-check-input-modern:checked + .income-source-label i {
+  color: white;
+}
+
+/* Form Actions Horizontal */
+.form-actions-horizontal {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1.5rem;
+  border-top: 2px solid #f1f5f9;
+}
+
+.btn-primary-modern {
+  padding: 0.875rem 2rem;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(99, 102, 241, 0.3);
+}
+
+.btn-primary-modern:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(99, 102, 241, 0.4);
+}
+
+.btn-primary-modern:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-secondary-modern {
+  padding: 0.875rem 2rem;
+  background: white;
+  color: #64748b;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-secondary-modern:hover {
+  border-color: #cbd5e1;
+  background: #f8fafc;
+  transform: translateY(-2px);
+}
+
+/* Section Divider */
+.section-divider {
+  border: none;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, #e2e8f0 50%, transparent 100%);
+}
+
+/* Alerts Modern */
+.alert-success-modern {
+  background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+  border: 2px solid #6ee7b7;
+  border-radius: 8px;
+  color: #065f46;
+}
+
+.alert-danger-modern {
+  background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+  border: 2px solid #fca5a5;
+  border-radius: 8px;
+  color: #991b1b;
+}
+
+/* Invalid Feedback */
+.invalid-feedback {
+  display: block;
+  color: #ef4444;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .form-row-horizontal {
+    flex-direction: column;
+  }
+  
+  .form-group-horizontal {
+    width: 100% !important;
+    flex: 1 !important;
+  }
+  
+  .form-actions-horizontal {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .btn-primary-modern,
+  .btn-secondary-modern {
+    width: 100%;
+  }
+}
+</style>

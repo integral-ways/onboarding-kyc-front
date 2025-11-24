@@ -6,7 +6,10 @@ import { KycService } from '../../../../services/kyc.service';
 @Component({
   selector: 'app-employment-info',
   templateUrl: './employment-info.component.html',
-  styleUrls: ['./employment-info.component.scss']
+  styleUrls: [
+    './employment-info.component.scss',
+    '../shared-horizontal-form-styles.scss'
+  ]
 })
 export class EmploymentInfoComponent implements OnInit {
   form!: FormGroup;

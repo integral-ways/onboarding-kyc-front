@@ -1,133 +1,153 @@
 <div class="step-container fade-in">
   <div class="row justify-content-center">
-    <div class="col-lg-8">
+    <div class="col-lg-10">
       <div class="card-modern p-4">
         <!-- Header -->
         <div class="d-flex align-items-center mb-4">
-          <div class="step-number">2</div>
+          <div class="step-number-modern">
+            <span>2</span>
+          </div>
           <div class="ms-3">
-            <h3 class="mb-1">{{ 'kyc.addressInfo.title' | translate }}</h3>
-            <p class="text-secondary mb-0">{{ 'kyc.addressInfo.subtitle' | translate }}</p>
+            <h3 class="mb-1 fw-bold">{{ 'kyc.addressInfo.title' | translate }}</h3>
+            <p class="text-muted mb-0">{{ 'kyc.addressInfo.subtitle' | translate }}</p>
           </div>
         </div>
 
         <!-- Success Alert -->
-        <div *ngIf="success" class="alert alert-success">
-          <i class="bi bi-check-circle-fill me-2"></i>
-          {{ 'kyc.messages.saveSuccess' | translate }}
+        <div *ngIf="success" class="alert alert-success-modern alert-dismissible">
+          <div class="alert-content">
+            <i class="bi bi-check-circle-fill"></i>
+            <span>{{ 'kyc.messages.saveSuccess' | translate }}</span>
+          </div>
+          <div class="alert-progress"></div>
         </div>
 
         <!-- Error Alert -->
-        <div *ngIf="error" class="alert alert-danger">
-          <i class="bi bi-exclamation-triangle-fill me-2"></i>
-          {{ error }}
+        <div *ngIf="error" class="alert alert-danger-modern alert-dismissible">
+          <div class="alert-content">
+            <i class="bi bi-exclamation-triangle-fill"></i>
+            <span>{{ error }}</span>
+          </div>
+          <button type="button" class="alert-close" (click)="error = null">
+            <i class="bi bi-x-lg"></i>
+          </button>
+          <div class="alert-progress"></div>
         </div>
 
         <!-- Info Box -->
-        <div class="info-box">
+        <div class="info-box-modern mb-4">
           <i class="bi bi-info-circle-fill"></i>
-          <p>Please provide your current residential address details. All fields marked with * are required.</p>
+          <p class="mb-0">Please provide your current residential address details. All fields marked with * are required.</p>
         </div>
 
         <!-- Form -->
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
           <!-- Location Section -->
-          <div class="section-title">
-            <i class="bi bi-geo-alt"></i>
-            <span>Location Details</span>
+          <div class="section-header mb-4">
+            <div class="section-icon">
+              <i class="bi bi-geo-alt"></i>
+            </div>
+            <div>
+              <h5 class="mb-0 fw-bold">Location Details</h5>
+              <small class="text-muted">Enter your residential address information</small>
+            </div>
           </div>
 
-          <div class="row g-3">
+          <!-- Country & City - Horizontal -->
+          <div class="form-row-horizontal mb-4">
             <!-- Country -->
-            <div class="col-12">
-              <label class="form-label-modern">
-                <i class="bi bi-globe"></i>
+            <div class="form-group-horizontal" style="flex: 1;">
+              <label class="form-label-horizontal">
+                <i class="bi bi-globe me-1"></i>
                 {{ 'kyc.addressInfo.country' | translate }}
-                <span class="required">*</span>
+                <span class="text-danger">*</span>
               </label>
               <input 
                 type="text" 
-                class="form-control form-control-modern" 
+                class="form-control-horizontal" 
                 formControlName="country"
                 placeholder="Enter country"
               />
             </div>
 
             <!-- City -->
-            <div class="col-12">
-              <label class="form-label-modern">
-                <i class="bi bi-building"></i>
+            <div class="form-group-horizontal" style="flex: 1;">
+              <label class="form-label-horizontal">
+                <i class="bi bi-building me-1"></i>
                 {{ 'kyc.addressInfo.city' | translate }}
-                <span class="required">*</span>
+                <span class="text-danger">*</span>
               </label>
               <input 
                 type="text" 
-                class="form-control form-control-modern" 
+                class="form-control-horizontal" 
                 formControlName="city"
                 placeholder="Enter city"
               />
             </div>
+          </div>
 
+          <!-- District & Building Number - Horizontal -->
+          <div class="form-row-horizontal mb-4">
             <!-- District -->
-            <div class="col-12">
-              <label class="form-label-modern">
-                <i class="bi bi-map"></i>
+            <div class="form-group-horizontal" style="flex: 2;">
+              <label class="form-label-horizontal">
+                <i class="bi bi-map me-1"></i>
                 {{ 'kyc.addressInfo.district' | translate }}
-                <span class="required">*</span>
+                <span class="text-danger">*</span>
               </label>
               <input 
                 type="text" 
-                class="form-control form-control-modern" 
+                class="form-control-horizontal" 
                 formControlName="district"
                 placeholder="Enter district"
               />
             </div>
 
             <!-- Building Number -->
-            <div class="col-12">
-              <label class="form-label-modern">
-                <i class="bi bi-hash"></i>
+            <div class="form-group-horizontal" style="flex: 1;">
+              <label class="form-label-horizontal">
+                <i class="bi bi-hash me-1"></i>
                 {{ 'kyc.addressInfo.buildingNumber' | translate }}
-                <span class="required">*</span>
+                <span class="text-danger">*</span>
               </label>
               <input 
                 type="text" 
-                class="form-control form-control-modern" 
+                class="form-control-horizontal" 
                 formControlName="buildingNumber"
-                placeholder="Enter building number"
-              />
-            </div>
-
-            <!-- Street -->
-            <div class="col-12">
-              <label class="form-label-modern">
-                <i class="bi bi-signpost"></i>
-                {{ 'kyc.addressInfo.street' | translate }}
-                <span class="required">*</span>
-              </label>
-              <input 
-                type="text" 
-                class="form-control form-control-modern" 
-                formControlName="street"
-                placeholder="Enter street name"
+                placeholder="Building #"
               />
             </div>
           </div>
 
+          <!-- Street - Full Width -->
+          <div class="form-group-full mb-4">
+            <label class="form-label-horizontal">
+              <i class="bi bi-signpost me-1"></i>
+              {{ 'kyc.addressInfo.street' | translate }}
+              <span class="text-danger">*</span>
+            </label>
+            <input 
+              type="text" 
+              class="form-control-horizontal" 
+              formControlName="street"
+              placeholder="Enter street name"
+            />
+          </div>
+
           <!-- Actions -->
-          <div class="kyc-actions">
-            <button type="button" class="btn-previous-modern" (click)="goBack()">
-              <i class="bi bi-arrow-left"></i>
-              <span>{{ 'kyc.buttons.back' | translate }}</span>
+          <div class="form-actions-horizontal mt-4">
+            <button type="button" class="btn-secondary-modern" (click)="goBack()">
+              <i class="bi bi-arrow-left me-2"></i>
+              {{ 'kyc.buttons.back' | translate }}
             </button>
-            <button type="submit" class="btn-save-modern" [disabled]="form.invalid || loading">
-              <span class="btn-content" *ngIf="!loading">
-                <span>{{ 'kyc.buttons.saveAndContinue' | translate }}</span>
-                <i class="bi bi-arrow-right"></i>
+            <button type="submit" class="btn-primary-modern" [disabled]="form.invalid || loading">
+              <span *ngIf="!loading">
+                {{ 'kyc.buttons.saveAndContinue' | translate }}
+                <i class="bi bi-arrow-right ms-2"></i>
               </span>
-              <span class="btn-content" *ngIf="loading">
-                <span class="spinner"></span>
-                <span>{{ 'kyc.buttons.saving' | translate }}</span>
+              <span *ngIf="loading">
+                <span class="spinner-border spinner-border-sm me-2"></span>
+                {{ 'kyc.buttons.saving' | translate }}
               </span>
             </button>
           </div>

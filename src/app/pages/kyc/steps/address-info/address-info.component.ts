@@ -6,7 +6,10 @@ import { KycService } from '../../../../services/kyc.service';
 @Component({
   selector: 'app-address-info',
   templateUrl: './address-info.component.html',
-  styleUrls: ['./address-info.component.scss']
+  styleUrls: [
+    './address-info.component.scss',
+    '../shared-horizontal-form-styles.scss'
+  ]
 })
 export class AddressInfoComponent implements OnInit {
   form!: FormGroup;
