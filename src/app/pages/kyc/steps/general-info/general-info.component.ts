@@ -16,6 +16,7 @@ export class GeneralInfoComponent implements OnInit {
   loading = false;
   error: string | null = null;
   success = false;
+  isBeneficialOwner = true;
 
   constructor(
     private fb: FormBuilder,
@@ -30,16 +31,51 @@ export class GeneralInfoComponent implements OnInit {
 
   initForm() {
     this.form = this.fb.group({
+      // Investment Profile
       investmentExperience: ['', Validators.required],
       investmentKnowledge: ['', Validators.required],
-      riskTolerance: ['', Validators.required]
+      riskTolerance: ['', Validators.required],
+      
+      // Beneficial Owner
+      isBeneficialOwner: [true, Validators.required],
+      beneficialOwnerName: [''],
+      
+      // Financial Sector Questions
+      workedInFinancialSector: [false, Validators.required],
+      hasFinancialExperience: [false, Validators.required],
+      isBoardMember: [false, Validators.required],
+      isConnectedToBoardMember: [false, Validators.required],
+      hasPublicPosition: [false, Validators.required],
+      hasRelationshipWithPublicOfficial: [false, Validators.required]
     });
+
+    // Listen to beneficial owner changes
+    this.form.get('isBeneficialOwner')?.valueChanges.subscribe(value => {
+      this.isBeneficialOwner = value;
+      this.updateBeneficialOwnerValidation();
+    });
+  }
+
+  updateBeneficialOwnerValidation() {
+    const beneficialOwnerNameControl = this.form.get('beneficialOwnerName');
+    
+    if (!this.isBeneficialOwner) {
+      beneficialOwnerNameControl?.setValidators([Validators.required]);
+    } else {
+      beneficialOwnerNameControl?.clearValidators();
+    }
+    
+    beneficialOwnerNameControl?.updateValueAndValidity();
   }
 
   loadData() {
     this.kycService.getGeneralInfo().subscribe({
       next: (data) => {
         if (data) {
+          // Set beneficial owner flag
+          if (data.isBeneficialOwner !== undefined) {
+            this.isBeneficialOwner = data.isBeneficialOwner;
+          }
           this.form.patchValue(data);
         }
       },

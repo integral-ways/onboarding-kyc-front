@@ -16,6 +16,44 @@ export class AddressInfoComponent implements OnInit {
   loading = false;
   error: string | null = null;
   success = false;
+  liveOutsideKSA = false;
+
+  countries = [
+    { value: 'SA', label: 'Saudi Arabia' },
+    { value: 'AE', label: 'United Arab Emirates' },
+    { value: 'KW', label: 'Kuwait' },
+    { value: 'BH', label: 'Bahrain' },
+    { value: 'QA', label: 'Qatar' },
+    { value: 'OM', label: 'Oman' },
+    { value: 'EG', label: 'Egypt' },
+    { value: 'JO', label: 'Jordan' },
+    { value: 'LB', label: 'Lebanon' },
+    { value: 'US', label: 'United States' },
+    { value: 'GB', label: 'United Kingdom' },
+    { value: 'CA', label: 'Canada' },
+    { value: 'OTHER', label: 'Other' }
+  ];
+
+  saudiCities = [
+    { value: 'Riyadh', label: 'Riyadh' },
+    { value: 'Jeddah', label: 'Jeddah' },
+    { value: 'Mecca', label: 'Mecca' },
+    { value: 'Medina', label: 'Medina' },
+    { value: 'Dammam', label: 'Dammam' },
+    { value: 'Khobar', label: 'Khobar' },
+    { value: 'Dhahran', label: 'Dhahran' },
+    { value: 'Taif', label: 'Taif' },
+    { value: 'Tabuk', label: 'Tabuk' },
+    { value: 'Buraidah', label: 'Buraidah' },
+    { value: 'Khamis Mushait', label: 'Khamis Mushait' },
+    { value: 'Hail', label: 'Hail' },
+    { value: 'Najran', label: 'Najran' },
+    { value: 'Jubail', label: 'Jubail' },
+    { value: 'Abha', label: 'Abha' },
+    { value: 'Yanbu', label: 'Yanbu' },
+    { value: 'Al-Kharj', label: 'Al-Kharj' },
+    { value: 'OTHER', label: 'Other' }
+  ];
 
   constructor(
     private fb: FormBuilder,
@@ -30,18 +68,61 @@ export class AddressInfoComponent implements OnInit {
 
   initForm() {
     this.form = this.fb.group({
-      country: ['', Validators.required],
+      liveOutsideKSA: [false],
+      country: ['Saudi Arabia'],
       city: ['', Validators.required],
-      district: ['', Validators.required],
+      district: [''],
       street: ['', Validators.required],
-      buildingNumber: ['', Validators.required]
+      buildingNumber: ['', Validators.required],
+      unitNumber: [''],
+      additionalNumber: [''],
+      postalCode: ['']
     });
+
+    // Listen to checkbox changes
+    this.form.get('liveOutsideKSA')?.valueChanges.subscribe(value => {
+      this.liveOutsideKSA = value;
+      this.updateValidators();
+    });
+  }
+
+  updateValidators() {
+    const countryControl = this.form.get('country');
+    const cityControl = this.form.get('city');
+    const districtControl = this.form.get('district');
+    const additionalNumberControl = this.form.get('additionalNumber');
+
+    if (this.liveOutsideKSA) {
+      // Outside KSA: country dropdown required, city text input required, district optional
+      countryControl?.setValidators([Validators.required]);
+      cityControl?.setValidators([Validators.required]);
+      districtControl?.clearValidators();
+      additionalNumberControl?.clearValidators();
+    } else {
+      // Inside KSA: country fixed, city dropdown required, district required
+      countryControl?.clearValidators();
+      cityControl?.setValidators([Validators.required]);
+      districtControl?.setValidators([Validators.required]);
+      additionalNumberControl?.setValidators([Validators.required]);
+      
+      // Set country to Saudi Arabia
+      countryControl?.setValue('Saudi Arabia');
+    }
+
+    countryControl?.updateValueAndValidity();
+    cityControl?.updateValueAndValidity();
+    districtControl?.updateValueAndValidity();
+    additionalNumberControl?.updateValueAndValidity();
   }
 
   loadData() {
     this.kycService.getAddressInfo().subscribe({
       next: (data) => {
         if (data) {
+          // Check if user lives outside KSA
+          if (data.liveOutsideKSA || (data.country && data.country !== 'Saudi Arabia')) {
+            this.liveOutsideKSA = true;
+          }
           this.form.patchValue(data);
         }
       },

@@ -79,247 +79,66 @@
             </div>
           </div>
 
-          <!-- Name Fields - Horizontal Layout -->
-          <div class="form-row-horizontal mb-4">
-            <!-- Title -->
-            <div class="form-group-horizontal" style="flex: 0 0 120px;">
-              <label class="form-label-horizontal">
-                <i class="bi bi-award me-1"></i>
-                {{ 'fields.title' | translate }}
-              </label>
-              <select class="form-control-horizontal" formControlName="title">
-                <option value="">Select</option>
-                <option value="Mr">Mr</option>
-                <option value="Mrs">Mrs</option>
-                <option value="Ms">Ms</option>
-                <option value="Dr">Dr</option>
-              </select>
-            </div>
-
-            <!-- First Name -->
-            <div class="form-group-horizontal" style="flex: 1;">
-              <label class="form-label-horizontal">
-                <i class="bi bi-person me-1"></i>
-                {{ 'fields.firstName' | translate }} <span class="text-danger">*</span>
-              </label>
-              <input type="text" class="form-control-horizontal"
-                formControlName="firstName" 
-                [placeholder]="'placeholders.firstName' | translate" />
-              <div class="invalid-feedback" *ngIf="form.get('firstName')?.invalid && form.get('firstName')?.touched">
-                First name is required
-              </div>
-            </div>
-
-            <!-- Second Name -->
-            <div class="form-group-horizontal" style="flex: 1;">
-              <label class="form-label-horizontal">
-                <i class="bi bi-person me-1"></i>
-                {{ 'fields.secondName' | translate }}
-              </label>
-              <input type="text" class="form-control-horizontal"
-                formControlName="secondName" 
-                [placeholder]="'placeholders.secondName' | translate" />
-            </div>
-          </div>
-
-          <!-- Last Name & Family Name - Horizontal Layout -->
-          <div class="form-row-horizontal mb-4">
-            <!-- Last Name -->
-            <div class="form-group-horizontal" style="flex: 1;">
-              <label class="form-label-horizontal">
-                <i class="bi bi-person-badge me-1"></i>
-                {{ 'fields.lastName' | translate }}
-              </label>
-              <input type="text" class="form-control-horizontal"
-                formControlName="lastName" 
-                [placeholder]="'placeholders.lastName' | translate" />
-            </div>
-
-            <!-- Family Name -->
-            <div class="form-group-horizontal" style="flex: 1;">
-              <label class="form-label-horizontal">
-                <i class="bi bi-people me-1"></i>
-                {{ 'fields.familyName' | translate }} <span class="text-danger">*</span>
-              </label>
-              <input type="text" class="form-control-horizontal"
-                formControlName="familyName" 
-                [placeholder]="'placeholders.familyName' | translate" />
-              <div class="invalid-feedback" *ngIf="form.get('familyName')?.invalid && form.get('familyName')?.touched">
-                Family name is required
-              </div>
-            </div>
-          </div>
-
-      
-
-          <hr class="section-divider my-4" />
-
-          <!-- Contact Information Section -->
-          <div class="section-header mb-4">
-            <div class="section-icon">
-              <i class="bi bi-telephone"></i>
-            </div>
-            <div>
-              <h5 class="mb-0 fw-bold">Contact Information</h5>
-              <small class="text-muted">Your contact details</small>
-            </div>
-          </div>
-
-          <!-- Contact Fields - Horizontal Layout -->
-          <div class="form-row-horizontal mb-4">
-            <!-- Country Code -->
-            <div class="form-group-horizontal" style="flex: 0 0 180px;">
-              <label class="form-label-horizontal">
-                <i class="bi bi-flag me-1"></i>
-                Country Code
-              </label>
-              <select class="form-control-horizontal" formControlName="countryCode">
-                <option value="+966">🇸🇦 +966</option>
-                <option value="+971">🇦🇪 +971</option>
-                <option value="+965">🇰🇼 +965</option>
-                <option value="+973">🇧🇭 +973</option>
-                <option value="+974">🇶🇦 +974</option>
-              </select>
-            </div>
-
-            <!-- Primary Contact (Read-only from Nafath) -->
-            <div class="form-group-horizontal" style="flex: 1;">
-              <label class="form-label-horizontal">
-                <i class="bi bi-phone-vibrate me-1"></i>
-                Primary Mobile
-              </label>
-              <div class="input-readonly-wrapper">
-                <input type="tel" class="form-control-horizontal readonly-input"
-                  formControlName="primaryContact" 
-                  placeholder="From Nafath"
-                  readonly />
-                <span class="readonly-badge">
-                  <i class="bi bi-shield-check me-1"></i>
-                  Nafath
-                </span>
-              </div>
-            </div>
-
-            <!-- Alternative Mobile -->
-            <div class="form-group-horizontal" style="flex: 1;">
-              <label class="form-label-horizontal">
-                <i class="bi bi-phone me-1"></i>
-                Alternative Mobile
-                <small class="text-muted ms-1">(Optional)</small>
-              </label>
-              <input type="tel" class="form-control-horizontal"
-                formControlName="altMobile" 
-                placeholder="5XXXXXXXX" />
-            </div>
-          </div>
-
-          <hr class="section-divider my-4" />
-
-          <!-- Address Information Section -->
-          <div class="section-header mb-4">
-            <div class="section-icon">
-              <i class="bi bi-geo-alt"></i>
-            </div>
-            <div>
-              <h5 class="mb-0 fw-bold">Address Information</h5>
-              <small class="text-muted">Your residential address</small>
-            </div>
-          </div>
-
-          <!-- Country & Region - Horizontal Layout -->
-          <div class="form-row-horizontal mb-4">
-            <!-- Country -->
-            <div class="form-group-horizontal" style="flex: 1;">
-              <label class="form-label-horizontal">
-                <i class="bi bi-globe me-1"></i>
-                Country
-              </label>
-              <input type="text" class="form-control-horizontal"
-                formControlName="country" 
-                placeholder="Saudi Arabia" />
-            </div>
-
-            <!-- Region -->
-            <div class="form-group-horizontal" style="flex: 1;">
-              <label class="form-label-horizontal">
-                <i class="bi bi-map me-1"></i>
-                Region
-              </label>
-              <input type="text" class="form-control-horizontal"
-                formControlName="region" 
-                placeholder="Riyadh" />
-            </div>
-          </div>
-
-          <!-- City & District - Horizontal Layout -->
-          <div class="form-row-horizontal mb-4">
-            <!-- City -->
-            <div class="form-group-horizontal" style="flex: 1;">
-              <label class="form-label-horizontal">
-                <i class="bi bi-building me-1"></i>
-                City
-              </label>
-              <input type="text" class="form-control-horizontal"
-                formControlName="city" 
-                placeholder="Riyadh" />
-            </div>
-
-            <!-- District -->
-            <div class="form-group-horizontal" style="flex: 1;">
-              <label class="form-label-horizontal">
-                <i class="bi bi-signpost-2 me-1"></i>
-                District
-              </label>
-              <input type="text" class="form-control-horizontal"
-                formControlName="district" 
-                placeholder="Olaya" />
-            </div>
-          </div>
-
-          <!-- Street - Full Width -->
-          <div class="form-group-full mb-4">
+          <!-- Full Name - Single Field -->
+          <!-- <div class="form-group-full mb-4">
             <label class="form-label-horizontal">
-              <i class="bi bi-signpost me-1"></i>
-              Street
+              <i class="bi bi-person me-1"></i>
+              Full Name <span class="text-danger">*</span>
             </label>
             <input type="text" class="form-control-horizontal"
-              formControlName="street" 
-              placeholder="King Fahd Road" />
-          </div>
+              formControlName="firstName" 
+              placeholder="Enter your full name" />
+            <div class="invalid-feedback" *ngIf="form.get('firstName')?.invalid && form.get('firstName')?.touched">
+              Full name is required
+            </div>
+          </div> -->
 
-          <!-- Building Number, Postal Code, Unit Number - Horizontal Layout -->
+          <!-- Education Level, Marital Status, Dependents - Horizontal Layout -->
           <div class="form-row-horizontal mb-4">
-            <!-- Building Number -->
+            <!-- Education Level -->
             <div class="form-group-horizontal" style="flex: 1;">
               <label class="form-label-horizontal">
-                <i class="bi bi-hash me-1"></i>
-                Building Number
+                <i class="bi bi-mortarboard me-1"></i>
+                Education Level <span class="text-danger">*</span>
               </label>
-              <input type="text" class="form-control-horizontal"
-                formControlName="buildingNumber" 
-                placeholder="1234" />
+              <select class="form-control-horizontal" formControlName="educationLevel">
+                <option value="">Select education level</option>
+                <option *ngFor="let level of educationLevels" [value]="level.value">
+                  {{ level.label }}
+                </option>
+              </select>
+              <div class="invalid-feedback" *ngIf="form.get('educationLevel')?.invalid && form.get('educationLevel')?.touched">
+                Education level is required
+              </div>
             </div>
 
-            <!-- Postal Code -->
+            <!-- Marital Status -->
             <div class="form-group-horizontal" style="flex: 1;">
               <label class="form-label-horizontal">
-                <i class="bi bi-mailbox me-1"></i>
-                Postal Code
+                <i class="bi bi-heart me-1"></i>
+                Marital Status <span class="text-danger">*</span>
               </label>
-              <input type="text" class="form-control-horizontal"
-                formControlName="postalCode" 
-                placeholder="12345" />
+              <select class="form-control-horizontal" formControlName="maritalStatus">
+                <option value="">Select marital status</option>
+                <option *ngFor="let status of maritalStatuses" [value]="status.value">
+                  {{ status.label }}
+                </option>
+              </select>
+              <div class="invalid-feedback" *ngIf="form.get('maritalStatus')?.invalid && form.get('maritalStatus')?.touched">
+                Marital status is required
+              </div>
             </div>
 
-            <!-- Unit Number -->
+            <!-- Number of Dependents -->
             <div class="form-group-horizontal" style="flex: 1;">
               <label class="form-label-horizontal">
-                <i class="bi bi-door-open me-1"></i>
-                Unit Number
+                <i class="bi bi-people-fill me-1"></i>
+                Number of Dependents
               </label>
-              <input type="text" class="form-control-horizontal"
-                formControlName="unitNumber" 
-                placeholder="2" />
+              <input type="number" class="form-control-horizontal" 
+                formControlName="numOfDependents"
+                min="0" 
+                placeholder="0" />
             </div>
           </div>
 
@@ -336,70 +155,71 @@
             </div>
           </div>
 
-          <!-- Financial Fields - Horizontal Layout -->
+          <!-- Annual Income & Net Worth - Horizontal Layout -->
           <div class="form-row-horizontal mb-4">
-            <!-- Dependents -->
+            <!-- Approximate Annual Income -->
             <div class="form-group-horizontal" style="flex: 1;">
               <label class="form-label-horizontal">
-                <i class="bi bi-people-fill me-1"></i>
-                {{ 'fields.dependents' | translate }}
+                <i class="bi bi-cash-coin me-1"></i>
+                Approximate Annual Income <span class="text-danger">*</span>
               </label>
-              <input type="number" class="form-control-horizontal" 
-                formControlName="numOfDependents"
-                min="0" 
-                [placeholder]="'placeholders.dependents' | translate" />
-            </div>
-
-            <!-- Net Worth -->
-            <div class="form-group-horizontal" style="flex: 1;">
-              <label class="form-label-horizontal">
-                <i class="bi bi-wallet2 me-1"></i>
-                {{ 'fields.netWorth' | translate }}
-              </label>
-              <div class="input-group-horizontal">
-                <span class="input-group-text-horizontal">SAR</span>
-                <input type="number" class="form-control-horizontal"
-                  formControlName="netWorth" 
-                  [placeholder]="'placeholders.netWorth' | translate" />
+              <select class="form-control-horizontal" formControlName="approximateAnnualIncome">
+                <option value="">Select income range</option>
+                <option *ngFor="let range of annualIncomeRanges" [value]="range.value">
+                  {{ range.label }}
+                </option>
+              </select>
+              <div class="invalid-feedback" *ngIf="form.get('approximateAnnualIncome')?.invalid && form.get('approximateAnnualIncome')?.touched">
+                Annual income is required
               </div>
             </div>
 
-            <!-- Net Growth -->
+            <!-- Approximate Net Worth -->
             <div class="form-group-horizontal" style="flex: 1;">
               <label class="form-label-horizontal">
-                <i class="bi bi-graph-up-arrow me-1"></i>
-                {{ 'fields.netGrowth' | translate }}
+                <i class="bi bi-piggy-bank me-1"></i>
+                Approximate Net Worth <span class="text-danger">*</span>
               </label>
-              <div class="input-group-horizontal">
-                <span class="input-group-text-horizontal">SAR</span>
-                <input type="number" class="form-control-horizontal"
-                  formControlName="netGrowth" 
-                  [placeholder]="'placeholders.netGrowth' | translate" />
+              <select class="form-control-horizontal" formControlName="approximateNetWorth">
+                <option value="">Select net worth range</option>
+                <option *ngFor="let range of netWorthRanges" [value]="range.value">
+                  {{ range.label }}
+                </option>
+              </select>
+              <div class="invalid-feedback" *ngIf="form.get('approximateNetWorth')?.invalid && form.get('approximateNetWorth')?.touched">
+                Net worth is required
               </div>
             </div>
           </div>
 
-          <!-- Income Source - Horizontal Checkboxes -->
+          <!-- Income Source - Modern Multi-select Dropdown -->
           <div class="form-group-full mb-4">
-            <label class="form-label-horizontal mb-3">
+            <label class="form-label-horizontal">
               <i class="bi bi-briefcase me-1"></i>
-              {{ 'fields.incomeSource' | translate }}
+              Income Source <span class="text-danger">*</span>
             </label>
-            <div class="income-source-horizontal">
-              <div class="income-source-item" *ngFor="let source of incomeSources">
-                <input 
-                  class="form-check-input-modern" 
-                  type="checkbox" 
-                  [id]="'income-' + source.value"
-                  [value]="source.value"
-                  (change)="onIncomeSourceChange($event, source.value)"
-                  [checked]="isIncomeSourceSelected(source.value)"
-                >
-                <label class="income-source-label" [for]="'income-' + source.value">
-                  <i [class]="source.icon"></i>
-                  <span>{{ source.label | translate }}</span>
-                </label>
+            <div class="multi-select-dropdown" [class.open]="incomeSourceDropdownOpen">
+              <div class="multi-select-trigger" (click)="toggleIncomeSourceDropdown()">
+                <span class="selected-text">{{ getSelectedIncomeSourcesLabel() }}</span>
+                <i class="bi bi-chevron-down dropdown-icon"></i>
               </div>
+              <div class="multi-select-options" *ngIf="incomeSourceDropdownOpen">
+                <div 
+                  class="multi-select-option" 
+                  *ngFor="let source of incomeSources"
+                  (click)="onIncomeSourceToggle(source.value)">
+                  <input 
+                    type="checkbox" 
+                    [checked]="isIncomeSourceSelected(source.value)"
+                    class="option-checkbox"
+                    readonly>
+                  <span class="option-label">{{ source.label }}</span>
+                  <i class="bi bi-check option-check" *ngIf="isIncomeSourceSelected(source.value)"></i>
+                </div>
+              </div>
+            </div>
+            <div class="invalid-feedback d-block" *ngIf="form.get('incomeSource')?.invalid && form.get('incomeSource')?.touched">
+              Please select at least one income source
             </div>
           </div>
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { KycService } from '../../../../services/kyc.service';
@@ -11,22 +11,41 @@ import { KycService } from '../../../../services/kyc.service';
     '../shared-horizontal-form-styles.scss'
   ]
 })
-export class PersonalInfoComponent implements OnInit {
+export class PersonalInfoComponent implements OnInit, OnDestroy {
   form!: FormGroup;
   loading = false;
   error: string | null = null;
   success = false;
   selectedIncomeSources: string[] = [];
+  incomeSourceDropdownOpen = false;
 
   incomeSources = [
-    { value: 'SALARY', label: 'Salary', icon: 'bi bi-cash-coin' },
-    { value: 'BUSINESS', label: 'Business', icon: 'bi bi-shop' },
-    { value: 'INVESTMENTS', label: 'Investments', icon: 'bi bi-graph-up' },
-    { value: 'RENTAL', label: 'Rental Income', icon: 'bi bi-house-door' },
-    { value: 'PENSION', label: 'Pension', icon: 'bi bi-piggy-bank' },
-    { value: 'INHERITANCE', label: 'Inheritance', icon: 'bi bi-gift' },
-    { value: 'FREELANCE', label: 'Freelance', icon: 'bi bi-laptop' },
-    { value: 'OTHER', label: 'Other', icon: 'bi bi-three-dots' }
+    { value: 'SALARY', label: 'Salary' },
+    { value: 'BUSINESS', label: 'Business' },
+    { value: 'INVESTMENTS', label: 'Investments' },
+    { value: 'RENTAL', label: 'Rental Income' },
+    { value: 'PENSION', label: 'Pension' },
+    { value: 'INHERITANCE', label: 'Inheritance' },
+    { value: 'FREELANCE', label: 'Freelance' },
+    { value: 'OTHER', label: 'Other' }
+  ];
+
+  annualIncomeRanges = [
+    { value: '0-50000', label: 'Less than 50,000 SAR' },
+    { value: '50000-100000', label: '50,000 - 100,000 SAR' },
+    { value: '100000-200000', label: '100,000 - 200,000 SAR' },
+    { value: '200000-500000', label: '200,000 - 500,000 SAR' },
+    { value: '500000-1000000', label: '500,000 - 1,000,000 SAR' },
+    { value: '1000000+', label: 'More than 1,000,000 SAR' }
+  ];
+
+  netWorthRanges = [
+    { value: '0-100000', label: 'Less than 100,000 SAR' },
+    { value: '100000-500000', label: '100,000 - 500,000 SAR' },
+    { value: '500000-1000000', label: '500,000 - 1,000,000 SAR' },
+    { value: '1000000-5000000', label: '1,000,000 - 5,000,000 SAR' },
+    { value: '5000000-10000000', label: '5,000,000 - 10,000,000 SAR' },
+    { value: '10000000+', label: 'More than 10,000,000 SAR' }
   ];
 
   constructor(
@@ -38,12 +57,42 @@ export class PersonalInfoComponent implements OnInit {
   ngOnInit() {
     this.initForm();
     this.loadData();
+    
+    // Close dropdown when clicking outside
+    document.addEventListener('click', this.closeDropdownOnClickOutside.bind(this));
   }
+
+  ngOnDestroy() {
+    document.removeEventListener('click', this.closeDropdownOnClickOutside.bind(this));
+  }
+
+  closeDropdownOnClickOutside(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.multi-select-dropdown')) {
+      this.incomeSourceDropdownOpen = false;
+    }
+  }
+
+  educationLevels = [
+    { value: 'HIGH_SCHOOL', label: 'High School' },
+    { value: 'DIPLOMA', label: 'Diploma' },
+    { value: 'BACHELOR', label: 'Bachelor\'s Degree' },
+    { value: 'MASTER', label: 'Master\'s Degree' },
+    { value: 'DOCTORATE', label: 'Doctorate' },
+    { value: 'OTHER', label: 'Other' }
+  ];
+
+  maritalStatuses = [
+    { value: 'SINGLE', label: 'Single' },
+    { value: 'MARRIED', label: 'Married' },
+    { value: 'DIVORCED', label: 'Divorced' },
+    { value: 'WIDOWED', label: 'Widowed' }
+  ];
 
   initForm() {
     this.form = this.fb.group({
       // Personal Information
-      title: ['', Validators.required],
+      // title: ['', Validators.required],
       firstName: ['', Validators.required],
       secondName: [''],
       lastName: [''],
@@ -52,27 +101,14 @@ export class PersonalInfoComponent implements OnInit {
       gender: [{ value: '', disabled: true }], // Read-only from Nafath
       birthDateHijri: [{ value: '', disabled: true }], // Read-only from Nafath
       birthDateGregorian: [{ value: '', disabled: true }], // Read-only from Nafath
+      educationLevel: ['', Validators.required],
+      maritalStatus: ['', Validators.required],
       
       // Financial Information
       numOfDependents: [0, [Validators.min(0)]],
-      netWorth: [''],
-      netGrowth: [''],
-      incomeSource: [[]], // Array
-      
-      // Contact Information
-      primaryContact: [{ value: '', disabled: true }], // Read-only from Nafath
-      altMobile: [''],
-      countryCode: ['+966'],
-      
-      // Address Information
-      country: [''],
-      region: [''],
-      city: [''],
-      district: [''],
-      street: [''],
-      buildingNumber: [''],
-      postalCode: [''],
-      unitNumber: ['']
+      approximateAnnualIncome: ['', Validators.required], // Dropdown range
+      approximateNetWorth: ['', Validators.required], // Dropdown range
+      incomeSource: [[], Validators.required] // Multi-select dropdown
     });
   }
 
@@ -101,20 +137,33 @@ export class PersonalInfoComponent implements OnInit {
     });
   }
 
-  onIncomeSourceChange(event: any, value: string) {
-    if (event.target.checked) {
-      this.selectedIncomeSources.push(value);
+  toggleIncomeSourceDropdown() {
+    this.incomeSourceDropdownOpen = !this.incomeSourceDropdownOpen;
+  }
+
+  onIncomeSourceToggle(value: string) {
+    const index = this.selectedIncomeSources.indexOf(value);
+    if (index > -1) {
+      this.selectedIncomeSources.splice(index, 1);
     } else {
-      const index = this.selectedIncomeSources.indexOf(value);
-      if (index > -1) {
-        this.selectedIncomeSources.splice(index, 1);
-      }
+      this.selectedIncomeSources.push(value);
     }
     this.form.patchValue({ incomeSource: this.selectedIncomeSources });
   }
 
   isIncomeSourceSelected(value: string): boolean {
     return this.selectedIncomeSources.includes(value);
+  }
+
+  getSelectedIncomeSourcesLabel(): string {
+    if (this.selectedIncomeSources.length === 0) {
+      return 'Select income sources';
+    }
+    if (this.selectedIncomeSources.length === 1) {
+      const source = this.incomeSources.find(s => s.value === this.selectedIncomeSources[0]);
+      return source ? source.label : '';
+    }
+    return `${this.selectedIncomeSources.length} sources selected`;
   }
 
   // Helper methods for header display
@@ -178,7 +227,6 @@ export class PersonalInfoComponent implements OnInit {
         gender: this.form.get('gender')?.value,
         birthDateHijri: this.form.get('birthDateHijri')?.value,
         birthDateGregorian: this.form.get('birthDateGregorian')?.value,
-        primaryContact: this.form.get('primaryContact')?.value,
         incomeSource: this.selectedIncomeSources  // Send as array
       };
 
@@ -187,7 +235,7 @@ export class PersonalInfoComponent implements OnInit {
           this.success = true;
           this.loading = false;
           setTimeout(() => {
-            this.router.navigate(['/kyc/employment-info']);
+            this.router.navigate(['/kyc/address-info']);
           }, 1000);
         },
         error: (err) => {

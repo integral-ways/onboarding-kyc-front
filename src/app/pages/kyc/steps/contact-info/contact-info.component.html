@@ -53,29 +53,13 @@
             </div>
           </div>
 
-          <!-- Country Code & Primary Contact - Horizontal -->
+          <!-- Mobile Number Row - Horizontal -->
           <div class="form-row-horizontal mb-4">
-            <!-- Country Code -->
-            <div class="form-group-horizontal" style="flex: 0 0 200px;">
-              <label class="form-label-horizontal">
-                <i class="bi bi-flag me-1"></i>
-                {{ 'kyc.contactInfo.countryCode' | translate }}
-                <span class="text-danger">*</span>
-              </label>
-              <select class="form-control-horizontal" formControlName="countryCode">
-                <option value="+966">🇸🇦 +966 (Saudi Arabia)</option>
-                <option value="+971">🇦🇪 +971 (UAE)</option>
-                <option value="+965">🇰🇼 +965 (Kuwait)</option>
-                <option value="+973">🇧🇭 +973 (Bahrain)</option>
-                <option value="+974">🇶🇦 +974 (Qatar)</option>
-              </select>
-            </div>
-
             <!-- Primary Contact (Read-only) -->
             <div class="form-group-horizontal" style="flex: 1;">
               <label class="form-label-horizontal">
                 <i class="bi bi-phone-vibrate me-1"></i>
-                {{ 'kyc.contactInfo.primaryContact' | translate }}
+                Mobile Number
                 <span class="text-danger">*</span>
               </label>
               <div class="input-readonly-wrapper">
@@ -92,21 +76,74 @@
                 </span>
               </div>
             </div>
+
+            <!-- Country Code -->
+            <div class="form-group-horizontal" style="flex: 0 0 250px;">
+              <label class="form-label-horizontal">
+                <i class="bi bi-flag me-1"></i>
+                Country Code
+                <span class="text-danger">*</span>
+              </label>
+              <select class="form-control-horizontal" formControlName="countryCode">
+                <option value="+966">🇸🇦 السعودية (966+)</option>
+                <option value="+971">🇦🇪 الإمارات (971+)</option>
+                <option value="+965">🇰🇼 الكويت (965+)</option>
+                <option value="+973">🇧🇭 البحرين (973+)</option>
+                <option value="+974">🇶🇦 قطر (974+)</option>
+              </select>
+            </div>
           </div>
 
-          <!-- Alternative Mobile - Full Width -->
+          <!-- Alternative Mobile & Email - Horizontal -->
+          <div class="form-row-horizontal mb-4">
+            <!-- Alternative Mobile -->
+            <div class="form-group-horizontal" style="flex: 1;">
+              <label class="form-label-horizontal">
+                <i class="bi bi-phone me-1"></i>
+                Alternative Mobile Number
+                <small class="text-muted ms-2">(Optional)</small>
+              </label>
+              <input 
+                type="tel" 
+                class="form-control-horizontal" 
+                formControlName="altMobile" 
+                placeholder="5XXXXXXXX"
+              />
+            </div>
+
+            <!-- Email -->
+            <div class="form-group-horizontal" style="flex: 1;">
+              <label class="form-label-horizontal">
+                <i class="bi bi-envelope me-1"></i>
+                Email Address <span class="text-danger">*</span>
+              </label>
+              <input 
+                type="email" 
+                class="form-control-horizontal" 
+                formControlName="email" 
+                placeholder="example@email.com"
+              />
+              <div class="invalid-feedback" *ngIf="form.get('email')?.invalid && form.get('email')?.touched">
+                <span *ngIf="form.get('email')?.errors?.['required']">Email is required</span>
+                <span *ngIf="form.get('email')?.errors?.['email']">Please enter a valid email address</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Preferred Language - Full Width -->
           <div class="form-group-full mb-4">
             <label class="form-label-horizontal">
-              <i class="bi bi-phone me-1"></i>
-              {{ 'kyc.contactInfo.altMobile' | translate }}
-              <small class="text-muted ms-2">(Optional)</small>
+              <i class="bi bi-translate me-1"></i>
+              Preferred Language <span class="text-danger">*</span>
             </label>
-            <input 
-              type="tel" 
-              class="form-control-horizontal" 
-              formControlName="altMobile" 
-              placeholder="5XXXXXXXX (Alternative contact number)"
-            />
+            <select class="form-control-horizontal" formControlName="preferredLanguage" style="max-width: 300px;">
+              <option *ngFor="let lang of languages" [value]="lang.value">
+                {{ lang.icon }} {{ lang.label }}
+              </option>
+            </select>
+            <div class="invalid-feedback" *ngIf="form.get('preferredLanguage')?.invalid && form.get('preferredLanguage')?.touched">
+              Preferred language is required
+            </div>
           </div>
 
           <!-- Actions -->

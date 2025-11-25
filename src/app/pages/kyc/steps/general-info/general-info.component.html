@@ -59,16 +59,15 @@
             <div class="form-group-horizontal" style="flex: 1;">
               <label class="form-label-horizontal">
                 <i class="bi bi-graph-up-arrow me-1"></i>
-                {{ 'kyc.generalInfo.investmentExperience' | translate }}
-                <span class="text-danger">*</span>
+                Investment Experience <span class="text-danger">*</span>
               </label>
               <select class="form-control-horizontal" formControlName="investmentExperience">
                 <option value="">Select experience level</option>
-                <option value="NONE">🌱 {{ 'kyc.generalInfo.none' | translate }}</option>
-                <option value="BEGINNER">📚 {{ 'kyc.generalInfo.beginner' | translate }}</option>
-                <option value="INTERMEDIATE">📈 {{ 'kyc.generalInfo.intermediate' | translate }}</option>
-                <option value="ADVANCED">🎯 {{ 'kyc.generalInfo.advanced' | translate }}</option>
-                <option value="EXPERT">🏆 {{ 'kyc.generalInfo.expert' | translate }}</option>
+                <option value="NONE">🌱 None</option>
+                <option value="BEGINNER">📚 Beginner</option>
+                <option value="INTERMEDIATE">📈 Intermediate</option>
+                <option value="ADVANCED">🎯 Advanced</option>
+                <option value="EXPERT">🏆 Expert</option>
               </select>
             </div>
 
@@ -76,15 +75,14 @@
             <div class="form-group-horizontal" style="flex: 1;">
               <label class="form-label-horizontal">
                 <i class="bi bi-lightbulb me-1"></i>
-                {{ 'kyc.generalInfo.investmentKnowledge' | translate }}
-                <span class="text-danger">*</span>
+                Investment Knowledge <span class="text-danger">*</span>
               </label>
               <select class="form-control-horizontal" formControlName="investmentKnowledge">
                 <option value="">Select knowledge level</option>
-                <option value="NONE">❌ {{ 'kyc.generalInfo.none' | translate }}</option>
-                <option value="BASIC">📖 {{ 'kyc.generalInfo.basic' | translate }}</option>
-                <option value="GOOD">✅ {{ 'kyc.generalInfo.good' | translate }}</option>
-                <option value="EXCELLENT">⭐ {{ 'kyc.generalInfo.excellent' | translate }}</option>
+                <option value="NONE">❌ None</option>
+                <option value="BASIC">📖 Basic</option>
+                <option value="GOOD">✅ Good</option>
+                <option value="EXCELLENT">⭐ Excellent</option>
               </select>
             </div>
           </div>
@@ -93,30 +91,327 @@
           <div class="form-group-full mb-4">
             <label class="form-label-horizontal mb-3">
               <i class="bi bi-speedometer2 me-1"></i>
-              {{ 'kyc.generalInfo.riskTolerance' | translate }}
-              <span class="text-danger">*</span>
+              Risk Tolerance <span class="text-danger">*</span>
             </label>
             <div class="risk-tolerance-cards">
               <div class="risk-card" 
                    [class.selected]="form.get('riskTolerance')?.value === 'LOW'"
                    (click)="form.patchValue({riskTolerance: 'LOW'})">
                 <div class="risk-icon low">🛡️</div>
-                <h6 class="fw-bold mb-1">{{ 'kyc.generalInfo.low' | translate }}</h6>
+                <h6 class="fw-bold mb-1">Low</h6>
                 <p class="text-muted small mb-0">Conservative - Minimal risk, stable returns</p>
               </div>
               <div class="risk-card" 
                    [class.selected]="form.get('riskTolerance')?.value === 'MEDIUM'"
                    (click)="form.patchValue({riskTolerance: 'MEDIUM'})">
                 <div class="risk-icon medium">⚖️</div>
-                <h6 class="fw-bold mb-1">{{ 'kyc.generalInfo.medium' | translate }}</h6>
+                <h6 class="fw-bold mb-1">Medium</h6>
                 <p class="text-muted small mb-0">Balanced - Moderate risk, balanced returns</p>
               </div>
               <div class="risk-card" 
                    [class.selected]="form.get('riskTolerance')?.value === 'HIGH'"
                    (click)="form.patchValue({riskTolerance: 'HIGH'})">
                 <div class="risk-icon high">🚀</div>
-                <h6 class="fw-bold mb-1">{{ 'kyc.generalInfo.high' | translate }}</h6>
+                <h6 class="fw-bold mb-1">High</h6>
                 <p class="text-muted small mb-0">Aggressive - Higher risk, potential high returns</p>
+              </div>
+            </div>
+          </div>
+
+          <hr class="section-divider my-4" />
+
+          <!-- Account Ownership Section -->
+          <div class="section-header mb-4">
+            <div class="section-icon">
+              <i class="bi bi-person-check"></i>
+            </div>
+            <div>
+              <h5 class="mb-0 fw-bold">Account Ownership</h5>
+              <small class="text-muted">Beneficial owner information</small>
+            </div>
+          </div>
+
+          <!-- Question 1: Beneficial Owner -->
+          <div class="form-group-full mb-4">
+            <label class="form-label-horizontal mb-3">
+              <i class="bi bi-shield-check me-1"></i>
+              Is the client the beneficial owner of the account? <span class="text-danger">*</span>
+            </label>
+            <div class="form-row-horizontal">
+              <div class="form-check-modern" style="flex: 1;" (click)="form.patchValue({isBeneficialOwner: true})">
+                <input 
+                  type="radio" 
+                  class="form-check-input-modern" 
+                  name="isBeneficialOwner"
+                  [value]="true"
+                  formControlName="isBeneficialOwner"
+                />
+                <label class="form-check-label-modern">
+                  <i class="bi bi-check-circle me-2"></i>
+                  Yes
+                </label>
+              </div>
+              <div class="form-check-modern" style="flex: 1;" (click)="form.patchValue({isBeneficialOwner: false})">
+                <input 
+                  type="radio" 
+                  class="form-check-input-modern" 
+                  name="isBeneficialOwner"
+                  [value]="false"
+                  formControlName="isBeneficialOwner"
+                />
+                <label class="form-check-label-modern">
+                  <i class="bi bi-x-circle me-2"></i>
+                  No
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Conditional: Beneficial Owner Name -->
+          <div *ngIf="!isBeneficialOwner" class="form-group-full mb-4">
+            <label class="form-label-horizontal">
+              <i class="bi bi-person me-1"></i>
+              Beneficial Owner Name <span class="text-danger">*</span>
+            </label>
+            <input 
+              type="text" 
+              class="form-control-horizontal" 
+              formControlName="beneficialOwnerName"
+              placeholder="Enter the beneficial owner's full name"
+            />
+            <div class="invalid-feedback" *ngIf="form.get('beneficialOwnerName')?.invalid && form.get('beneficialOwnerName')?.touched">
+              Beneficial owner name is required
+            </div>
+          </div>
+
+          <hr class="section-divider my-4" />
+
+          <!-- Financial Sector & Professional Background Section -->
+          <div class="section-header mb-4">
+            <div class="section-icon">
+              <i class="bi bi-briefcase"></i>
+            </div>
+            <div>
+              <h5 class="mb-0 fw-bold">Financial Sector & Professional Background</h5>
+              <small class="text-muted">Please answer the following questions</small>
+            </div>
+          </div>
+
+          <!-- Question 2: Worked in Financial Sector -->
+          <div class="form-group-full mb-4">
+            <label class="form-label-horizontal mb-2">
+              <i class="bi bi-bank me-1"></i>
+              Has the client worked in the financial sector during the past five years?
+            </label>
+            <small class="text-muted d-block mb-3">
+              (This includes, for example: working in financing companies, banks, capital market institutions, financing companies, or insurance companies.)
+            </small>
+            <div class="form-row-horizontal">
+              <div class="form-check-modern" style="flex: 1;" (click)="form.patchValue({workedInFinancialSector: true})">
+                <input 
+                  type="radio" 
+                  class="form-check-input-modern" 
+                  name="workedInFinancialSector"
+                  [value]="true"
+                  formControlName="workedInFinancialSector"
+                />
+                <label class="form-check-label-modern">
+                  <i class="bi bi-check-circle me-2"></i>
+                  Yes
+                </label>
+              </div>
+              <div class="form-check-modern" style="flex: 1;" (click)="form.patchValue({workedInFinancialSector: false})">
+                <input 
+                  type="radio" 
+                  class="form-check-input-modern" 
+                  name="workedInFinancialSector"
+                  [value]="false"
+                  formControlName="workedInFinancialSector"
+                />
+                <label class="form-check-label-modern">
+                  <i class="bi bi-x-circle me-2"></i>
+                  No
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Question 3: Financial Experience -->
+          <div class="form-group-full mb-4">
+            <label class="form-label-horizontal mb-3">
+              <i class="bi bi-graph-up me-1"></i>
+              Does the client have any experience or prior involvement related to the financial sector?
+            </label>
+            <div class="form-row-horizontal">
+              <div class="form-check-modern" style="flex: 1;" (click)="form.patchValue({hasFinancialExperience: true})">
+                <input 
+                  type="radio" 
+                  class="form-check-input-modern" 
+                  name="hasFinancialExperience"
+                  [value]="true"
+                  formControlName="hasFinancialExperience"
+                />
+                <label class="form-check-label-modern">
+                  <i class="bi bi-check-circle me-2"></i>
+                  Yes
+                </label>
+              </div>
+              <div class="form-check-modern" style="flex: 1;" (click)="form.patchValue({hasFinancialExperience: false})">
+                <input 
+                  type="radio" 
+                  class="form-check-input-modern" 
+                  name="hasFinancialExperience"
+                  [value]="false"
+                  formControlName="hasFinancialExperience"
+                />
+                <label class="form-check-label-modern">
+                  <i class="bi bi-x-circle me-2"></i>
+                  No
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Question 4: Board Member -->
+          <div class="form-group-full mb-4">
+            <label class="form-label-horizontal mb-3">
+              <i class="bi bi-people me-1"></i>
+              Is the client a board member, audit committee member, or senior executive in a listed company?
+            </label>
+            <div class="form-row-horizontal">
+              <div class="form-check-modern" style="flex: 1;" (click)="form.patchValue({isBoardMember: true})">
+                <input 
+                  type="radio" 
+                  class="form-check-input-modern" 
+                  name="isBoardMember"
+                  [value]="true"
+                  formControlName="isBoardMember"
+                />
+                <label class="form-check-label-modern">
+                  <i class="bi bi-check-circle me-2"></i>
+                  Yes
+                </label>
+              </div>
+              <div class="form-check-modern" style="flex: 1;" (click)="form.patchValue({isBoardMember: false})">
+                <input 
+                  type="radio" 
+                  class="form-check-input-modern" 
+                  name="isBoardMember"
+                  [value]="false"
+                  formControlName="isBoardMember"
+                />
+                <label class="form-check-label-modern">
+                  <i class="bi bi-x-circle me-2"></i>
+                  No
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Question 5: Connected to Board Member -->
+          <div class="form-group-full mb-4">
+            <label class="form-label-horizontal mb-3">
+              <i class="bi bi-diagram-3 me-1"></i>
+              Is the client connected or affiliated with any board member, audit committee member, or senior executive in a listed company?
+            </label>
+            <div class="form-row-horizontal">
+              <div class="form-check-modern" style="flex: 1;" (click)="form.patchValue({isConnectedToBoardMember: true})">
+                <input 
+                  type="radio" 
+                  class="form-check-input-modern" 
+                  name="isConnectedToBoardMember"
+                  [value]="true"
+                  formControlName="isConnectedToBoardMember"
+                />
+                <label class="form-check-label-modern">
+                  <i class="bi bi-check-circle me-2"></i>
+                  Yes
+                </label>
+              </div>
+              <div class="form-check-modern" style="flex: 1;" (click)="form.patchValue({isConnectedToBoardMember: false})">
+                <input 
+                  type="radio" 
+                  class="form-check-input-modern" 
+                  name="isConnectedToBoardMember"
+                  [value]="false"
+                  formControlName="isConnectedToBoardMember"
+                />
+                <label class="form-check-label-modern">
+                  <i class="bi bi-x-circle me-2"></i>
+                  No
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Question 6: Public Position -->
+          <div class="form-group-full mb-4">
+            <label class="form-label-horizontal mb-2">
+              <i class="bi bi-building me-1"></i>
+              Is the client entrusted with a public position in the Kingdom or a foreign country, or does the client hold a high-ranking administrative position in an international organization?
+            </label>
+            <div class="form-row-horizontal">
+              <div class="form-check-modern" style="flex: 1;" (click)="form.patchValue({hasPublicPosition: true})">
+                <input 
+                  type="radio" 
+                  class="form-check-input-modern" 
+                  name="hasPublicPosition"
+                  [value]="true"
+                  formControlName="hasPublicPosition"
+                />
+                <label class="form-check-label-modern">
+                  <i class="bi bi-check-circle me-2"></i>
+                  Yes
+                </label>
+              </div>
+              <div class="form-check-modern" style="flex: 1;" (click)="form.patchValue({hasPublicPosition: false})">
+                <input 
+                  type="radio" 
+                  class="form-check-input-modern" 
+                  name="hasPublicPosition"
+                  [value]="false"
+                  formControlName="hasPublicPosition"
+                />
+                <label class="form-check-label-modern">
+                  <i class="bi bi-x-circle me-2"></i>
+                  No
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Question 7: Relationship with Public Official -->
+          <div class="form-group-full mb-4">
+            <label class="form-label-horizontal mb-2">
+              <i class="bi bi-heart me-1"></i>
+              Does the client have a close relationship (kinship or marriage up to the second degree) with a person entrusted with a public position in the Kingdom or a foreign country, or a person holding a high-ranking administrative position in an international organization?
+            </label>
+            <div class="form-row-horizontal">
+              <div class="form-check-modern" style="flex: 1;" (click)="form.patchValue({hasRelationshipWithPublicOfficial: true})">
+                <input 
+                  type="radio" 
+                  class="form-check-input-modern" 
+                  name="hasRelationshipWithPublicOfficial"
+                  [value]="true"
+                  formControlName="hasRelationshipWithPublicOfficial"
+                />
+                <label class="form-check-label-modern">
+                  <i class="bi bi-check-circle me-2"></i>
+                  Yes
+                </label>
+              </div>
+              <div class="form-check-modern" style="flex: 1;" (click)="form.patchValue({hasRelationshipWithPublicOfficial: false})">
+                <input 
+                  type="radio" 
+                  class="form-check-input-modern" 
+                  name="hasRelationshipWithPublicOfficial"
+                  [value]="false"
+                  formControlName="hasRelationshipWithPublicOfficial"
+                />
+                <label class="form-check-label-modern">
+                  <i class="bi bi-x-circle me-2"></i>
+                  No
+                </label>
               </div>
             </div>
           </div>

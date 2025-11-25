@@ -53,47 +53,83 @@
             </div>
           </div>
 
-          <!-- Country & City - Horizontal -->
-          <div class="form-row-horizontal mb-4">
-            <!-- Country -->
+          <!-- Checkbox: Live Outside KSA -->
+          <div class="form-group-full mb-4">
+            <div class="form-check-modern">
+              <input 
+                type="checkbox" 
+                class="form-check-input-modern" 
+                id="liveOutsideKSA"
+                formControlName="liveOutsideKSA"
+              />
+              <label class="form-check-label-modern" for="liveOutsideKSA">
+                <i class="bi bi-globe-americas me-2"></i>
+                I do not live inside the Kingdom of Saudi Arabia
+              </label>
+            </div>
+          </div>
+
+          <!-- OUTSIDE KSA: Country Dropdown & City Text Input -->
+          <div *ngIf="liveOutsideKSA" class="form-row-horizontal mb-4">
+            <!-- Country Dropdown -->
             <div class="form-group-horizontal" style="flex: 1;">
               <label class="form-label-horizontal">
                 <i class="bi bi-globe me-1"></i>
-                {{ 'kyc.addressInfo.country' | translate }}
-                <span class="text-danger">*</span>
+                Country <span class="text-danger">*</span>
               </label>
-              <input 
-                type="text" 
-                class="form-control-horizontal" 
-                formControlName="country"
-                placeholder="Enter country"
-              />
+              <select class="form-control-horizontal" formControlName="country">
+                <option value="">Select country</option>
+                <option *ngFor="let country of countries" [value]="country.label">
+                  {{ country.label }}
+                </option>
+              </select>
+              <div class="invalid-feedback" *ngIf="form.get('country')?.invalid && form.get('country')?.touched">
+                Country is required
+              </div>
             </div>
 
-            <!-- City -->
+            <!-- City Text Input -->
             <div class="form-group-horizontal" style="flex: 1;">
               <label class="form-label-horizontal">
                 <i class="bi bi-building me-1"></i>
-                {{ 'kyc.addressInfo.city' | translate }}
-                <span class="text-danger">*</span>
+                City <span class="text-danger">*</span>
               </label>
               <input 
                 type="text" 
                 class="form-control-horizontal" 
                 formControlName="city"
-                placeholder="Enter city"
+                placeholder="Enter city name"
               />
+              <div class="invalid-feedback" *ngIf="form.get('city')?.invalid && form.get('city')?.touched">
+                City is required
+              </div>
             </div>
           </div>
 
-          <!-- District & Building Number - Horizontal -->
-          <div class="form-row-horizontal mb-4">
-            <!-- District -->
-            <div class="form-group-horizontal" style="flex: 2;">
+          <!-- INSIDE KSA: City Dropdown Only -->
+          <div *ngIf="!liveOutsideKSA" class="form-row-horizontal mb-4">
+            <!-- City Dropdown -->
+            <div class="form-group-horizontal" style="flex: 1;">
+              <label class="form-label-horizontal">
+                <i class="bi bi-building me-1"></i>
+                City <span class="text-danger">*</span>
+              </label>
+              <select class="form-control-horizontal" formControlName="city">
+                <option value="">Select city</option>
+                <option *ngFor="let city of saudiCities" [value]="city.value">
+                  {{ city.label }}
+                </option>
+              </select>
+              <div class="invalid-feedback" *ngIf="form.get('city')?.invalid && form.get('city')?.touched">
+                City is required
+              </div>
+            </div>
+
+            <!-- District (Inside KSA only) -->
+            <div class="form-group-horizontal" style="flex: 1;">
               <label class="form-label-horizontal">
                 <i class="bi bi-map me-1"></i>
-                {{ 'kyc.addressInfo.district' | translate }}
-                <span class="text-danger">*</span>
+                District <span class="text-danger">*</span>
               </label>
               <input 
                 type="text" 
@@ -101,21 +137,9 @@
                 formControlName="district"
                 placeholder="Enter district"
               />
-            </div>
-
-            <!-- Building Number -->
-            <div class="form-group-horizontal" style="flex: 1;">
-              <label class="form-label-horizontal">
-                <i class="bi bi-hash me-1"></i>
-                {{ 'kyc.addressInfo.buildingNumber' | translate }}
-                <span class="text-danger">*</span>
-              </label>
-              <input 
-                type="text" 
-                class="form-control-horizontal" 
-                formControlName="buildingNumber"
-                placeholder="Building #"
-              />
+              <div class="invalid-feedback" *ngIf="form.get('district')?.invalid && form.get('district')?.touched">
+                District is required
+              </div>
             </div>
           </div>
 
@@ -123,8 +147,7 @@
           <div class="form-group-full mb-4">
             <label class="form-label-horizontal">
               <i class="bi bi-signpost me-1"></i>
-              {{ 'kyc.addressInfo.street' | translate }}
-              <span class="text-danger">*</span>
+              Street <span class="text-danger">*</span>
             </label>
             <input 
               type="text" 
@@ -132,6 +155,74 @@
               formControlName="street"
               placeholder="Enter street name"
             />
+            <div class="invalid-feedback" *ngIf="form.get('street')?.invalid && form.get('street')?.touched">
+              Street is required
+            </div>
+          </div>
+
+          <!-- Building Number, Unit Number, Additional Number (Inside KSA), Postal Code -->
+          <div class="form-row-horizontal mb-4">
+            <!-- Building Number -->
+            <div class="form-group-horizontal" style="flex: 1;">
+              <label class="form-label-horizontal">
+                <i class="bi bi-hash me-1"></i>
+                Building Number <span class="text-danger">*</span>
+              </label>
+              <input 
+                type="text" 
+                class="form-control-horizontal" 
+                formControlName="buildingNumber"
+                placeholder="Building #"
+              />
+              <div class="invalid-feedback" *ngIf="form.get('buildingNumber')?.invalid && form.get('buildingNumber')?.touched">
+                Building number is required
+              </div>
+            </div>
+
+            <!-- Unit Number -->
+            <div class="form-group-horizontal" style="flex: 1;">
+              <label class="form-label-horizontal">
+                <i class="bi bi-door-open me-1"></i>
+                Unit Number
+              </label>
+              <input 
+                type="text" 
+                class="form-control-horizontal" 
+                formControlName="unitNumber"
+                placeholder="Unit #"
+              />
+            </div>
+
+            <!-- Additional Number (Inside KSA only) -->
+            <div *ngIf="!liveOutsideKSA" class="form-group-horizontal" style="flex: 1;">
+              <label class="form-label-horizontal">
+                <i class="bi bi-123 me-1"></i>
+                Additional Number <span class="text-danger">*</span>
+              </label>
+              <input 
+                type="text" 
+                class="form-control-horizontal" 
+                formControlName="additionalNumber"
+                placeholder="Additional #"
+              />
+              <div class="invalid-feedback" *ngIf="form.get('additionalNumber')?.invalid && form.get('additionalNumber')?.touched">
+                Additional number is required
+              </div>
+            </div>
+
+            <!-- Postal Code -->
+            <div class="form-group-horizontal" style="flex: 1;">
+              <label class="form-label-horizontal">
+                <i class="bi bi-mailbox me-1"></i>
+                Postal Code
+              </label>
+              <input 
+                type="text" 
+                class="form-control-horizontal" 
+                formControlName="postalCode"
+                placeholder="Postal code"
+              />
+            </div>
           </div>
 
           <!-- Actions -->

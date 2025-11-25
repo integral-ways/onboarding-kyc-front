@@ -19,6 +19,12 @@ export class ContactInfoComponent implements OnInit {
   error: string | null = null;
   success = false;
   loggedInMobile = '';
+  currentLanguage = 'en';
+
+  languages = [
+    { value: 'en', label: 'English', icon: '🇬🇧' },
+    { value: 'ar', label: 'العربية', icon: '🇸🇦' }
+  ];
 
   constructor(
     private fb: FormBuilder,
@@ -30,6 +36,7 @@ export class ContactInfoComponent implements OnInit {
 
   ngOnInit() {
     this.getLoggedInMobile();
+    this.getCurrentLanguage();
     this.initForm();
     this.loadData();
   }
@@ -40,11 +47,18 @@ export class ContactInfoComponent implements OnInit {
     this.loggedInMobile = mobile;
   }
 
+  getCurrentLanguage() {
+    // Get current language from localStorage or default to 'en'
+    this.currentLanguage = localStorage.getItem('language') || 'en';
+  }
+
   initForm() {
     this.form = this.fb.group({
       primaryContact: [{ value: this.loggedInMobile, disabled: true }, [Validators.required, Validators.pattern(/^[0-9]{10}$/)]],
       altMobile: ['', Validators.pattern(/^[0-9]{10}$/)],
-      countryCode: ['+966', Validators.required]
+      countryCode: ['+966', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      preferredLanguage: [this.currentLanguage, Validators.required]
     });
   }
 
