@@ -3,7 +3,7 @@
 ## Overview
 All KYC form steps (except bank-info and fatca-info) have been redesigned with a modern, professional horizontal form layout.
 
-## Enhanced Steps
+## Enhanced Steps []
 
 ### ✅ 1. Personal Info (Step 1)
 **Layout:**
