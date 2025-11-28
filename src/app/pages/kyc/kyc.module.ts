@@ -15,8 +15,10 @@ import { FatcaInfoComponent } from './steps/fatca-info/fatca-info.component';
 import { BankInfoComponent } from './steps/bank-info/bank-info.component';
 import { AccountCredentialsComponent } from './steps/account-credentials/account-credentials.component';
 import { SelectStateDirective } from '../../directives/select-state.directive';
+import { AccountSummaryComponent } from './account-summary/account-summary.component';
 
 const routes: Routes = [
+  { path: 'account-summary', component: AccountSummaryComponent },
   {
     path: '',
     component: KycLayoutComponent,
@@ -45,7 +47,8 @@ const routes: Routes = [
     FatcaInfoComponent,
     BankInfoComponent,
     AccountCredentialsComponent,
-    SelectStateDirective
+    SelectStateDirective,
+    AccountSummaryComponent
   ],
   imports: [
     CommonModule,

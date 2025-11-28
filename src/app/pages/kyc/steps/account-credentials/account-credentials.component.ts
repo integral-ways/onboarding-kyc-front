@@ -249,12 +249,28 @@ export class AccountCredentialsComponent implements OnInit, OnDestroy {
       this.kycService.saveAccountCredentials(this.form.value).subscribe({
         next: () => {
           this.success = true;
-          this.loading = false;
-          setTimeout(() => {
-            this.router.navigate(['/kyc/review']).then(() => {
+          // Complete the registration
+          this.kycService.completeRegistration({}).subscribe({
+            next: () => {
+              this.loading = false;
+              setTimeout(() => {
+                this.router.navigate(['/kyc/account-summary']).then(() => {
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+              }, 500);
+            },
+            error: (err) => {
+              console.error('Complete registration error:', err);
+              this.success = false;
+              this.loading = false;
+              // Show detailed error message
+              const errorMessage = err.error?.message || err.message || 'Failed to complete registration';
+              this.error = errorMessage;
+              
+              // Scroll to top to show error
               window.scrollTo({ top: 0, behavior: 'smooth' });
-            });
-          }, 1000);
+            }
+          });
         },
         error: (err) => {
           console.error('Save error:', err);

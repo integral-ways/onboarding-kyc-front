@@ -265,6 +265,24 @@
     "toggle": "Toggle Language",
     "switchTo": "Switch to"
   },
+  "accountSummary": {
+    "successTitle": "Account Successfully Created!",
+    "successMessage": "Your KYC application has been submitted and is under review",
+    "idNumber": "ID Number",
+    "accountNumber": "Account Number",
+    "username": "Username",
+    "applicationStatus": "Application Status",
+    "statusPending": "Under Review",
+    "nextStepsTitle": "What's Next?",
+    "nextStep1": "Our team will review your application within 2-3 business days",
+    "nextStep2": "You will receive a notification once your account is approved",
+    "nextStep3": "After approval, you can access all banking services",
+    "goToDashboard": "Go to Dashboard",
+    "sendToEmail": "Send Details to Email",
+    "sending": "Sending...",
+    "emailSentSuccess": "Account details sent to your email successfully!",
+    "loading": "Loading your account details..."
+  },
   "nafath": {
     "title": "Nafath Authentication",
     "subtitle": "Secure identity verification",

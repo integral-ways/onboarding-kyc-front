@@ -156,6 +156,14 @@ export class KycLayoutComponent implements OnInit {
       return;
     }
 
+    // Check if all steps are completed
+    if (data.allStepsCompleted) {
+      // All steps completed, redirect to account summary
+      this.hasRedirected = true;
+      this.router.navigate(['/kyc/account-summary'], { replaceUrl: true });
+      return;
+    }
+
     const stepMap: { [key: string]: string } = {
       'personalInfo': 'personal-info',
       'addressInfo': 'address-info',
@@ -178,10 +186,6 @@ export class KycLayoutComponent implements OnInit {
         this.hasRedirected = true;
         this.router.navigate(['/kyc', route], { replaceUrl: true });
       }
-    } else if (data.allStepsCompleted) {
-      // All steps completed, redirect to last step or completion page
-      this.hasRedirected = true;
-      this.router.navigate(['/kyc', 'account-credentials'], { replaceUrl: true });
     }
   }
 

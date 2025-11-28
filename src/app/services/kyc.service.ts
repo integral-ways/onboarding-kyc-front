@@ -122,4 +122,16 @@ export class KycService {
     return this.http.post<ApiResponse<any>>(`${this.apiUrl}/complete`, data)
       .pipe(map(response => this.extractData(response)));
   }
+
+  // Account Summary
+  getAccountSummary(): Observable<any> {
+    return this.http.get<ApiResponse<any>>(`${this.apiUrl}/account-summary`)
+      .pipe(map(response => this.extractData(response)));
+  }
+
+  // Send Account Details Email
+  sendAccountDetailsEmail(): Observable<any> {
+    return this.http.post<ApiResponse<any>>(`${this.apiUrl}/send-account-details`, {})
+      .pipe(map(response => this.extractData(response)));
+  }
 }

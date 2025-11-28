@@ -1,0 +1,88 @@
+<div class="account-summary-container">
+  <div class="summary-card" *ngIf="!loading && accountData">
+    <!-- Success Icon -->
+    <div class="success-icon">
+      <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="40" cy="40" r="40" fill="#10B981" fill-opacity="0.1"/>
+        <circle cx="40" cy="40" r="32" fill="#10B981"/>
+        <path d="M52 32L36 48L28 40" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+
+    <!-- Success Message -->
+    <h1 class="success-title">{{ 'accountSummary.successTitle' | translate }}</h1>
+    <p class="success-message">{{ 'accountSummary.successMessage' | translate }}</p>
+
+    <!-- Account Details -->
+    <div class="account-details">
+      <div class="detail-item">
+        <div class="detail-label">{{ 'accountSummary.idNumber' | translate }}</div>
+        <div class="detail-value">{{ accountData.idNumber }}</div>
+      </div>
+
+      <div class="detail-item">
+        <div class="detail-label">{{ 'accountSummary.accountNumber' | translate }}</div>
+        <div class="detail-value">{{ accountData.accountNumber }}</div>
+      </div>
+
+      <div class="detail-item">
+        <div class="detail-label">{{ 'accountSummary.username' | translate }}</div>
+        <div class="detail-value">{{ accountData.username }}</div>
+      </div>
+
+      <div class="detail-item">
+        <div class="detail-label">{{ 'accountSummary.applicationStatus' | translate }}</div>
+        <div class="detail-value status-badge">
+          <span class="status-indicator"></span>
+          {{ 'accountSummary.statusPending' | translate }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Next Steps -->
+    <div class="next-steps">
+      <h3>{{ 'accountSummary.nextStepsTitle' | translate }}</h3>
+      <ul>
+        <li>{{ 'accountSummary.nextStep1' | translate }}</li>
+        <li>{{ 'accountSummary.nextStep2' | translate }}</li>
+        <li>{{ 'accountSummary.nextStep3' | translate }}</li>
+      </ul>
+    </div>
+
+    <!-- Success/Error Messages -->
+    <div class="alert alert-success" *ngIf="emailSent">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" style="display: inline-block; vertical-align: middle; margin-right: 8px;">
+        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+      </svg>
+      {{ 'accountSummary.emailSentSuccess' | translate }}
+    </div>
+
+    <div class="alert alert-error" *ngIf="emailError">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" style="display: inline-block; vertical-align: middle; margin-right: 8px;">
+        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+      </svg>
+      {{ emailError }}
+    </div>
+
+    <!-- Actions -->
+    <div class="actions">
+      <button class="btn-primary" (click)="goToDashboard()">
+        {{ 'accountSummary.goToDashboard' | translate }}
+      </button>
+      <button class="btn-secondary" (click)="sendDetailsToEmail()" [disabled]="sendingEmail">
+        <svg *ngIf="!sendingEmail" width="20" height="20" viewBox="0 0 20 20" fill="currentColor" style="display: inline-block; vertical-align: middle; margin-right: 8px;">
+          <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
+          <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+        </svg>
+        <span class="spinner" *ngIf="sendingEmail"></span>
+        {{ sendingEmail ? ('accountSummary.sending' | translate) : ('accountSummary.sendToEmail' | translate) }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div class="loading-state" *ngIf="loading">
+    <div class="spinner"></div>
+    <p>{{ 'accountSummary.loading' | translate }}</p>
+  </div>
+</div>
