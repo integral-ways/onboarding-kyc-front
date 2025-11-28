@@ -60,7 +60,7 @@ export class SeoService {
   ) {}
 
   loadConfig(): Observable<SiteConfig> {
-    return this.http.get<SiteConfig>('/assets/config/site-config.json').pipe(
+    return this.http.get<SiteConfig>('assets/config/site-config.json').pipe(
       tap(config => {
         this.configSubject.next(config);
         this.initializeSEO(config);
