@@ -56,9 +56,9 @@ export class ContactInfoComponent implements OnInit {
     this.form = this.fb.group({
       primaryContact: [{ value: this.loggedInMobile, disabled: true }, [Validators.required, Validators.pattern(/^[0-9]{10}$/)]],
       altMobile: ['', Validators.pattern(/^[0-9]{10}$/)],
-      countryCode: ['+966', Validators.required],
+      countryCode: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      preferredLanguage: [this.currentLanguage, Validators.required]
+      preferredLanguage: ['', Validators.required]
     });
   }
 
@@ -97,7 +97,9 @@ export class ContactInfoComponent implements OnInit {
           this.success = true;
           this.loading = false;
           setTimeout(() => {
-            this.router.navigate(['/kyc/employment-info']);
+            this.router.navigate(['/kyc/employment-info']).then(() => {
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
           }, 1000);
         },
         error: (err) => {

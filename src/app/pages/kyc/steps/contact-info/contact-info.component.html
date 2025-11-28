@@ -43,7 +43,7 @@
         <!-- Form -->
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
           <!-- Contact Information Section -->
-          <div class="section-header mb-4">
+          <!-- <div class="section-header mb-4">
             <div class="section-icon">
               <i class="bi bi-phone"></i>
             </div>
@@ -51,7 +51,7 @@
               <h5 class="mb-0 fw-bold">Contact Information</h5>
               <small class="text-muted">Enter your phone numbers and contact details</small>
             </div>
-          </div>
+          </div> -->
 
           <!-- Mobile Number Row - Horizontal -->
           <div class="form-row-horizontal mb-4">
@@ -85,6 +85,7 @@
                 <span class="text-danger">*</span>
               </label>
               <select class="form-control-horizontal" formControlName="countryCode">
+                <option value="" disabled selected>Select country code</option>
                 <option value="+966">🇸🇦 السعودية (966+)</option>
                 <option value="+971">🇦🇪 الإمارات (971+)</option>
                 <option value="+965">🇰🇼 الكويت (965+)</option>
@@ -137,6 +138,7 @@
               Preferred Language <span class="text-danger">*</span>
             </label>
             <select class="form-control-horizontal" formControlName="preferredLanguage" style="max-width: 300px;">
+              <option value="" disabled selected>Select preferred language</option>
               <option *ngFor="let lang of languages" [value]="lang.value">
                 {{ lang.icon }} {{ lang.label }}
               </option>

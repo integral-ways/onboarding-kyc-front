@@ -191,7 +191,8 @@
     "employmentInfo": "معلومات التوظيف",
     "generalInfo": "معلومات عامة",
     "fatcaInfo": "معلومات FATCA",
-    "bankInfo": "المعلومات البنكية"
+    "bankInfo": "المعلومات البنكية",
+    "accountCredentials": "بيانات الحساب"
   },
   "fields": {
     "title": "اللقب",

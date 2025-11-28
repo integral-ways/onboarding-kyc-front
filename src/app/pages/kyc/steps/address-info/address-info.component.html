@@ -43,7 +43,7 @@
         <!-- Form -->
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
           <!-- Location Section -->
-          <div class="section-header mb-4">
+          <!-- <div class="section-header mb-4">
             <div class="section-icon">
               <i class="bi bi-geo-alt"></i>
             </div>
@@ -51,7 +51,7 @@
               <h5 class="mb-0 fw-bold">Location Details</h5>
               <small class="text-muted">Enter your residential address information</small>
             </div>
-          </div>
+          </div> -->
 
           <!-- Checkbox: Live Outside KSA -->
           <div class="form-group-full mb-4">
@@ -78,7 +78,7 @@
                 Country <span class="text-danger">*</span>
               </label>
               <select class="form-control-horizontal" formControlName="country">
-                <option value="">Select country</option>
+                <option value="" disabled selected>Select country</option>
                 <option *ngFor="let country of countries" [value]="country.label">
                   {{ country.label }}
                 </option>
@@ -115,7 +115,7 @@
                 City <span class="text-danger">*</span>
               </label>
               <select class="form-control-horizontal" formControlName="city">
-                <option value="">Select city</option>
+                <option value="" disabled selected>Select city</option>
                 <option *ngFor="let city of saudiCities" [value]="city.value">
                   {{ city.label }}
                 </option>

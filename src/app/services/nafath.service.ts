@@ -5,7 +5,7 @@ import { switchMap, takeWhile, map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 
 export interface NafathStatusResponse {
-  status: 'WAITING' | 'USER_ACTION_REQUIRED' | 'SUCCESS' | 'REJECTED' | 'EXPIRED';
+  status: 'WAITING' | 'COMPLETED' | 'ERROR' | 'REJECTED' | 'EXPIRED';
   token?: string;
   message?: string;
   updatedAt?: string;

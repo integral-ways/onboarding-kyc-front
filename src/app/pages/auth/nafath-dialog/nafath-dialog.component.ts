@@ -50,7 +50,7 @@ export class NafathDialogComponent implements OnInit, OnDestroy {
           this.status = response.status;
           this.message = response.message || '';
 
-          if (response.status === 'SUCCESS') {
+          if (response.status === 'COMPLETED') {
             // Success - continue normal flow
             console.log('Nafath authentication successful');
             console.log('Nafath token received:', response.token);

@@ -13,6 +13,7 @@ import { EmploymentInfoComponent } from './steps/employment-info/employment-info
 import { GeneralInfoComponent } from './steps/general-info/general-info.component';
 import { FatcaInfoComponent } from './steps/fatca-info/fatca-info.component';
 import { BankInfoComponent } from './steps/bank-info/bank-info.component';
+import { AccountCredentialsComponent } from './steps/account-credentials/account-credentials.component';
 import { SelectStateDirective } from '../../directives/select-state.directive';
 
 const routes: Routes = [
@@ -27,7 +28,8 @@ const routes: Routes = [
       { path: 'employment-info', component: EmploymentInfoComponent },
       { path: 'general-info', component: GeneralInfoComponent },
       { path: 'fatca-info', component: FatcaInfoComponent },
-      { path: 'bank-info', component: BankInfoComponent }
+      { path: 'bank-info', component: BankInfoComponent },
+      { path: 'account-credentials', component: AccountCredentialsComponent }
     ]
   }
 ];
@@ -42,6 +44,7 @@ const routes: Routes = [
     GeneralInfoComponent,
     FatcaInfoComponent,
     BankInfoComponent,
+    AccountCredentialsComponent,
     SelectStateDirective
   ],
   imports: [

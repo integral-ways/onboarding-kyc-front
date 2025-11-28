@@ -106,6 +106,17 @@ export class KycService {
       .pipe(map(response => this.extractData(response)));
   }
 
+  // Account Credentials
+  checkUsernameAvailability(username: string): Observable<any> {
+    return this.http.get<ApiResponse<any>>(`${this.apiUrl}/check-username/${username}`)
+      .pipe(map(response => this.extractData(response)));
+  }
+
+  saveAccountCredentials(data: any): Observable<any> {
+    return this.http.post<ApiResponse<any>>(`${this.apiUrl}/account-credentials`, data)
+      .pipe(map(response => this.extractData(response)));
+  }
+
   // Complete Registration
   completeRegistration(data: any): Observable<any> {
     return this.http.post<ApiResponse<any>>(`${this.apiUrl}/complete`, data)

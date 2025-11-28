@@ -98,7 +98,9 @@ export class GeneralInfoComponent implements OnInit {
           this.success = true;
           this.loading = false;
           setTimeout(() => {
-            this.router.navigate(['/kyc/fatca-info']);
+            this.router.navigate(['/kyc/fatca-info']).then(() => {
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
           }, 1000);
         },
         error: (err) => {

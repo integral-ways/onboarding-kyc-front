@@ -15,7 +15,7 @@ export class KycLayoutComponent implements OnInit {
   progress: any;
   steps: any[] = [];
   completedSteps = 0;
-  totalSteps = 7;
+  totalSteps = 8;
   currentTheme: 'light' | 'dark' = 'light';
   currentLang: 'en' | 'ar' = 'en';
   mobileMenuOpen = false;
@@ -91,7 +91,7 @@ export class KycLayoutComponent implements OnInit {
         }
         
         this.progress = data;
-        this.totalSteps = data.totalSteps || 7;
+        this.totalSteps = data.totalSteps || 8;
         
         // Convert steps object to array and sort by step number
         if (data.steps) {
@@ -126,7 +126,8 @@ export class KycLayoutComponent implements OnInit {
       'employment-info': 4,
       'general-info': 5,
       'fatca-info': 6,
-      'bank-info': 7
+      'bank-info': 7,
+      'account-credentials': 8
     };
 
     // Find which step we're currently on based on URL
@@ -162,7 +163,8 @@ export class KycLayoutComponent implements OnInit {
       'employmentInfo': 'employment-info',
       'generalInfo': 'general-info',
       'fatcaInfo': 'fatca-info',
-      'bankInfo': 'bank-info'
+      'bankInfo': 'bank-info',
+      'accountCredentials': 'account-credentials'
     };
 
     // Find the first incomplete step
@@ -179,7 +181,7 @@ export class KycLayoutComponent implements OnInit {
     } else if (data.allStepsCompleted) {
       // All steps completed, redirect to last step or completion page
       this.hasRedirected = true;
-      this.router.navigate(['/kyc', 'bank-info'], { replaceUrl: true });
+      this.router.navigate(['/kyc', 'account-credentials'], { replaceUrl: true });
     }
   }
 
@@ -191,7 +193,8 @@ export class KycLayoutComponent implements OnInit {
       'employmentInfo': 'employment-info',
       'generalInfo': 'general-info',
       'fatcaInfo': 'fatca-info',
-      'bankInfo': 'bank-info'
+      'bankInfo': 'bank-info',
+      'accountCredentials': 'account-credentials'
     };
     
     const route = routeMap[stepKey] || stepKey;
@@ -207,7 +210,8 @@ export class KycLayoutComponent implements OnInit {
       'employmentInfo': 'employment-info',
       'generalInfo': 'general-info',
       'fatcaInfo': 'fatca-info',
-      'bankInfo': 'bank-info'
+      'bankInfo': 'bank-info',
+      'accountCredentials': 'account-credentials'
     };
     
     const route = routeMap[step.key];

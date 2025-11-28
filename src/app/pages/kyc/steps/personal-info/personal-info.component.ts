@@ -8,7 +8,8 @@ import { KycService } from '../../../../services/kyc.service';
   templateUrl: './personal-info.component.html',
   styleUrls: [
     './personal-info.component.scss',
-    '../shared-horizontal-form-styles.scss'
+    '../shared-horizontal-form-styles.scss',
+    '../professional-multiselect.scss'
   ]
 })
 export class PersonalInfoComponent implements OnInit, OnDestroy {
@@ -20,14 +21,14 @@ export class PersonalInfoComponent implements OnInit, OnDestroy {
   incomeSourceDropdownOpen = false;
 
   incomeSources = [
-    { value: 'SALARY', label: 'Salary' },
-    { value: 'BUSINESS', label: 'Business' },
-    { value: 'INVESTMENTS', label: 'Investments' },
-    { value: 'RENTAL', label: 'Rental Income' },
-    { value: 'PENSION', label: 'Pension' },
-    { value: 'INHERITANCE', label: 'Inheritance' },
-    { value: 'FREELANCE', label: 'Freelance' },
-    { value: 'OTHER', label: 'Other' }
+    { value: 'SALARY', label: 'Salary', icon: '💼' },
+    { value: 'BUSINESS', label: 'Business', icon: '🏢' },
+    { value: 'INVESTMENTS', label: 'Investments', icon: '📈' },
+    { value: 'RENTAL', label: 'Rental Income', icon: '🏠' },
+    { value: 'PENSION', label: 'Pension', icon: '👴' },
+    { value: 'INHERITANCE', label: 'Inheritance', icon: '💎' },
+    { value: 'FREELANCE', label: 'Freelance', icon: '💻' },
+    { value: 'OTHER', label: 'Other', icon: '✨' }
   ];
 
   annualIncomeRanges = [
@@ -60,15 +61,27 @@ export class PersonalInfoComponent implements OnInit, OnDestroy {
     
     // Close dropdown when clicking outside
     document.addEventListener('click', this.closeDropdownOnClickOutside.bind(this));
+    
+    // Reposition dropdown on scroll and resize
+    window.addEventListener('scroll', this.handleScrollResize.bind(this), true);
+    window.addEventListener('resize', this.handleScrollResize.bind(this));
   }
 
   ngOnDestroy() {
     document.removeEventListener('click', this.closeDropdownOnClickOutside.bind(this));
+    window.removeEventListener('scroll', this.handleScrollResize.bind(this), true);
+    window.removeEventListener('resize', this.handleScrollResize.bind(this));
+  }
+
+  handleScrollResize() {
+    if (this.incomeSourceDropdownOpen) {
+      this.positionDropdown();
+    }
   }
 
   closeDropdownOnClickOutside(event: MouseEvent) {
     const target = event.target as HTMLElement;
-    if (!target.closest('.multi-select-dropdown')) {
+    if (!target.closest('.professional-multiselect')) {
       this.incomeSourceDropdownOpen = false;
     }
   }
@@ -139,6 +152,61 @@ export class PersonalInfoComponent implements OnInit, OnDestroy {
 
   toggleIncomeSourceDropdown() {
     this.incomeSourceDropdownOpen = !this.incomeSourceDropdownOpen;
+    
+    if (this.incomeSourceDropdownOpen) {
+      // Position dropdown after DOM update
+      setTimeout(() => {
+        this.positionDropdown();
+      }, 0);
+    }
+  }
+
+  positionDropdown() {
+    const trigger = document.querySelector('.professional-multiselect .multiselect-trigger') as HTMLElement;
+    const dropdown = document.querySelector('.professional-multiselect .multiselect-dropdown') as HTMLElement;
+    
+    if (trigger && dropdown) {
+      const rect = trigger.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+      const viewportWidth = window.innerWidth;
+      
+      // Calculate available space below and above
+      const spaceBelow = viewportHeight - rect.bottom;
+      const spaceAbove = rect.top;
+      
+      // Determine if dropdown should open upward or downward
+      const openUpward = spaceBelow < 300 && spaceAbove > spaceBelow;
+      
+      if (openUpward) {
+        // Position above the trigger
+        dropdown.style.bottom = `${viewportHeight - rect.top + 8}px`;
+        dropdown.style.top = 'auto';
+      } else {
+        // Position below the trigger
+        dropdown.style.top = `${rect.bottom + 8}px`;
+        dropdown.style.bottom = 'auto';
+      }
+      
+      // Handle horizontal positioning
+      const isMobile = viewportWidth <= 768;
+      
+      if (isMobile) {
+        // On mobile, use padding from edges
+        const padding = 16;
+        dropdown.style.left = `${padding}px`;
+        dropdown.style.right = `${padding}px`;
+        dropdown.style.width = 'auto';
+      } else {
+        // On desktop, match trigger width and position
+        dropdown.style.left = `${rect.left}px`;
+        dropdown.style.width = `${rect.width}px`;
+        dropdown.style.right = 'auto';
+      }
+      
+      // Ensure dropdown doesn't exceed viewport height
+      const maxHeight = openUpward ? spaceAbove - 16 : spaceBelow - 16;
+      dropdown.style.maxHeight = `${Math.min(maxHeight, 400)}px`;
+    }
   }
 
   onIncomeSourceToggle(value: string) {
@@ -164,6 +232,26 @@ export class PersonalInfoComponent implements OnInit, OnDestroy {
       return source ? source.label : '';
     }
     return `${this.selectedIncomeSources.length} sources selected`;
+  }
+
+  getSelectedIncomeSources(): string[] {
+    return this.selectedIncomeSources.map(value => {
+      const source = this.incomeSources.find(s => s.value === value);
+      return source ? source.label : value;
+    });
+  }
+
+  removeIncomeSource(event: Event, label: string) {
+    event.stopPropagation();
+    const source = this.incomeSources.find(s => s.label === label);
+    if (source) {
+      this.onIncomeSourceToggle(source.value);
+    }
+  }
+
+  clearAllIncomeSources() {
+    this.selectedIncomeSources = [];
+    this.form.patchValue({ incomeSource: [] });
   }
 
   // Helper methods for header display
@@ -235,7 +323,9 @@ export class PersonalInfoComponent implements OnInit, OnDestroy {
           this.success = true;
           this.loading = false;
           setTimeout(() => {
-            this.router.navigate(['/kyc/address-info']);
+            this.router.navigate(['/kyc/address-info']).then(() => {
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
           }, 1000);
         },
         error: (err) => {

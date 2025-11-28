@@ -140,7 +140,9 @@ export class AddressInfoComponent implements OnInit {
           this.success = true;
           this.loading = false;
           setTimeout(() => {
-            this.router.navigate(['/kyc/contact-info']);
+            this.router.navigate(['/kyc/contact-info']).then(() => {
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
           }, 1000);
         },
         error: (err) => {

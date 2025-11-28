@@ -28,14 +28,22 @@ export class EmploymentInfoComponent implements OnInit {
     this.loadData();
   }
 
+  employmentYearsOptions = [
+    { value: '0-1', label: 'Less than 1 year' },
+    { value: '1-3', label: '1-3 years' },
+    { value: '3-5', label: '3-5 years' },
+    { value: '5-10', label: '5-10 years' },
+    { value: '10-15', label: '10-15 years' },
+    { value: '15-20', label: '15-20 years' },
+    { value: '20+', label: 'More than 20 years' }
+  ];
+
   initForm() {
     this.form = this.fb.group({
       employmentType: ['', Validators.required],
       employerName: ['', Validators.required],
       jobTitle: ['', Validators.required],
-      occupation: ['', Validators.required],
-      employmentYears: [0, [Validators.required, Validators.min(0)]],
-      monthlyIncome: [0, [Validators.required, Validators.min(0)]]
+      employmentYears: ['', Validators.required]
     });
   }
 
@@ -60,7 +68,9 @@ export class EmploymentInfoComponent implements OnInit {
           this.success = true;
           this.loading = false;
           setTimeout(() => {
-            this.router.navigate(['/kyc/general-info']);
+            this.router.navigate(['/kyc/general-info']).then(() => {
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
           }, 1000);
         },
         error: (err) => {

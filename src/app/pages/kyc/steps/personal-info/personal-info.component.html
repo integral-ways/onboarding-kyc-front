@@ -68,16 +68,7 @@
         <!-- Form -->
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
 
-          <!-- Personal Details Section -->
-          <div class="section-header mb-4">
-            <div class="section-icon">
-              <i class="bi bi-person-circle"></i>
-            </div>
-            <div>
-              <h5 class="mb-0 fw-bold">{{ 'kyc.personalInfo.title' | translate }}</h5>
-              <small class="text-muted">Enter your personal information</small>
-            </div>
-          </div>
+       
 
           <!-- Full Name - Single Field -->
           <!-- <div class="form-group-full mb-4">
@@ -102,7 +93,7 @@
                 Education Level <span class="text-danger">*</span>
               </label>
               <select class="form-control-horizontal" formControlName="educationLevel">
-                <option value="">Select education level</option>
+                <option value="" disabled selected>Select education level</option>
                 <option *ngFor="let level of educationLevels" [value]="level.value">
                   {{ level.label }}
                 </option>
@@ -119,7 +110,7 @@
                 Marital Status <span class="text-danger">*</span>
               </label>
               <select class="form-control-horizontal" formControlName="maritalStatus">
-                <option value="">Select marital status</option>
+                <option value="" disabled selected>Select marital status</option>
                 <option *ngFor="let status of maritalStatuses" [value]="status.value">
                   {{ status.label }}
                 </option>
@@ -164,7 +155,7 @@
                 Approximate Annual Income <span class="text-danger">*</span>
               </label>
               <select class="form-control-horizontal" formControlName="approximateAnnualIncome">
-                <option value="">Select income range</option>
+                <option value="" disabled selected>Select income range</option>
                 <option *ngFor="let range of annualIncomeRanges" [value]="range.value">
                   {{ range.label }}
                 </option>
@@ -181,7 +172,7 @@
                 Approximate Net Worth <span class="text-danger">*</span>
               </label>
               <select class="form-control-horizontal" formControlName="approximateNetWorth">
-                <option value="">Select net worth range</option>
+                <option value="" disabled selected>Select net worth range</option>
                 <option *ngFor="let range of netWorthRanges" [value]="range.value">
                   {{ range.label }}
                 </option>
@@ -192,33 +183,73 @@
             </div>
           </div>
 
-          <!-- Income Source - Modern Multi-select Dropdown -->
+          <!-- Income Source - Professional Multi-select Dropdown -->
           <div class="form-group-full mb-4">
             <label class="form-label-horizontal">
               <i class="bi bi-briefcase me-1"></i>
               Income Source <span class="text-danger">*</span>
             </label>
-            <div class="multi-select-dropdown" [class.open]="incomeSourceDropdownOpen">
-              <div class="multi-select-trigger" (click)="toggleIncomeSourceDropdown()">
-                <span class="selected-text">{{ getSelectedIncomeSourcesLabel() }}</span>
-                <i class="bi bi-chevron-down dropdown-icon"></i>
-              </div>
-              <div class="multi-select-options" *ngIf="incomeSourceDropdownOpen">
-                <div 
-                  class="multi-select-option" 
-                  *ngFor="let source of incomeSources"
-                  (click)="onIncomeSourceToggle(source.value)">
-                  <input 
-                    type="checkbox" 
-                    [checked]="isIncomeSourceSelected(source.value)"
-                    class="option-checkbox"
-                    readonly>
-                  <span class="option-label">{{ source.label }}</span>
-                  <i class="bi bi-check option-check" *ngIf="isIncomeSourceSelected(source.value)"></i>
+            <div class="professional-multiselect" [class.is-open]="incomeSourceDropdownOpen" [class.is-invalid]="form.get('incomeSource')?.invalid && form.get('incomeSource')?.touched">
+              <!-- Trigger Button -->
+              <button type="button" class="multiselect-trigger" (click)="toggleIncomeSourceDropdown()">
+                <div class="trigger-content">
+                  <div class="selected-items" *ngIf="getSelectedIncomeSources().length > 0">
+                    <span class="selected-badge" *ngFor="let source of getSelectedIncomeSources()">
+                      <span class="badge-text">{{ source }}</span>
+                      <i class="bi bi-x badge-remove" (click)="removeIncomeSource($event, source)"></i>
+                    </span>
+                  </div>
+                  <span class="placeholder" *ngIf="getSelectedIncomeSources().length === 0">
+                    Select income sources
+                  </span>
+                </div>
+                <div class="trigger-icons">
+                  <span class="selected-count" *ngIf="getSelectedIncomeSources().length > 0">
+                    {{ getSelectedIncomeSources().length }}
+                  </span>
+                  <i class="bi bi-chevron-down chevron-icon"></i>
+                </div>
+              </button>
+
+              <!-- Dropdown Options -->
+              <div class="multiselect-dropdown" *ngIf="incomeSourceDropdownOpen">
+                <div class="dropdown-header">
+                  <span class="header-title">Select Income Sources</span>
+                  <button type="button" class="clear-all-btn" *ngIf="getSelectedIncomeSources().length > 0" (click)="clearAllIncomeSources()">
+                    <i class="bi bi-x-circle"></i> Clear All
+                  </button>
+                </div>
+                <div class="dropdown-options">
+                  <div 
+                    class="option-item" 
+                    *ngFor="let source of incomeSources"
+                    [class.is-selected]="isIncomeSourceSelected(source.value)"
+                    (click)="onIncomeSourceToggle(source.value)">
+                    <div class="option-checkbox">
+                      <input 
+                        type="checkbox" 
+                        [checked]="isIncomeSourceSelected(source.value)"
+                        readonly
+                        tabindex="-1">
+                      <span class="checkbox-custom">
+                        <i class="bi bi-check"></i>
+                      </span>
+                    </div>
+                    <div class="option-content">
+                      <span class="option-label">{{ source.label }}</span>
+                      <span class="option-icon">{{ source.icon }}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="dropdown-footer">
+                  <button type="button" class="footer-btn" (click)="toggleIncomeSourceDropdown()">
+                    <i class="bi bi-check2"></i> Done
+                  </button>
                 </div>
               </div>
             </div>
             <div class="invalid-feedback d-block" *ngIf="form.get('incomeSource')?.invalid && form.get('incomeSource')?.touched">
+              <i class="bi bi-exclamation-circle me-1"></i>
               Please select at least one income source
             </div>
           </div>

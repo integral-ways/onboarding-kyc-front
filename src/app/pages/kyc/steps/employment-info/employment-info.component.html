@@ -43,7 +43,7 @@
         <!-- Form -->
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
           <!-- Employment Status Section -->
-          <div class="section-header mb-4">
+          <!-- <div class="section-header mb-4">
             <div class="section-icon">
               <i class="bi bi-person-workspace"></i>
             </div>
@@ -51,7 +51,7 @@
               <h5 class="mb-0 fw-bold">Employment Status</h5>
               <small class="text-muted">Provide your current employment information</small>
             </div>
-          </div>
+          </div> -->
 
           <!-- Employment Type & Employer Name - Horizontal -->
           <div class="form-row-horizontal mb-4">
@@ -63,7 +63,7 @@
                 <span class="text-danger">*</span>
               </label>
               <select class="form-control-horizontal" formControlName="employmentType">
-                <option value="">Select employment type</option>
+                <option value="" disabled selected>Select employment type</option>
                 <option value="EMPLOYED">{{ 'kyc.employmentInfo.employed' | translate }}</option>
                 <option value="SELF_EMPLOYED">{{ 'kyc.employmentInfo.selfEmployed' | translate }}</option>
                 <option value="UNEMPLOYED">{{ 'kyc.employmentInfo.unemployed' | translate }}</option>
@@ -88,7 +88,7 @@
             </div>
           </div>
 
-          <!-- Job Title & Occupation - Horizontal -->
+          <!-- Job Title & Employment Years - Horizontal -->
           <div class="form-row-horizontal mb-4">
             <!-- Job Title -->
             <div class="form-group-horizontal" style="flex: 1;">
@@ -105,24 +105,6 @@
               />
             </div>
 
-            <!-- Occupation -->
-            <div class="form-group-horizontal" style="flex: 1;">
-              <label class="form-label-horizontal">
-                <i class="bi bi-tools me-1"></i>
-                {{ 'kyc.employmentInfo.occupation' | translate }}
-                <span class="text-danger">*</span>
-              </label>
-              <input 
-                type="text" 
-                class="form-control-horizontal" 
-                formControlName="occupation"
-                placeholder="Enter occupation"
-              />
-            </div>
-          </div>
-
-          <!-- Employment Years & Monthly Income - Horizontal -->
-          <div class="form-row-horizontal mb-4">
             <!-- Employment Years -->
             <div class="form-group-horizontal" style="flex: 1;">
               <label class="form-label-horizontal">
@@ -130,35 +112,12 @@
                 {{ 'kyc.employmentInfo.employmentYears' | translate }}
                 <span class="text-danger">*</span>
               </label>
-              <div class="input-group-horizontal">
-                <input 
-                  type="number" 
-                  class="form-control-horizontal input-with-suffix" 
-                  formControlName="employmentYears" 
-                  min="0"
-                  placeholder="0"
-                />
-                <span class="input-group-text-horizontal">Years</span>
-              </div>
-            </div>
-
-            <!-- Monthly Income -->
-            <div class="form-group-horizontal" style="flex: 1;">
-              <label class="form-label-horizontal">
-                <i class="bi bi-currency-dollar me-1"></i>
-                {{ 'kyc.employmentInfo.monthlyIncome' | translate }}
-                <span class="text-danger">*</span>
-              </label>
-              <div class="input-group-horizontal">
-                <span class="input-group-text-horizontal">SAR</span>
-                <input 
-                  type="number" 
-                  class="form-control-horizontal" 
-                  formControlName="monthlyIncome" 
-                  min="0"
-                  placeholder="0.00"
-                />
-              </div>
+              <select class="form-control-horizontal" formControlName="employmentYears">
+                <option value="" disabled selected>Select years of experience</option>
+                <option *ngFor="let option of employmentYearsOptions" [value]="option.value">
+                  {{ option.label }}
+                </option>
+              </select>
             </div>
           </div>
 

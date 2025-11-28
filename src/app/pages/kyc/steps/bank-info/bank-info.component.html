@@ -1,13 +1,15 @@
 <div class="step-container fade-in">
   <div class="row justify-content-center">
-    <div class="col-lg-10">
+    <div class="col-lg-10 col-xl-9">
       <div class="card-modern p-4">
         <!-- Header -->
         <div class="d-flex align-items-center mb-4">
-          <div class="step-number">7</div>
-          <div class="ms-3">
-            <h3 class="mb-1">{{ 'kyc.bankInfo.title' | translate }}</h3>
-            <p class="text-secondary mb-0">{{ 'kyc.bankInfo.subtitle' | translate }}</p>
+          <div class="step-number-modern">
+            <span>7</span>
+          </div>
+          <div class="ms-3 flex-grow-1">
+            <h3 class="mb-1 fw-bold">{{ 'kyc.bankInfo.title' | translate }}</h3>
+            <p class="text-muted mb-0">{{ 'kyc.bankInfo.subtitle' | translate }}</p>
           </div>
         </div>
 
@@ -26,30 +28,59 @@
         <!-- Form -->
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
           <div class="row g-3">
-            <!-- Row 1: Bank Name, Account Holder Name -->
-            <div class="col-md-6">
-              <label class="form-label-modern">
-                <i class="bi bi-building"></i>
-                Bank Name <span class="required">*</span>
-              </label>
-              <input type="text" class="form-control form-control-modern" formControlName="bankName" placeholder="Bank name" />
-            </div>
-
-            <div class="col-md-6">
-              <label class="form-label-modern">
-                <i class="bi bi-person-circle"></i>
-                Account Holder <span class="required">*</span>
-              </label>
-              <input type="text" class="form-control form-control-modern" formControlName="accountHolderName" placeholder="Account holder name" />
-            </div>
-
-            <!-- Row 2: IBAN -->
+            <!-- Row 1: IBAN -->
             <div class="col-12">
               <label class="form-label-modern">
                 <i class="bi bi-credit-card-2-front"></i>
                 IBAN <span class="required">*</span>
               </label>
-              <input type="text" class="form-control form-control-modern" formControlName="iban" placeholder="SA0000000000000000000000" style="font-family: monospace; letter-spacing: 1px;" />
+              <input type="text" class="form-control form-control-modern"
+                [class.is-invalid]="form.get('iban')?.invalid && form.get('iban')?.touched"
+                [class.is-valid]="form.get('iban')?.valid && form.get('iban')?.touched" formControlName="iban"
+                placeholder="SA0000000000000000000000" style="font-family: monospace; letter-spacing: 1px;"
+                maxlength="30" />
+              <div class="invalid-feedback" *ngIf="form.get('iban')?.invalid && form.get('iban')?.touched">
+                <i class="bi bi-exclamation-circle"></i>
+                {{ getIbanError() }}
+              </div>
+              <div class="valid-feedback" *ngIf="form.get('iban')?.valid && form.get('iban')?.touched">
+                <i class="bi bi-check-circle"></i>
+                {{ currentLanguage === 'ar' ? 'رقم آيبان صحيح' : 'Valid IBAN' }}
+              </div>
+              <small class="text-muted" *ngIf="!form.get('iban')?.touched || form.get('iban')?.valid">
+                <i class="bi bi-info-circle"></i>
+                {{ currentLanguage === 'ar' ? 'سيتم اكتشاف اسم البنك تلقائياً من رقم الآيبان' : 'Bank name will be
+                detected automatically from IBAN' }}
+              </small>
+            </div>
+
+            <!-- Row 2: Bank Name (Auto-detected) -->
+            <div class="col-md-6">
+              <label class="form-label-modern">
+                <i class="bi bi-building"></i>
+                {{ currentLanguage === 'ar' ? 'اسم البنك' : 'Bank Name' }} <span class="required">*</span>
+              </label>
+              <input type="text" class="form-control form-control-modern" formControlName="bankName"
+                [placeholder]="currentLanguage === 'ar' ? 'سيتم اكتشافه تلقائياً' : 'Auto-detected from IBAN'"
+                readonly />
+              <small class="text-muted">
+                <i class="bi bi-lock-fill"></i>
+                {{ currentLanguage === 'ar' ? 'يتم اكتشافه تلقائياً' : 'Auto-detected' }}
+              </small>
+            </div>
+
+            <!-- Row 3: Account Holder Name (Read-only from Personal Info) -->
+            <div class="col-md-6">
+              <label class="form-label-modern">
+                <i class="bi bi-person-circle"></i>
+                {{ currentLanguage === 'ar' ? 'اسم صاحب الحساب' : 'Account Holder' }} <span class="required">*</span>
+              </label>
+              <input type="text" class="form-control form-control-modern" formControlName="accountHolderName"
+                [placeholder]="currentLanguage === 'ar' ? 'اسم صاحب الحساب' : 'Account holder name'" readonly />
+              <small class="text-muted">
+                <i class="bi bi-lock-fill"></i>
+                {{ currentLanguage === 'ar' ? 'من البيانات الشخصية (نفاذ)' : 'From Personal Info (Nafath)' }}
+              </small>
             </div>
           </div>
 

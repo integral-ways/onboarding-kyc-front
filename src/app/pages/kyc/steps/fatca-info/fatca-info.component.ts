@@ -134,7 +134,9 @@ export class FatcaInfoComponent implements OnInit {
           }, 5000);
           
           setTimeout(() => {
-            this.router.navigate(['/kyc/bank-info']);
+            this.router.navigate(['/kyc/bank-info']).then(() => {
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
           }, 1000);
         },
         error: (err) => {

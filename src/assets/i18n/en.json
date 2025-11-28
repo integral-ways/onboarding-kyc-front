@@ -191,7 +191,8 @@
     "employmentInfo": "Employment Information",
     "generalInfo": "General Information",
     "fatcaInfo": "FATCA Information",
-    "bankInfo": "Bank Information"
+    "bankInfo": "Bank Information",
+    "accountCredentials": "Account Credentials"
   },
   "fields": {
     "title": "Title",
