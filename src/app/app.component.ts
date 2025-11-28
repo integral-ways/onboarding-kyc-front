@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
+import { Router, NavigationStart } from '@angular/router';
 import { SeoService } from './services/seo.service';
 import * as AuthActions from './store/auth/auth.actions';
 
@@ -13,11 +14,14 @@ export class AppComponent implements OnInit {
   title = 'KYC Onboarding';
   currentTheme: 'light' | 'dark' = 'light';
   currentLang: 'en' | 'ar' = 'en';
+  showReloadWarning = false;
+  private hasUnsavedChanges = false;
 
   constructor(
     private store: Store,
     private translate: TranslateService,
-    private seoService: SeoService
+    private seoService: SeoService,
+    private router: Router
   ) {
     // Initialize translation
     this.translate.addLangs(['en', 'ar']);
@@ -37,6 +41,21 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     // Load token from localStorage on app init
     this.store.dispatch(AuthActions.loadToken());
+    
+    // Enable reload prevention when in KYC flow
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationStart) {
+        // Enable warning for KYC pages, disable for others
+        this.hasUnsavedChanges = event.url.includes('/kyc/') && !event.url.includes('/account-summary');
+      }
+    });
+  }
+
+  @HostListener('window:beforeunload', ['$event'])
+  unloadNotification($event: any): void {
+    if (this.hasUnsavedChanges) {
+      $event.returnValue = 'You have unsaved changes. Are you sure you want to leave?';
+    }
   }
   
   private initializeSEO() {
@@ -69,5 +88,9 @@ export class AppComponent implements OnInit {
   toggleLanguage() {
     const newLang = this.currentLang === 'en' ? 'ar' : 'en';
     this.setLanguage(newLang);
+  }
+
+  closeReloadWarning() {
+    this.showReloadWarning = false;
   }
 }

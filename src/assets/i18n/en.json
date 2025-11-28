@@ -283,6 +283,12 @@
     "emailSentSuccess": "Account details sent to your email successfully!",
     "loading": "Loading your account details..."
   },
+  "reloadWarning": {
+    "title": "Warning: Unsaved Changes",
+    "message": "If you reload this page, you will lose all your progress and data. Are you sure you want to continue?",
+    "cancel": "Stay on Page",
+    "reload": "Reload Anyway"
+  },
   "nafath": {
     "title": "Nafath Authentication",
     "subtitle": "Secure identity verification",

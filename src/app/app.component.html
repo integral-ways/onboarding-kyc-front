@@ -1,3 +1,27 @@
 <div class="app-container">
   <router-outlet></router-outlet>
 </div>
+
+<!-- Reload Warning Dialog -->
+<div class="reload-warning-overlay" *ngIf="showReloadWarning" (click)="closeReloadWarning()">
+  <div class="reload-warning-dialog" (click)="$event.stopPropagation()">
+    <div class="warning-icon">
+      <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="32" cy="32" r="32" fill="#FEF3C7"/>
+        <path d="M32 20V36M32 44H32.02" stroke="#F59E0B" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    
+    <h2 class="warning-title">{{ 'reloadWarning.title' | translate }}</h2>
+    <p class="warning-message">{{ 'reloadWarning.message' | translate }}</p>
+    
+    <div class="warning-actions">
+      <button class="btn-cancel" (click)="closeReloadWarning()">
+        {{ 'reloadWarning.cancel' | translate }}
+      </button>
+      <button class="btn-reload" (click)="closeReloadWarning()">
+        {{ 'reloadWarning.reload' | translate }}
+      </button>
+    </div>
+  </div>
+</div>
